@@ -1,0 +1,42 @@
+import 'package:fitness_flutter/core/config/size_config.dart';
+import 'package:flutter/material.dart';
+
+class OnboardingTile extends StatelessWidget {
+  final title, imagePath, mainText;
+
+  OnboardingTile({this.imagePath, this.mainText, this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 34,
+        ),
+        Image.asset(
+          imagePath,
+        ),
+        Spacer(),
+        Text(
+          title,
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            fontSize: 24.0,
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: SizeConfig.screenWidth / 100,
+          ),
+          child: Text(
+            mainText,
+            style: TextStyle(
+              fontSize: 16.0,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ],
+    );
+  }
+}
