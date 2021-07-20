@@ -31,6 +31,9 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
       );
 
       yield PageChangedState(counter: pageIndex);
+    } else if (event is PageSwipedEvent) {
+      pageIndex = event.index;
+      yield PageChangedState(counter: pageIndex);
     }
   }
 }

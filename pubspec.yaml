@@ -34,6 +34,7 @@ dependencies:
   smooth_page_indicator: ^0.2.3
   step_progress_indicator: ^1.0.0
   dots_indicator: ^2.0.0
+  percent_indicator: ^3.0.1
 
 dev_dependencies:
   flutter_test:

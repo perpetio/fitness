@@ -4,6 +4,7 @@ import 'package:fitness_flutter/core/const/data_constants.dart';
 import 'package:fitness_flutter/screens/onboarding/bloc/onboarding_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class OnboardingContent extends StatelessWidget {
   @override
@@ -15,7 +16,7 @@ class OnboardingContent extends StatelessWidget {
         children: [
           Expanded(
             flex: 4,
-            child: _createPageView(bloc.pageController),
+            child: _createPageView(bloc.pageController, bloc),
           ),
           Expanded(
             flex: 2,
@@ -26,12 +27,14 @@ class OnboardingContent extends StatelessWidget {
     );
   }
 
-  Widget _createPageView(PageController controller) {
+  Widget _createPageView(PageController controller, OnboardingBloc bloc) {
     return PageView(
       scrollDirection: Axis.horizontal,
       controller: controller,
       children: DataConstants.onboardingTiles,
-      onPageChanged: (index) {},
+      onPageChanged: (index) {
+        bloc.add(PageSwipedEvent(index: index));
+      },
     );
   }
 
@@ -55,28 +58,35 @@ class OnboardingContent extends StatelessWidget {
           },
         ),
         Spacer(),
-        Material(
-          shape: CircleBorder(),
-          color: ColorConstants.kPrimaryColor,
-          child: BlocBuilder<OnboardingBloc, OnboardingState>(
-            buildWhen: (_, currState) => currState is PageChangedState,
-            builder: (context, state) {
-              return RawMaterialButton(
+        BlocBuilder<OnboardingBloc, OnboardingState>(
+          buildWhen: (_, currState) => currState is PageChangedState,
+          builder: (context, state) {
+            final percent = (bloc.pageIndex.toDouble() + 1) / 3;
+            return CircularPercentIndicator(
+              radius: 110,
+              backgroundColor: ColorConstants.kPrimaryColor,
+              progressColor: Colors.white,
+              percent: 1 - percent,
+              center: Material(
                 shape: CircleBorder(),
-                onPressed: () {
-                  bloc.add(PageChangedEvent());
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: Icon(
-                    Icons.east_rounded,
-                    size: 38.0,
-                    color: Colors.white,
+                color: ColorConstants.kPrimaryColor,
+                child: RawMaterialButton(
+                  shape: CircleBorder(),
+                  onPressed: () {
+                    bloc.add(PageChangedEvent());
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Icon(
+                      Icons.east_rounded,
+                      size: 38.0,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
         SizedBox(height: 30),
       ],
