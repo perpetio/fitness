@@ -8,35 +8,39 @@ class OnboardingTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 34,
-        ),
-        Image.asset(
-          imagePath,
-        ),
-        Spacer(),
-        Text(
-          title,
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-            fontSize: 24.0,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 34,
           ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: SizeConfig.screenWidth / 100,
+          Image.asset(
+            imagePath,
           ),
-          child: Text(
-            mainText,
+          SizedBox(height: 65),
+          Text(
+            title,
             style: TextStyle(
-              fontSize: 16.0,
+              fontWeight: FontWeight.w700,
+              fontSize: 24.0,
             ),
-            textAlign: TextAlign.center,
           ),
-        ),
-      ],
+          SizedBox(height: 15),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: SizeConfig.screenWidth / 100,
+            ),
+            child: Text(
+              mainText,
+              style: TextStyle(
+                fontSize: 16.0,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

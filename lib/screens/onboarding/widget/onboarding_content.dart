@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class OnboardingContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final PageController controller = PageController(initialPage: 0);
     final bloc = BlocProvider.of<OnboardingBloc>(context);
     return SafeArea(
       child: Column(
@@ -16,11 +15,11 @@ class OnboardingContent extends StatelessWidget {
         children: [
           Expanded(
             flex: 4,
-            child: _createPageView(controller),
+            child: _createPageView(bloc.pageController),
           ),
           Expanded(
             flex: 2,
-            child: _createStatic(controller, bloc),
+            child: _createStatic(bloc),
           ),
         ],
       ),
@@ -32,14 +31,15 @@ class OnboardingContent extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       controller: controller,
       children: DataConstants.onboardingTiles,
+      onPageChanged: (index) {},
     );
   }
 
-  Widget _createStatic(PageController controller, OnboardingBloc bloc) {
+  Widget _createStatic(OnboardingBloc bloc) {
     return Column(
       children: [
         SizedBox(
-          height: 50,
+          height: 30,
         ),
         BlocBuilder<OnboardingBloc, OnboardingState>(
           buildWhen: (_, currState) => currState is PageChangedState,
@@ -64,11 +64,7 @@ class OnboardingContent extends StatelessWidget {
               return RawMaterialButton(
                 shape: CircleBorder(),
                 onPressed: () {
-                  controller.animateToPage(
-                    bloc.pageIndex,
-                    duration: Duration(seconds: 2),
-                    curve: Curves.ease,
-                  );
+                  bloc.add(PageChangedEvent());
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),
@@ -81,7 +77,8 @@ class OnboardingContent extends StatelessWidget {
               );
             },
           ),
-        )
+        ),
+        SizedBox(height: 30),
       ],
     );
   }

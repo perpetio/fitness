@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 part 'onboarding_event.dart';
@@ -11,6 +12,8 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
 
   int pageIndex = 0;
 
+  final pageController = PageController(initialPage: 0);
+
   @override
   Stream<OnboardingState> mapEventToState(
     OnboardingEvent event,
@@ -20,6 +23,13 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
         return;
       }
       pageIndex += 1;
+
+      pageController.animateToPage(
+        pageIndex,
+        duration: Duration(milliseconds: 500),
+        curve: Curves.ease,
+      );
+
       yield PageChangedState(counter: pageIndex);
     }
   }
