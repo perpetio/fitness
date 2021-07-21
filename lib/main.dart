@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Fitness',
       theme: ThemeData(
         textTheme:
-            TextTheme(bodyText1: TextStyle(color: ColorConstants.kTextColor)),
+            TextTheme(bodyText1: TextStyle(color: ColorConstants.textColor)),
         fontFamily: 'NotoSansKR',
         scaffoldBackgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
