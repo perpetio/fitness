@@ -14,3 +14,7 @@ class SignUpButtonEnableChangedState extends SignUpState {
 }
 
 class ShowErrorState extends SignUpState {}
+
+class NextHomePageState extends SignUpState {}
+
+class NextSignInPageState extends SignUpState {}

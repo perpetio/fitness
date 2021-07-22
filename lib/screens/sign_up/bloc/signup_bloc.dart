@@ -30,11 +30,19 @@ class SignUpBloc extends Bloc<SignupEvent, SignUpState> {
       }
     } else if (event is SignUpTappedEvent) {
       if (checkValidatorsOfTextField()) {
-        // AuthService.signUp(emailController.text, passwordController.text);
-        print("Go to the next page");
+        try {
+          await AuthService.signUp(emailController.text,
+              passwordController.text, userNameController.text);
+          yield NextHomePageState();
+          print("Go to the next page");
+        } catch (e) {
+          print("error");
+        }
       } else {
         yield ShowErrorState();
       }
+    } else if (event is SignInTappedEvent) {
+      yield NextSignInPageState();
     }
   }
 

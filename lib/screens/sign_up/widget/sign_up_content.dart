@@ -159,7 +159,10 @@ class SignUpContent extends StatelessWidget {
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
-            recognizer: TapGestureRecognizer()..onTap = () {},
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                bloc.add(SignInTappedEvent());
+              },
           ),
         ],
       ),

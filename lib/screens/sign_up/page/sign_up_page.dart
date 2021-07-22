@@ -1,3 +1,5 @@
+import 'package:fitness_flutter/screens/home/page/home_page.dart';
+import 'package:fitness_flutter/screens/sign_in/page/sign_in_page.dart';
 import 'package:fitness_flutter/screens/sign_up/bloc/signup_bloc.dart';
 import 'package:fitness_flutter/screens/sign_up/widget/sign_up_content.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +17,17 @@ class SignUpPage extends StatelessWidget {
     return BlocProvider<SignUpBloc>(
       create: (BuildContext context) => signUpBloc,
       child: BlocConsumer<SignUpBloc, SignUpState>(
-        listenWhen: (previous, current) {
-          return true;
+        listenWhen: (_, currState) =>
+            currState is NextHomePageState || currState is NextSignInPageState,
+        listener: (context, state) {
+          if (state is NextHomePageState) {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => HomePage()));
+          } else if (state is NextSignInPageState) {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => SignInPage()));
+          }
         },
-        listener: (context, state) {},
         buildWhen: (_, currState) => currState is SignupInitial,
         builder: (context, state) {
           return SignUpContent();
