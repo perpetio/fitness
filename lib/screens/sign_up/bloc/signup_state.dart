@@ -15,6 +15,12 @@ class SignUpButtonEnableChangedState extends SignUpState {
 
 class ShowErrorState extends SignUpState {}
 
+class ErrorState extends SignUpState {
+  final String message;
+
+  ErrorState({required this.message});
+}
+
 class NextHomePageState extends SignUpState {}
 
 class NextSignInPageState extends SignUpState {}

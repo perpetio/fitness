@@ -36,7 +36,7 @@ class SignUpBloc extends Bloc<SignupEvent, SignUpState> {
           yield NextHomePageState();
           print("Go to the next page");
         } catch (e) {
-          print("error");
+          yield ErrorState(message: e.toString());
         }
       } else {
         yield ShowErrorState();

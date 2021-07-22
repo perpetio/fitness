@@ -18,7 +18,9 @@ class SignUpPage extends StatelessWidget {
       create: (BuildContext context) => signUpBloc,
       child: BlocConsumer<SignUpBloc, SignUpState>(
         listenWhen: (_, currState) =>
-            currState is NextHomePageState || currState is NextSignInPageState,
+            currState is NextHomePageState ||
+            currState is NextSignInPageState ||
+            currState is ErrorState,
         listener: (context, state) {
           if (state is NextHomePageState) {
             Navigator.of(context).push(MaterialPageRoute(
@@ -26,6 +28,10 @@ class SignUpPage extends StatelessWidget {
           } else if (state is NextSignInPageState) {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (BuildContext context) => SignInPage()));
+          } else if (state is ErrorState) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message)),
+            );
           }
         },
         buildWhen: (_, currState) => currState is SignupInitial,
