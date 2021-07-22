@@ -11,10 +11,10 @@ class SignUpPage extends StatelessWidget {
     );
   }
 
-  BlocProvider<SignupBloc> _buildBody(BuildContext context) {
-    return BlocProvider<SignupBloc>(
+  BlocProvider<SignUpBloc> _buildBody(BuildContext context) {
+    return BlocProvider<SignUpBloc>(
       create: (BuildContext context) => signUpBloc,
-      child: BlocConsumer<SignupBloc, SignupState>(
+      child: BlocConsumer<SignUpBloc, SignUpState>(
         listenWhen: (previous, current) {
           return true;
         },

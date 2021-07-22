@@ -27,7 +27,7 @@ class FitnessButton extends StatelessWidget {
           style: TextStyle(
             color: ColorConstants.white,
             fontSize: 18,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),

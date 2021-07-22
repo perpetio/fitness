@@ -12,4 +12,5 @@ class ColorConstants {
   static const textFieldBorder = Color(0xFFB9BBC5);
 
   static const disabledColor = Color(0xFFE1E1E5);
+  static const errorColor = Color(0xFFF25252);
 }

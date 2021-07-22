@@ -1,5 +1,6 @@
 import 'package:fitness_flutter/core/const/color_constants.dart';
 import 'package:fitness_flutter/core/const/text_constants.dart';
+import 'package:fitness_flutter/core/service/validation_service.dart';
 import 'package:fitness_flutter/screens/common_widgets/fitness_button.dart';
 import 'package:fitness_flutter/screens/common_widgets/fitness_text_field.dart';
 import 'package:fitness_flutter/screens/sign_up/bloc/signup_bloc.dart';
@@ -21,15 +22,15 @@ class SignUpContent extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               _createTitle(),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
               _createForm(context),
-              SizedBox(height: 40),
-              _createSignUpButton(),
+              const SizedBox(height: 40),
+              _createSignUpButton(context),
               Spacer(),
-              _createHaveAccountText(),
-              SizedBox(height: 30),
+              _createHaveAccountText(context),
+              const SizedBox(height: 30),
             ],
           ),
         ),
@@ -49,69 +50,100 @@ class SignUpContent extends StatelessWidget {
   }
 
   Widget _createForm(BuildContext context) {
-    final bloc = BlocProvider.of<SignupBloc>(context);
-    return Column(
-      children: [
-        FitnessTextField(
-          title: TextConstants.username,
-          placeholder: TextConstants.userNamePlaceholder,
-          controller: bloc.userNameController,
-          onTextChanged: () {
-            bloc.add(OnTextChangedEvent());
-          },
-        ),
-        SizedBox(height: 20),
-        FitnessTextField(
-          title: TextConstants.email,
-          placeholder: TextConstants.emailPlaceholder,
-          controller: bloc.emailController,
-          onTextChanged: () {
-            bloc.add(OnTextChangedEvent());
-          },
-        ),
-        SizedBox(height: 20),
-        FitnessTextField(
-          title: TextConstants.password,
-          placeholder: TextConstants.passwordPlaceholder,
-          obscureText: true,
-          controller: bloc.passwordController,
-          onTextChanged: () {
-            bloc.add(OnTextChangedEvent());
-          },
-        ),
-        SizedBox(height: 20),
-        FitnessTextField(
-          title: TextConstants.confirmPassword,
-          placeholder: TextConstants.confirmPasswordPlaceholder,
-          obscureText: true,
-          controller: bloc.confirmPasswordController,
-          onTextChanged: () {
-            bloc.add(OnTextChangedEvent());
-          },
-        ),
-      ],
+    final bloc = BlocProvider.of<SignUpBloc>(context);
+    return BlocBuilder<SignUpBloc, SignUpState>(
+      buildWhen: (_, currState) => currState is ShowErrorState,
+      builder: (context, state) {
+        return Column(
+          children: [
+            FitnessTextField(
+              title: TextConstants.username,
+              placeholder: TextConstants.userNamePlaceholder,
+              controller: bloc.userNameController,
+              errorText: TextConstants.usernameErrorText,
+              isError: state is ShowErrorState
+                  ? !ValidationService.username(bloc.userNameController.text)
+                  : false,
+              onTextChanged: () {
+                bloc.add(OnTextChangedEvent());
+              },
+            ),
+            const SizedBox(height: 20),
+            FitnessTextField(
+              title: TextConstants.email,
+              placeholder: TextConstants.emailPlaceholder,
+              controller: bloc.emailController,
+              errorText: TextConstants.emailErrorText,
+              isError: state is ShowErrorState
+                  ? !ValidationService.email(bloc.emailController.text)
+                  : false,
+              onTextChanged: () {
+                bloc.add(OnTextChangedEvent());
+              },
+            ),
+            const SizedBox(height: 20),
+            FitnessTextField(
+              title: TextConstants.password,
+              placeholder: TextConstants.passwordPlaceholder,
+              obscureText: true,
+              isError: state is ShowErrorState
+                  ? !ValidationService.password(bloc.passwordController.text)
+                  : false,
+              controller: bloc.passwordController,
+              errorText: TextConstants.passwordErrorText,
+              onTextChanged: () {
+                bloc.add(OnTextChangedEvent());
+              },
+            ),
+            const SizedBox(height: 20),
+            FitnessTextField(
+              title: TextConstants.confirmPassword,
+              placeholder: TextConstants.confirmPasswordPlaceholder,
+              obscureText: true,
+              isError: state is ShowErrorState
+                  ? !ValidationService.confirmPassword(
+                      bloc.passwordController.text,
+                      bloc.confirmPasswordController.text)
+                  : false,
+              controller: bloc.confirmPasswordController,
+              errorText: TextConstants.confirmPasswordErrorText,
+              onTextChanged: () {
+                bloc.add(OnTextChangedEvent());
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
-  Widget _createSignUpButton() {
+  Widget _createSignUpButton(BuildContext context) {
+    final bloc = BlocProvider.of<SignUpBloc>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: BlocBuilder<SignupBloc, SignupState>(
+      child: BlocBuilder<SignUpBloc, SignUpState>(
         buildWhen: (_, currState) =>
             currState is SignUpButtonEnableChangedState,
         builder: (context, state) {
-          return FitnessButton(
-            title: TextConstants.signUp,
-            isEnabled: state is SignUpButtonEnableChangedState
-                ? state.isEnabled
-                : false,
+          return GestureDetector(
+            child: FitnessButton(
+              title: TextConstants.signUp,
+              isEnabled: state is SignUpButtonEnableChangedState
+                  ? state.isEnabled
+                  : false,
+            ),
+            onTap: () {
+              FocusScope.of(context).unfocus();
+              bloc.add(SignUpTappedEvent());
+            },
           );
         },
       ),
     );
   }
 
-  Widget _createHaveAccountText() {
+  Widget _createHaveAccountText(BuildContext context) {
+    final bloc = BlocProvider.of<SignUpBloc>(context);
     return RichText(
       text: TextSpan(
         text: TextConstants.alreadyHaveAccount,
@@ -127,10 +159,7 @@ class SignUpContent extends StatelessWidget {
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {
-                print("Sign In");
-              },
+            recognizer: TapGestureRecognizer()..onTap = () {},
           ),
         ],
       ),

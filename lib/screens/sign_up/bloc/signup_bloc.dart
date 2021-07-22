@@ -1,14 +1,16 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:fitness_flutter/core/service/auth_service.dart';
+import 'package:fitness_flutter/core/service/validation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 part 'signup_event.dart';
 part 'signup_state.dart';
 
-class SignupBloc extends Bloc<SignupEvent, SignupState> {
-  SignupBloc() : super(SignupInitial());
+class SignUpBloc extends Bloc<SignupEvent, SignUpState> {
+  SignUpBloc() : super(SignupInitial());
 
   final userNameController = TextEditingController();
   final emailController = TextEditingController();
@@ -18,13 +20,20 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   bool isButtonEnabled = false;
 
   @override
-  Stream<SignupState> mapEventToState(
+  Stream<SignUpState> mapEventToState(
     SignupEvent event,
   ) async* {
     if (event is OnTextChangedEvent) {
       if (isButtonEnabled != checkIfSignUpButtonEnabled()) {
         isButtonEnabled = checkIfSignUpButtonEnabled();
         yield SignUpButtonEnableChangedState(isEnabled: isButtonEnabled);
+      }
+    } else if (event is SignUpTappedEvent) {
+      if (checkValidatorsOfTextField()) {
+        // AuthService.signUp(emailController.text, passwordController.text);
+        print("Go to the next page");
+      } else {
+        yield ShowErrorState();
       }
     }
   }
@@ -35,6 +44,14 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
         passwordController.text.isNotEmpty &&
         confirmPasswordController.text.isNotEmpty;
   }
+
+  bool checkValidatorsOfTextField() {
+    return ValidationService.username(userNameController.text) &&
+        ValidationService.email(emailController.text) &&
+        ValidationService.password(passwordController.text) &&
+        ValidationService.confirmPassword(
+            passwordController.text, confirmPasswordController.text);
+  }
 }
 
-final signUpBloc = SignupBloc();
+final signUpBloc = SignUpBloc();

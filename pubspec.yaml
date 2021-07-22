@@ -23,12 +23,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  #BloC  
+  
+    #BloC  
   flutter_bloc: ^7.0.1
 
   # Firebase
   firebase_core: ^1.4.0
-  # firebase_database: ^7.1.2
+  firebase_auth: ^3.0.1
 
   # IOS Icons
   cupertino_icons: ^1.0.2

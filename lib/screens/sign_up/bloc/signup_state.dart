@@ -1,14 +1,16 @@
 part of 'signup_bloc.dart';
 
 @immutable
-abstract class SignupState {}
+abstract class SignUpState {}
 
-class SignupInitial extends SignupState {}
+class SignupInitial extends SignUpState {}
 
-class SignUpButtonEnableChangedState extends SignupState {
+class SignUpButtonEnableChangedState extends SignUpState {
   final bool isEnabled;
 
   SignUpButtonEnableChangedState({
     required this.isEnabled,
   });
 }
+
+class ShowErrorState extends SignUpState {}
