@@ -12,13 +12,11 @@ class OnboardingTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
         children: [
-          SizedBox(
-            height: 34,
-          ),
+          const SizedBox(height: 34),
           Image.asset(
             imagePath,
           ),
-          SizedBox(height: 65),
+          const SizedBox(height: 65),
           Text(
             title,
             style: TextStyle(
@@ -26,7 +24,7 @@ class OnboardingTile extends StatelessWidget {
               fontSize: 24.0,
             ),
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: SizeConfig.screenWidth / 100,

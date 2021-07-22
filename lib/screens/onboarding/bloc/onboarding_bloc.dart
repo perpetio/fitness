@@ -20,6 +20,7 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   ) async* {
     if (event is PageChangedEvent) {
       if (pageIndex == 2) {
+        yield NextScreenState();
         return;
       }
       pageIndex += 1;
@@ -37,3 +38,5 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     }
   }
 }
+
+final onboardingBloc = OnboardingBloc();

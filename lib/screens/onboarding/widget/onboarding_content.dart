@@ -52,7 +52,7 @@ class OnboardingContent extends StatelessWidget {
               position: bloc.pageIndex.toDouble(),
               decorator: DotsDecorator(
                 color: Colors.grey,
-                activeColor: ColorConstants.kPrimaryColor,
+                activeColor: ColorConstants.primaryColor,
               ),
             );
           },
@@ -64,12 +64,12 @@ class OnboardingContent extends StatelessWidget {
             final percent = (bloc.pageIndex.toDouble() + 1) / 3;
             return CircularPercentIndicator(
               radius: 110,
-              backgroundColor: ColorConstants.kPrimaryColor,
+              backgroundColor: ColorConstants.primaryColor,
               progressColor: Colors.white,
               percent: 1 - percent,
               center: Material(
                 shape: CircleBorder(),
-                color: ColorConstants.kPrimaryColor,
+                color: ColorConstants.primaryColor,
                 child: RawMaterialButton(
                   shape: CircleBorder(),
                   onPressed: () {
