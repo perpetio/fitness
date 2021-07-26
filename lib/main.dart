@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitness_flutter/core/const/color_constants.dart';
-import 'package:fitness_flutter/screens/home/page/home_page.dart';
 import 'package:fitness_flutter/screens/onboarding/page/onboarding_page.dart';
+import 'package:fitness_flutter/screens/tab_bar/page/tab_bar_page.dart';
 import 'package:flutter/material.dart';
 
 const text = "Wow";
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: isLoggedIn ? HomePage() : OnboardingPage(),
+      home: isLoggedIn ? TabBarPage() : OnboardingPage(),
     );
   }
 }

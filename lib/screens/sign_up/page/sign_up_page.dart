@@ -1,7 +1,7 @@
-import 'package:fitness_flutter/screens/home/page/home_page.dart';
 import 'package:fitness_flutter/screens/sign_in/page/sign_in_page.dart';
 import 'package:fitness_flutter/screens/sign_up/bloc/signup_bloc.dart';
 import 'package:fitness_flutter/screens/sign_up/widget/sign_up_content.dart';
+import 'package:fitness_flutter/screens/tab_bar/page/tab_bar_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,16 +18,16 @@ class SignUpPage extends StatelessWidget {
       create: (BuildContext context) => SignUpBloc(),
       child: BlocConsumer<SignUpBloc, SignUpState>(
         listenWhen: (_, currState) =>
-            currState is NextHomePageState ||
+            currState is NextTabBarPageState ||
             currState is NextSignInPageState ||
             currState is ErrorState,
         listener: (context, state) {
-          if (state is NextHomePageState) {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => HomePage()));
+          if (state is NextTabBarPageState) {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (_) => TabBarPage()));
           } else if (state is NextSignInPageState) {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => SignInPage()));
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (_) => SignInPage()));
           } else if (state is ErrorState) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.message)),

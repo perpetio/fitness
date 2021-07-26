@@ -26,11 +26,11 @@ class SignInContent extends StatelessWidget {
             buildWhen: (_, currState) =>
                 currState is LoadingState ||
                 currState is ErrorState ||
-                currState is NextHomePageState,
+                currState is NextTabBarPageState,
             builder: (context, state) {
               if (state is LoadingState) {
                 return _createLoading();
-              } else if (state is ErrorState || state is NextHomePageState) {
+              } else if (state is ErrorState || state is NextTabBarPageState) {
                 return SizedBox();
               }
               return SizedBox();

@@ -34,7 +34,7 @@ class SignUpBloc extends Bloc<SignupEvent, SignUpState> {
           yield LoadingState();
           await AuthService.signUp(emailController.text,
               passwordController.text, userNameController.text);
-          yield NextHomePageState();
+          yield NextTabBarPageState();
           print("Go to the next page");
         } catch (e) {
           yield ErrorState(message: e.toString());
