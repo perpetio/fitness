@@ -14,6 +14,7 @@ class TextConstants {
   // Sign Up
   static const String signUp = "Sign up";
   static const String signIn = "Sign In";
+  static const String signOut = "Sign Out";
 
   static const String username = "Username";
   static const String userNamePlaceholder = "Your name";

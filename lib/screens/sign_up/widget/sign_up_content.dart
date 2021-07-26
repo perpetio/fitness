@@ -2,6 +2,7 @@ import 'package:fitness_flutter/core/const/color_constants.dart';
 import 'package:fitness_flutter/core/const/text_constants.dart';
 import 'package:fitness_flutter/core/service/validation_service.dart';
 import 'package:fitness_flutter/screens/common_widgets/fitness_button.dart';
+import 'package:fitness_flutter/screens/common_widgets/fitness_loading.dart';
 import 'package:fitness_flutter/screens/common_widgets/fitness_text_field.dart';
 import 'package:fitness_flutter/screens/sign_up/bloc/signup_bloc.dart';
 import 'package:flutter/gestures.dart';
@@ -19,23 +20,49 @@ class SignUpContent extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         color: ColorConstants.white,
-        child: SafeArea(
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              _createTitle(),
-              const SizedBox(height: 50),
-              _createForm(context),
-              const SizedBox(height: 40),
-              _createSignUpButton(context),
-              Spacer(),
-              _createHaveAccountText(context),
-              const SizedBox(height: 30),
-            ],
-          ),
+        child: Stack(
+          children: [
+            _createMainData(context),
+            BlocBuilder<SignUpBloc, SignUpState>(
+              buildWhen: (_, currState) =>
+                  currState is LoadingState ||
+                  currState is NextHomePageState ||
+                  currState is ErrorState,
+              builder: (context, state) {
+                if (state is LoadingState) {
+                  return _createLoading();
+                } else if (state is NextHomePageState || state is ErrorState) {
+                  return SizedBox();
+                }
+                return SizedBox();
+              },
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  Widget _createMainData(BuildContext context) {
+    return SafeArea(
+      child: Column(
+        children: [
+          const SizedBox(height: 20),
+          _createTitle(),
+          const SizedBox(height: 50),
+          _createForm(context),
+          const SizedBox(height: 40),
+          _createSignUpButton(context),
+          Spacer(),
+          _createHaveAccountText(context),
+          const SizedBox(height: 30),
+        ],
+      ),
+    );
+  }
+
+  Widget _createLoading() {
+    return FitnessLoading();
   }
 
   Widget _createTitle() {
