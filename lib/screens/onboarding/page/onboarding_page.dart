@@ -22,7 +22,7 @@ class OnboardingPage extends StatelessWidget {
         listener: (context, state) {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
-              builder: (BuildContext context) {
+              builder: (_) {
                 return SignUpPage();
               },
             ),
