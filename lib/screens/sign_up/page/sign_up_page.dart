@@ -15,7 +15,7 @@ class SignUpPage extends StatelessWidget {
 
   BlocProvider<SignUpBloc> _buildBody(BuildContext context) {
     return BlocProvider<SignUpBloc>(
-      create: (BuildContext context) => signUpBloc,
+      create: (BuildContext context) => SignUpBloc(),
       child: BlocConsumer<SignUpBloc, SignUpState>(
         listenWhen: (_, currState) =>
             currState is NextHomePageState ||
@@ -23,7 +23,7 @@ class SignUpPage extends StatelessWidget {
             currState is ErrorState,
         listener: (context, state) {
           if (state is NextHomePageState) {
-            Navigator.of(context).push(MaterialPageRoute(
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (BuildContext context) => HomePage()));
           } else if (state is NextSignInPageState) {
             Navigator.of(context).push(MaterialPageRoute(

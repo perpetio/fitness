@@ -14,6 +14,7 @@ class TextConstants {
   // Sign Up
   static const String signUp = "Sign up";
   static const String signIn = "Sign In";
+  static const String signOut = "Sign Out";
 
   static const String username = "Username";
   static const String userNamePlaceholder = "Your name";
@@ -36,4 +37,8 @@ class TextConstants {
   static const String alreadyHaveAccount = "Already have an account?";
 
   // Sing In
+  static const String passwordPlaceholderSignIn = "Enter your password";
+  static const String forgotPassword = "Forgot password?";
+
+  static const String doNotHaveAnAccount = "Do not have an account?";
 }
