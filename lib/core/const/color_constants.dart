@@ -14,4 +14,10 @@ class ColorConstants {
 
   static const disabledColor = Color(0xFFE1E1E5);
   static const errorColor = Color(0xFFF25252);
+
+  static const homeBackgroundColor = Color.fromRGBO(252, 252, 252, 1);
+  static const textGrey = Color(0xFF8F98A3);
+
+  static const cardioColor = Color(0xFFFCB74F);
+  static const armsColor = Color(0xFF5C9BA4);
 }

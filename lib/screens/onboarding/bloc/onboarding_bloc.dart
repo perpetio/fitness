@@ -38,5 +38,3 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     }
   }
 }
-
-final onboardingBloc = OnboardingBloc();

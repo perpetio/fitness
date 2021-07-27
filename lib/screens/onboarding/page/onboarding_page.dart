@@ -16,7 +16,7 @@ class OnboardingPage extends StatelessWidget {
 
   BlocProvider<OnboardingBloc> _buildBody(BuildContext context) {
     return BlocProvider<OnboardingBloc>(
-      create: (BuildContext context) => onboardingBloc,
+      create: (BuildContext context) => OnboardingBloc(),
       child: BlocConsumer<OnboardingBloc, OnboardingState>(
         listenWhen: (_, currState) => currState is NextScreenState,
         listener: (context, state) {
