@@ -1,7 +1,6 @@
 import 'package:fitness_flutter/core/config/size_config.dart';
 import 'package:fitness_flutter/screens/home/bloc/home_bloc.dart';
 import 'package:fitness_flutter/screens/home/widget/home_content.dart';
-import 'package:fitness_flutter/screens/sign_in/page/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
