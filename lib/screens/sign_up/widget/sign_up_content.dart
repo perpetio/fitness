@@ -50,7 +50,7 @@ class SignUpContent extends StatelessWidget {
         children: [
           const SizedBox(height: 20),
           _createTitle(),
-          const SizedBox(height: 50),
+          // const SizedBox(height: 50),
           _createForm(context),
           const SizedBox(height: 40),
           _createSignUpButton(context),
