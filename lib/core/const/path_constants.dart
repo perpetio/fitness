@@ -20,4 +20,7 @@ class PathConstants {
   static const String cardio = 'assets/images/home/cardio.png';
   static const String arms = 'assets/images/home/arms.png';
   static const String progress = 'assets/icons/home/progress.png';
+
+  // Workout Details
+  static const String yogaWorkout = 'assets/images/workout/yoga_workout.png';
 }

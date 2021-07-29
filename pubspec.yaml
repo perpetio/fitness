@@ -40,6 +40,9 @@ dependencies:
   # Percent circle
   percent_indicator: ^3.0.1
 
+  # Workout Details sliding up panel
+  sliding_up_panel: ^2.0.0+1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -58,6 +61,7 @@ flutter:
     - assets/images/onboarding/
     - assets/images/auth/
     - assets/images/home/
+    - assets/images/workout/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
