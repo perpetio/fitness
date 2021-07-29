@@ -1,4 +1,3 @@
-import 'package:fitness_flutter/core/config/size_config.dart';
 import 'package:fitness_flutter/core/const/color_constants.dart';
 import 'package:fitness_flutter/core/const/path_constants.dart';
 import 'package:fitness_flutter/core/const/text_constants.dart';
@@ -14,18 +13,19 @@ class HomeStatistics extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _createComletedWorkouts(),
+          _createComletedWorkouts(context),
           _createColumnStatistics(),
         ],
       ),
     );
   }
 
-  Widget _createComletedWorkouts() {
+  Widget _createComletedWorkouts(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Container(
       padding: EdgeInsets.all(15),
       height: 200,
-      width: SizeConfig.screenWidth * 0.35,
+      width: screenWidth * 0.35,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: ColorConstants.white,
@@ -116,10 +116,11 @@ class DataWorkouts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       height: 90,
-      width: SizeConfig.screenWidth * 0.5,
+      width: screenWidth * 0.5,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: ColorConstants.white,

@@ -82,64 +82,66 @@ class SignUpContent extends StatelessWidget {
     return BlocBuilder<SignUpBloc, SignUpState>(
       buildWhen: (_, currState) => currState is ShowErrorState,
       builder: (context, state) {
-        return Column(
-          children: [
-            FitnessTextField(
-              title: TextConstants.username,
-              placeholder: TextConstants.userNamePlaceholder,
-              controller: bloc.userNameController,
-              errorText: TextConstants.usernameErrorText,
-              isError: state is ShowErrorState
-                  ? !ValidationService.username(bloc.userNameController.text)
-                  : false,
-              onTextChanged: () {
-                bloc.add(OnTextChangedEvent());
-              },
-            ),
-            const SizedBox(height: 20),
-            FitnessTextField(
-              title: TextConstants.email,
-              placeholder: TextConstants.emailPlaceholder,
-              controller: bloc.emailController,
-              errorText: TextConstants.emailErrorText,
-              isError: state is ShowErrorState
-                  ? !ValidationService.email(bloc.emailController.text)
-                  : false,
-              onTextChanged: () {
-                bloc.add(OnTextChangedEvent());
-              },
-            ),
-            const SizedBox(height: 20),
-            FitnessTextField(
-              title: TextConstants.password,
-              placeholder: TextConstants.passwordPlaceholder,
-              obscureText: true,
-              isError: state is ShowErrorState
-                  ? !ValidationService.password(bloc.passwordController.text)
-                  : false,
-              controller: bloc.passwordController,
-              errorText: TextConstants.passwordErrorText,
-              onTextChanged: () {
-                bloc.add(OnTextChangedEvent());
-              },
-            ),
-            const SizedBox(height: 20),
-            FitnessTextField(
-              title: TextConstants.confirmPassword,
-              placeholder: TextConstants.confirmPasswordPlaceholder,
-              obscureText: true,
-              isError: state is ShowErrorState
-                  ? !ValidationService.confirmPassword(
-                      bloc.passwordController.text,
-                      bloc.confirmPasswordController.text)
-                  : false,
-              controller: bloc.confirmPasswordController,
-              errorText: TextConstants.confirmPasswordErrorText,
-              onTextChanged: () {
-                bloc.add(OnTextChangedEvent());
-              },
-            ),
-          ],
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              FitnessTextField(
+                title: TextConstants.username,
+                placeholder: TextConstants.userNamePlaceholder,
+                controller: bloc.userNameController,
+                errorText: TextConstants.usernameErrorText,
+                isError: state is ShowErrorState
+                    ? !ValidationService.username(bloc.userNameController.text)
+                    : false,
+                onTextChanged: () {
+                  bloc.add(OnTextChangedEvent());
+                },
+              ),
+              const SizedBox(height: 20),
+              FitnessTextField(
+                title: TextConstants.email,
+                placeholder: TextConstants.emailPlaceholder,
+                controller: bloc.emailController,
+                errorText: TextConstants.emailErrorText,
+                isError: state is ShowErrorState
+                    ? !ValidationService.email(bloc.emailController.text)
+                    : false,
+                onTextChanged: () {
+                  bloc.add(OnTextChangedEvent());
+                },
+              ),
+              const SizedBox(height: 20),
+              FitnessTextField(
+                title: TextConstants.password,
+                placeholder: TextConstants.passwordPlaceholder,
+                obscureText: true,
+                isError: state is ShowErrorState
+                    ? !ValidationService.password(bloc.passwordController.text)
+                    : false,
+                controller: bloc.passwordController,
+                errorText: TextConstants.passwordErrorText,
+                onTextChanged: () {
+                  bloc.add(OnTextChangedEvent());
+                },
+              ),
+              const SizedBox(height: 20),
+              FitnessTextField(
+                title: TextConstants.confirmPassword,
+                placeholder: TextConstants.confirmPasswordPlaceholder,
+                obscureText: true,
+                isError: state is ShowErrorState
+                    ? !ValidationService.confirmPassword(
+                        bloc.passwordController.text,
+                        bloc.confirmPasswordController.text)
+                    : false,
+                controller: bloc.confirmPasswordController,
+                errorText: TextConstants.confirmPasswordErrorText,
+                onTextChanged: () {
+                  bloc.add(OnTextChangedEvent());
+                },
+              ),
+            ],
+          ),
         );
       },
     );

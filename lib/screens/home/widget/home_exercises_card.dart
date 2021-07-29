@@ -1,4 +1,3 @@
-import 'package:fitness_flutter/core/config/size_config.dart';
 import 'package:fitness_flutter/core/const/color_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +17,7 @@ class ExercisesCard extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Container(
       padding: EdgeInsets.only(
         left: 20,
@@ -25,7 +25,7 @@ class ExercisesCard extends StatelessWidget {
         right: 12,
       ),
       height: 160,
-      width: SizeConfig.screenWidth * 0.6,
+      width: screenWidth * 0.6,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: color,

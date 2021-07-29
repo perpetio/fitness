@@ -1,4 +1,3 @@
-import 'package:fitness_flutter/core/config/size_config.dart';
 import 'package:fitness_flutter/screens/home/bloc/home_bloc.dart';
 import 'package:fitness_flutter/screens/home/widget/home_content.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,6 @@ class HomePage extends StatelessWidget {
   }
 
   BlocProvider<HomeBloc> _buildContext(BuildContext context) {
-    SizeConfig().init(context);
     return BlocProvider<HomeBloc>(
       create: (BuildContext context) => HomeBloc(),
       child: BlocConsumer<HomeBloc, HomeState>(

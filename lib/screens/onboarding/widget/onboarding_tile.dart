@@ -1,4 +1,3 @@
-import 'package:fitness_flutter/core/config/size_config.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingTile extends StatelessWidget {
@@ -8,13 +7,16 @@ class OnboardingTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
         children: [
           const SizedBox(height: 34),
-          Image.asset(
-            imagePath,
+          Expanded(
+            child: Image.asset(
+              imagePath,
+            ),
           ),
           const SizedBox(height: 65),
           Text(
@@ -27,7 +29,7 @@ class OnboardingTile extends StatelessWidget {
           const SizedBox(height: 15),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: SizeConfig.screenWidth / 100,
+              horizontal: screenWidth / 100,
             ),
             child: Text(
               mainText,
