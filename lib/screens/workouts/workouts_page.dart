@@ -1,4 +1,3 @@
-import 'package:fitness_flutter/core/config/size_config.dart';
 import 'package:fitness_flutter/screens/workouts/bloc/workouts_bloc.dart';
 import 'package:fitness_flutter/screens/workouts/widget/workout_content.dart';
 import 'package:flutter/material.dart';
