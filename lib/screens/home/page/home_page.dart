@@ -1,6 +1,6 @@
+import 'package:fitness_flutter/core/config/size_config.dart';
 import 'package:fitness_flutter/screens/home/bloc/home_bloc.dart';
 import 'package:fitness_flutter/screens/home/widget/home_content.dart';
-import 'package:fitness_flutter/screens/sign_in/page/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,6 +15,7 @@ class HomePage extends StatelessWidget {
   }
 
   BlocProvider<HomeBloc> _buildContext(BuildContext context) {
+    SizeConfig().init(context);
     return BlocProvider<HomeBloc>(
       create: (BuildContext context) => HomeBloc(),
       child: BlocConsumer<HomeBloc, HomeState>(
@@ -22,15 +23,8 @@ class HomePage extends StatelessWidget {
         builder: (context, state) {
           return HomeContent();
         },
-        listenWhen: (_, currState) => currState is SignOutButtonTappedState,
-        listener: (context, state) {
-          if (state is SignOutButtonTappedState) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) => SignInPage()),
-            );
-          }
-        },
+        listenWhen: (_, currState) => true,
+        listener: (context, state) {},
       ),
     );
   }

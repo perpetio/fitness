@@ -1,7 +1,9 @@
 import 'package:fitness_flutter/core/const/color_constants.dart';
 import 'package:fitness_flutter/core/const/path_constants.dart';
 import 'package:fitness_flutter/core/const/text_constants.dart';
+import 'package:fitness_flutter/core/service/auth_service.dart';
 import 'package:fitness_flutter/screens/home/page/home_page.dart';
+import 'package:fitness_flutter/screens/sign_in/page/sign_in_page.dart';
 import 'package:fitness_flutter/screens/tab_bar/bloc/tab_bar_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +22,7 @@ class TabBarPage extends StatelessWidget {
         builder: (context, state) {
           final bloc = BlocProvider.of<TabBarBloc>(context);
           return Scaffold(
-            body: _createBody(bloc.currentIndex),
+            body: _createBody(context, bloc.currentIndex),
             bottomNavigationBar: _createdBottomTabBar(context),
           );
         },
@@ -62,7 +64,7 @@ class TabBarPage extends StatelessWidget {
     );
   }
 
-  Widget _createBody(int index) {
+  Widget _createBody(BuildContext context, int index) {
     final children = [
       HomePage(),
       Scaffold(
@@ -72,7 +74,22 @@ class TabBarPage extends StatelessWidget {
       ),
       Scaffold(
         body: Center(
-          child: Text("Settings"),
+          child: RawMaterialButton(
+            fillColor: Colors.red,
+            child: Text(
+              TextConstants.signOut,
+              style: TextStyle(
+                color: ColorConstants.white,
+              ),
+            ),
+            onPressed: () {
+              AuthService.signOut();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => SignInPage()),
+              );
+            },
+          ),
         ),
       ),
     ];

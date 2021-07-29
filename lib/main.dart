@@ -5,8 +5,6 @@ import 'package:fitness_flutter/screens/onboarding/page/onboarding_page.dart';
 import 'package:fitness_flutter/screens/tab_bar/page/tab_bar_page.dart';
 import 'package:flutter/material.dart';
 
-const text = "Wow";
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

@@ -46,4 +46,31 @@ class TextConstants {
   static const String homeIcon = "Home";
   static const String workoutsIcon = "Workouts";
   static const String settingsIcon = "Settings";
+
+  // Home screen
+  static const String checkActivity = "Let's check your activity";
+  static const String finished = "Finished";
+  static const String completedWorkouts = "Completed workouts";
+
+  static const String inProgress = "In progress";
+  static const String workouts = "Workouts";
+
+  static const String timeSent = "Time sent";
+  static const String minutes = "Minutes";
+
+  static const String discoverWorkouts = "Discover new workouts";
+
+  static const String keepProgress = "Keep the progress!";
+  static const String profileSuccessful =
+      "You are more successful than 88% users.";
+
+  // Home screen -> cardio card
+  static const String cardioTitle = "Cardio";
+  static const String cardioExercises = "10 Exercises";
+  static const String cardioMinutes = "50 Minutes";
+
+  // Home screen -> arms card
+  static const String armsTitle = "Arms";
+  static const String armsExercises = "6 Exercises";
+  static const String armsMinutes = "35 Minutes";
 }

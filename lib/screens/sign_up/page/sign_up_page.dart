@@ -26,8 +26,8 @@ class SignUpPage extends StatelessWidget {
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (_) => TabBarPage()));
           } else if (state is NextSignInPageState) {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => SignInPage()));
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (_) => SignInPage()));
           } else if (state is ErrorState) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.message)),
