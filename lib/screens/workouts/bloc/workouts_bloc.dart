@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:fitness_flutter/data/workout_data.dart';
 import 'package:meta/meta.dart';
 
 part 'workouts_event.dart';
@@ -13,6 +14,8 @@ class WorkoutsBloc extends Bloc<WorkoutsEvent, WorkoutsState> {
   Stream<WorkoutsState> mapEventToState(
     WorkoutsEvent event,
   ) async* {
-    // TODO: implement mapEventToState
+    if (event is CardTappedEvent) {
+      yield CardTappedState(workout: event.workout);
+    }
   }
 }

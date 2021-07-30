@@ -19,7 +19,7 @@ class ExercisesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         left: 20,
         top: 10,
         right: 12,

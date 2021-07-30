@@ -40,6 +40,9 @@ dependencies:
   # Percent circle
   percent_indicator: ^3.0.1
 
+  # Workout Details sliding up panel
+  sliding_up_panel: ^2.0.0+1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -54,10 +57,11 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/icons/home/
     - assets/images/onboarding/
     - assets/images/auth/
     - assets/images/home/
+    - assets/images/exercises/
+    - assets/icons/home/
     - assets/icons/workouts/
 
   # An image asset can refer to one or more resolution-specific "variants", see

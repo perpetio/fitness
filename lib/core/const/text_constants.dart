@@ -1,12 +1,18 @@
 class TextConstants {
+  // Common
+  static const String start = "Start";
+
   // Onboarding
   static const String onboarding1Title = "Workout anywhere";
   static const String onboarding2Title = "Learn techniques";
   static const String onboarding3Title = "Stay strong & healthy";
 
-  static const String onboarding1Description = "You can do your workout at home without any equipment, outside or at the gym.";
-  static const String onboarding2Description = "Our workout programs are made by professionals.";
-  static const String onboarding3Description = "We want you to fully enjoy the program and stay healthy and positive.";
+  static const String onboarding1Description =
+      "You can do your workout at home without any equipment, outside or at the gym.";
+  static const String onboarding2Description =
+      "Our workout programs are made by professionals.";
+  static const String onboarding3Description =
+      "We want you to fully enjoy the program and stay healthy and positive.";
 
   // Sign Up
   static const String signUp = "Sign up";
@@ -19,11 +25,13 @@ class TextConstants {
 
   static const String email = "Email";
   static const String emailPlaceholder = "example@mail.com";
-  static const String emailErrorText = 'Email is unvalid, please enter email properly';
+  static const String emailErrorText =
+      'Email is unvalid, please enter email properly';
 
   static const String password = "Password";
   static const String passwordPlaceholder = "Must be at least 6 symbols";
-  static const String passwordErrorText = 'Password should contain at least 6 characters';
+  static const String passwordErrorText =
+      'Password should contain at least 6 characters';
 
   static const String confirmPassword = "Confirm password";
   static const String confirmPasswordPlaceholder = "Re-enter password";
@@ -56,7 +64,8 @@ class TextConstants {
   static const String discoverWorkouts = "Discover new workouts";
 
   static const String keepProgress = "Keep the progress!";
-  static const String profileSuccessful = "You are more successful than 88% users.";
+  static const String profileSuccessful =
+      "You are more successful than 88% users.";
 
   // Home screen -> cardio card
   static const String cardioTitle = "Cardio";
@@ -70,21 +79,38 @@ class TextConstants {
 
   //Workout screen -> yoga card
   static const String yogaTitle = "Yoga";
-  static const String yogaExercises = "16 Exercises";
-  static const String yogaMinutes = "52 Minutes";
+  static const String yogaExercises = "16";
+  static const String yogaMinutes = "52";
 
   //Workout screen -> pilates card
   static const String pilatesTitle = "Pilates";
-  static const String pilatesExercises = "20 Exercises";
-  static const String pilatesMinutes = "60 Minutes";
+  static const String pilatesExercises = "20";
+  static const String pilatesMinutes = "60";
 
   //Workout screen -> fullBody card
   static const String fullBodyTitle = "Full body";
-  static const String fullBodyExercises = "14 Exercises";
-  static const String fullBodyMinutes = "48 Minutes";
+  static const String fullBodyExercises = "14";
+  static const String fullBodyMinutes = "48";
 
   //Workout screen -> stretching card
   static const String stretchingTitle = "Stretching";
-  static const String stretchingExercises = "8 Exercises";
-  static const String stretchingMinutes = "35 Minutes";
+  static const String stretchingExercises = "8";
+  static const String stretchingMinutes = "35";
+
+  // Workout Details screen common
+  static const String workout = "Workout";
+  static const String exercisesLowercase = "exercises";
+  static const String exercisesUppercase = "Exercises";
+
+  // Workout Details screen -> card1
+  static const String reclining = "Reclining to big toe";
+  static const String recliningMinutes = "12 minutes";
+
+  // Workout Details screen -> card2
+  static const String cowPose = "Cow Pose";
+  static const String cowPoseMinutes = "8 minutes";
+
+  // Workout Details screen -> card3
+  static const String warriorPose = "Warrioe || Pose";
+  static const String warriorPoseMinutes = "12 minutes";
 }
