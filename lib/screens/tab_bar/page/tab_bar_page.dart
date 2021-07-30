@@ -5,8 +5,7 @@ import 'package:fitness_flutter/core/service/auth_service.dart';
 import 'package:fitness_flutter/screens/home/page/home_page.dart';
 import 'package:fitness_flutter/screens/sign_in/page/sign_in_page.dart';
 import 'package:fitness_flutter/screens/tab_bar/bloc/tab_bar_bloc.dart';
-import 'package:fitness_flutter/screens/workout_details_screen.dart/page/workout_details_page.dart';
-import 'package:fitness_flutter/screens/workouts/workouts_page.dart';
+import 'package:fitness_flutter/screens/workouts/page/workouts_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

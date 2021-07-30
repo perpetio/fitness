@@ -1,42 +1,11 @@
 import 'package:fitness_flutter/core/const/color_constants.dart';
-import 'package:fitness_flutter/core/const/path_constants.dart';
-import 'package:fitness_flutter/core/const/text_constants.dart';
+import 'package:fitness_flutter/core/const/data_constants.dart';
 import 'package:fitness_flutter/data/workout_data.dart';
 import 'package:fitness_flutter/screens/workouts/widget/workout_card.dart';
 import 'package:flutter/material.dart';
 
 class WorkoutContent extends StatelessWidget {
   WorkoutContent({Key? key}) : super(key: key);
-  final List<WorkoutData> workouts = [
-    WorkoutData(
-        title: TextConstants.yogaTitle,
-        exercices: TextConstants.yogaExercises,
-        minutes: TextConstants.yogaMinutes,
-        currentProgress: 10,
-        progress: 16,
-        image: PathConstants.yoga),
-    WorkoutData(
-        title: TextConstants.pilatesTitle,
-        exercices: TextConstants.pilatesExercises,
-        minutes: TextConstants.pilatesMinutes,
-        currentProgress: 1,
-        progress: 20,
-        image: PathConstants.pilates),
-    WorkoutData(
-        title: TextConstants.fullBodyTitle,
-        exercices: TextConstants.fullBodyExercises,
-        minutes: TextConstants.fullBodyMinutes,
-        currentProgress: 12,
-        progress: 14,
-        image: PathConstants.fullBody),
-    WorkoutData(
-        title: TextConstants.stretchingTitle,
-        exercices: TextConstants.stretchingExercises,
-        minutes: TextConstants.stretchingMinutes,
-        currentProgress: 0,
-        progress: 8,
-        image: PathConstants.stretching),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -56,20 +25,28 @@ class WorkoutContent extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Text('Workouts', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            child: Text('Workouts',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
           ),
           const SizedBox(height: 5),
           Expanded(
             child: ListView(
-              children: workouts
-                  .map((e) => Column(
-                        children: [WorkoutCard(workout: e), SizedBox(height: 20)],
-                      ))
+              children: DataConstants.workouts
+                  .map(
+                    (e) => _createWorkoutCard(e),
+                  )
                   .toList(),
             ),
           )
         ],
       ),
+    );
+  }
+
+  Widget _createWorkoutCard(WorkoutData workoutData) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: WorkoutCard(workout: workoutData),
     );
   }
 }

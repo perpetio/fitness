@@ -1,4 +1,6 @@
 part of 'workoutdetails_bloc.dart';
 
 @immutable
-abstract class WorkoutdetailsEvent {}
+abstract class WorkoutDetailsEvent {}
+
+class BackTappedEvent extends WorkoutDetailsEvent {}

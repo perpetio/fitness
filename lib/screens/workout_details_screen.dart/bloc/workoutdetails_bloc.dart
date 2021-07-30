@@ -6,12 +6,16 @@ import 'package:meta/meta.dart';
 part 'workoutdetails_event.dart';
 part 'workoutdetails_state.dart';
 
-class WorkoutdetailsBloc
-    extends Bloc<WorkoutdetailsEvent, WorkoutdetailsState> {
-  WorkoutdetailsBloc() : super(WorkoutdetailsInitial());
+class WorkoutDetailsBloc
+    extends Bloc<WorkoutDetailsEvent, WorkoutDetailsState> {
+  WorkoutDetailsBloc() : super(WorkoutDetailsInitial());
 
   @override
-  Stream<WorkoutdetailsState> mapEventToState(
-    WorkoutdetailsEvent event,
-  ) async* {}
+  Stream<WorkoutDetailsState> mapEventToState(
+    WorkoutDetailsEvent event,
+  ) async* {
+    if (event is BackTappedEvent) {
+      yield BackTappedState();
+    }
+  }
 }
