@@ -49,26 +49,28 @@ class WorkoutContent extends StatelessWidget {
   }
 
   Widget _createHomeBody(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 50),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Text('Workouts', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-          ),
-          const SizedBox(height: 5),
-          Expanded(
-            child: ListView(
-              children: workouts
-                  .map((e) => Column(
-                        children: [WorkoutCard(workout: e), SizedBox(height: 20)],
-                      ))
-                  .toList(),
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Text('Workouts', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
             ),
-          )
-        ],
+            const SizedBox(height: 5),
+            Expanded(
+              child: ListView(
+                children: workouts
+                    .map((e) => Column(
+                          children: [WorkoutCard(workout: e), SizedBox(height: 20)],
+                        ))
+                    .toList(),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

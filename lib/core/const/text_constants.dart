@@ -87,4 +87,7 @@ class TextConstants {
   static const String stretchingTitle = "Stretching";
   static const String stretchingExercises = "8 Exercises";
   static const String stretchingMinutes = "35 Minutes";
+
+  //Settings screen
+  static const String joinUs = 'Join us in social media';
 }
