@@ -1,8 +1,8 @@
 import 'package:fitness_flutter/core/const/path_constants.dart';
 import 'package:fitness_flutter/core/const/text_constants.dart';
 import 'package:fitness_flutter/data/workout_data.dart';
-import 'package:fitness_flutter/screens/workout_details_screen.dart/widget/panel/workout_tag.dart';
-import 'package:fitness_flutter/screens/workout_details_screen.dart/widget/panel/exercises_list.dart';
+import 'package:fitness_flutter/screens/workout_details_screen/widget/panel/exercises_list.dart';
+import 'package:fitness_flutter/screens/workout_details_screen/widget/panel/workout_tag.dart';
 import 'package:flutter/material.dart';
 
 class WorkoutDetailsPanel extends StatelessWidget {
