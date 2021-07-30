@@ -3,6 +3,7 @@ import 'package:fitness_flutter/core/const/path_constants.dart';
 import 'package:fitness_flutter/core/const/text_constants.dart';
 import 'package:fitness_flutter/core/service/auth_service.dart';
 import 'package:fitness_flutter/screens/home/page/home_page.dart';
+import 'package:fitness_flutter/screens/settings/settings_screen.dart';
 import 'package:fitness_flutter/screens/sign_in/page/sign_in_page.dart';
 import 'package:fitness_flutter/screens/tab_bar/bloc/tab_bar_bloc.dart';
 import 'package:fitness_flutter/screens/workouts/page/workouts_page.dart';
@@ -69,26 +70,27 @@ class TabBarPage extends StatelessWidget {
     final children = [
       HomePage(),
       WorkoutsPage(),
-      Scaffold(
-        body: Center(
-          child: RawMaterialButton(
-            fillColor: Colors.red,
-            child: Text(
-              TextConstants.signOut,
-              style: TextStyle(
-                color: ColorConstants.white,
-              ),
-            ),
-            onPressed: () {
-              AuthService.signOut();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (_) => SignInPage()),
-              );
-            },
-          ),
-        ),
-      ),
+      SettingsScreen()
+      // Scaffold(
+      //   body: Center(
+      //     child: RawMaterialButton(
+      //       fillColor: Colors.red,
+      //       child: Text(
+      //         TextConstants.signOut,
+      //         style: TextStyle(
+      //           color: ColorConstants.white,
+      //         ),
+      //       ),
+      //       onPressed: () {
+      //         AuthService.signOut();
+      //         Navigator.pushReplacement(
+      //           context,
+      //           MaterialPageRoute(builder: (_) => SignInPage()),
+      //         );
+      //       },
+      //     ),
+      //   ),
+      // ),
     ];
     return children[index];
   }

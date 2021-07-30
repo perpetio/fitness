@@ -40,6 +40,9 @@ dependencies:
   # Percent circle
   percent_indicator: ^3.0.1
 
+  # URL launcher
+  url_launcher: ^6.0.9
+
   # Workout Details sliding up panel
   sliding_up_panel: ^2.0.0+1
 
@@ -63,6 +66,7 @@ flutter:
     - assets/images/exercises/
     - assets/icons/home/
     - assets/icons/workouts/
+    - assets/icons/social_networks/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

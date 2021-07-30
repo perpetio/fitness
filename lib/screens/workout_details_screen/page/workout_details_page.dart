@@ -1,8 +1,8 @@
 import 'package:fitness_flutter/core/const/text_constants.dart';
 import 'package:fitness_flutter/data/workout_data.dart';
 import 'package:fitness_flutter/screens/common_widgets/fitness_button.dart';
-import 'package:fitness_flutter/screens/workout_details_screen.dart/bloc/workoutdetails_bloc.dart';
-import 'package:fitness_flutter/screens/workout_details_screen.dart/widget/workout_details_content.dart';
+import 'package:fitness_flutter/screens/workout_details_screen/bloc/workoutdetails_bloc.dart';
+import 'package:fitness_flutter/screens/workout_details_screen/widget/workout_details_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

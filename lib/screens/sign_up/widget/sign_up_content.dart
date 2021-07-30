@@ -24,15 +24,11 @@ class SignUpContent extends StatelessWidget {
           children: [
             _createMainData(context),
             BlocBuilder<SignUpBloc, SignUpState>(
-              buildWhen: (_, currState) =>
-                  currState is LoadingState ||
-                  currState is NextTabBarPageState ||
-                  currState is ErrorState,
+              buildWhen: (_, currState) => currState is LoadingState || currState is NextTabBarPageState || currState is ErrorState,
               builder: (context, state) {
                 if (state is LoadingState) {
                   return _createLoading();
-                } else if (state is NextTabBarPageState ||
-                    state is ErrorState) {
+                } else if (state is NextTabBarPageState || state is ErrorState) {
                   return SizedBox();
                 }
                 return SizedBox();
@@ -90,9 +86,7 @@ class SignUpContent extends StatelessWidget {
                 placeholder: TextConstants.userNamePlaceholder,
                 controller: bloc.userNameController,
                 errorText: TextConstants.usernameErrorText,
-                isError: state is ShowErrorState
-                    ? !ValidationService.username(bloc.userNameController.text)
-                    : false,
+                isError: state is ShowErrorState ? !ValidationService.username(bloc.userNameController.text) : false,
                 onTextChanged: () {
                   bloc.add(OnTextChangedEvent());
                 },
@@ -103,9 +97,7 @@ class SignUpContent extends StatelessWidget {
                 placeholder: TextConstants.emailPlaceholder,
                 controller: bloc.emailController,
                 errorText: TextConstants.emailErrorText,
-                isError: state is ShowErrorState
-                    ? !ValidationService.email(bloc.emailController.text)
-                    : false,
+                isError: state is ShowErrorState ? !ValidationService.email(bloc.emailController.text) : false,
                 onTextChanged: () {
                   bloc.add(OnTextChangedEvent());
                 },
@@ -115,9 +107,7 @@ class SignUpContent extends StatelessWidget {
                 title: TextConstants.password,
                 placeholder: TextConstants.passwordPlaceholder,
                 obscureText: true,
-                isError: state is ShowErrorState
-                    ? !ValidationService.password(bloc.passwordController.text)
-                    : false,
+                isError: state is ShowErrorState ? !ValidationService.password(bloc.passwordController.text) : false,
                 controller: bloc.passwordController,
                 errorText: TextConstants.passwordErrorText,
                 onTextChanged: () {
@@ -129,11 +119,8 @@ class SignUpContent extends StatelessWidget {
                 title: TextConstants.confirmPassword,
                 placeholder: TextConstants.confirmPasswordPlaceholder,
                 obscureText: true,
-                isError: state is ShowErrorState
-                    ? !ValidationService.confirmPassword(
-                        bloc.passwordController.text,
-                        bloc.confirmPasswordController.text)
-                    : false,
+                isError:
+                    state is ShowErrorState ? !ValidationService.confirmPassword(bloc.passwordController.text, bloc.confirmPasswordController.text) : false,
                 controller: bloc.confirmPasswordController,
                 errorText: TextConstants.confirmPasswordErrorText,
                 onTextChanged: () {
@@ -152,15 +139,12 @@ class SignUpContent extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: BlocBuilder<SignUpBloc, SignUpState>(
-        buildWhen: (_, currState) =>
-            currState is SignUpButtonEnableChangedState,
+        buildWhen: (_, currState) => currState is SignUpButtonEnableChangedState,
         builder: (context, state) {
           return GestureDetector(
             child: FitnessButton(
               title: TextConstants.signUp,
-              isEnabled: state is SignUpButtonEnableChangedState
-                  ? state.isEnabled
-                  : false,
+              isEnabled: state is SignUpButtonEnableChangedState ? state.isEnabled : false,
             ),
             onTap: () {
               FocusScope.of(context).unfocus();

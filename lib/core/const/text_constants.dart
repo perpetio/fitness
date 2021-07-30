@@ -97,6 +97,13 @@ class TextConstants {
   static const String stretchingExercises = "8";
   static const String stretchingMinutes = "35";
 
+  //Settings screen
+  static const String joinUs = 'Join us in social media';
+  static const String calendar = "Calendar";
+  static const String reminder = "Reminder";
+  static const String rateUsOn = "Rate us on ";
+  static const String terms = "Terms & Conditions";
+
   // Workout Details screen common
   static const String workout = "Workout";
   static const String exercisesLowercase = "exercises";

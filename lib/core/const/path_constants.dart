@@ -35,4 +35,9 @@ class PathConstants {
   static const String pilates = 'assets/icons/workouts/pilates.png';
   static const String fullBody = 'assets/icons/workouts/full_body.png';
   static const String stretching = 'assets/icons/workouts/stretching.png';
+
+  //social networks
+  static const String facebook = 'assets/icons/social_networks/facebook.png';
+  static const String instagram = 'assets/icons/social_networks/instagram.png';
+  static const String twitter = 'assets/icons/social_networks/twitter.png';
 }
