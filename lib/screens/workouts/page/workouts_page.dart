@@ -1,3 +1,4 @@
+import 'package:fitness_flutter/screens/workout_details_screen/page/workout_details_page.dart';
 import 'package:fitness_flutter/screens/workouts/bloc/workouts_bloc.dart';
 import 'package:fitness_flutter/screens/workouts/widget/workout_content.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,18 @@ class WorkoutsPage extends StatelessWidget {
         builder: (context, state) {
           return WorkoutContent();
         },
-        listenWhen: (_, currState) => true,
-        listener: (context, state) {},
+        listenWhen: (_, currState) => currState is CardTappedState,
+        listener: (context, state) {
+          if (state is CardTappedState) {
+            Navigator.of(context, rootNavigator: true).push(
+              MaterialPageRoute(
+                builder: (_) => WorkoutDetailsPage(
+                  workout: state.workout,
+                ),
+              ),
+            );
+          }
+        },
       ),
     );
   }

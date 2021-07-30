@@ -6,7 +6,7 @@ import 'package:fitness_flutter/screens/home/page/home_page.dart';
 import 'package:fitness_flutter/screens/settings/settings_screen.dart';
 import 'package:fitness_flutter/screens/sign_in/page/sign_in_page.dart';
 import 'package:fitness_flutter/screens/tab_bar/bloc/tab_bar_bloc.dart';
-import 'package:fitness_flutter/screens/workouts/workouts_page.dart';
+import 'package:fitness_flutter/screens/workouts/page/workouts_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +19,8 @@ class TabBarPage extends StatelessWidget {
       create: (BuildContext context) => TabBarBloc(),
       child: BlocConsumer<TabBarBloc, TabBarState>(
         listener: (context, state) {},
-        buildWhen: (_, currState) => currState is TabBarInitial || currState is TabBarItemSelectedState,
+        buildWhen: (_, currState) =>
+            currState is TabBarInitial || currState is TabBarItemSelectedState,
         builder: (context, state) {
           final bloc = BlocProvider.of<TabBarBloc>(context);
           return Scaffold(

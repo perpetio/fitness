@@ -21,6 +21,15 @@ class PathConstants {
   static const String arms = 'assets/images/home/arms.png';
   static const String progress = 'assets/icons/home/progress.png';
 
+  // Workout Details
+  static const String yogaWorkout = 'assets/images/workouts/yoga_workout.png';
+  static const String back = 'assets/icons/workouts/back.png';
+  static const String rectangle = 'assets/icons/workouts/rectangle.png';
+  static const String timeTracker = 'assets/icons/workouts/time.png';
+  static const String exerciseTracker = 'assets/icons/workouts/exercise.png';
+
+  static const String recicling = 'assets/images/exercises/recicling.png';
+
   //Workouts
   static const String yoga = 'assets/icons/workouts/yoga.png';
   static const String pilates = 'assets/icons/workouts/pilates.png';
