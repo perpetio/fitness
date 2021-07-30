@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_flutter/core/const/color_constants.dart';
 import 'package:fitness_flutter/core/const/path_constants.dart';
 import 'package:fitness_flutter/core/const/text_constants.dart';
+import 'package:fitness_flutter/screens/common_widgets/settings_container.dart';
 import 'package:fitness_flutter/screens/settings/bloc/bloc/settings_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,7 +49,23 @@ class SettingsScreen extends StatelessWidget {
             ]),
             SizedBox(height: 15),
             Text(displayName, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            Text(TextConstants.joinUs),
+            SizedBox(height: 15),
+            SettingsContainer(
+              child: Text(TextConstants.calendar, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
+              withArrow: true,
+              onTap: () {
+                print('on tap');
+              },
+            ),
+            SettingsContainer(child: Text(TextConstants.reminder, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)), withArrow: true),
+            SettingsContainer(
+                child: Text(TextConstants.rateUsOn + '${Platform.isIOS ? 'App store' : 'Play market'}',
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
+            SettingsContainer(child: Text(TextConstants.terms, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
+            SettingsContainer(child: Text(TextConstants.signOut, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
+            SizedBox(height: 15),
+            Text(TextConstants.joinUs, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+            SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
