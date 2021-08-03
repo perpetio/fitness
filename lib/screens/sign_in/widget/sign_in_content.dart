@@ -142,12 +142,9 @@ class SignInContent extends StatelessWidget {
       child: BlocBuilder<SignInBloc, SignInState>(
         buildWhen: (_, currState) => currState is SignInButtonEnableChangedState,
         builder: (context, state) {
-          return GestureDetector(
-            child: FitnessButton(
-              title: TextConstants.signIn,
-              isEnabled: state is SignInButtonEnableChangedState ? state.isEnabled : false,
-              onTap: () {},
-            ),
+          return FitnessButton(
+            title: TextConstants.signIn,
+            isEnabled: state is SignInButtonEnableChangedState ? state.isEnabled : false,
             onTap: () {
               FocusScope.of(context).unfocus();
               bloc.add(SignInTappedEvent());

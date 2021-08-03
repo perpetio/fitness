@@ -4,9 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_flutter/core/const/color_constants.dart';
 import 'package:fitness_flutter/core/const/path_constants.dart';
 import 'package:fitness_flutter/core/const/text_constants.dart';
+import 'package:fitness_flutter/core/service/auth_service.dart';
 import 'package:fitness_flutter/screens/common_widgets/settings_container.dart';
 import 'package:fitness_flutter/screens/edit_account/edit_account_screen.dart';
 import 'package:fitness_flutter/screens/settings/bloc/bloc/settings_bloc.dart';
+import 'package:fitness_flutter/screens/sign_in/page/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -46,7 +48,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return SafeArea(
       child: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(top: 20.0),
+          padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
           child: Column(children: [
             Stack(alignment: Alignment.topRight, children: [
               Center(
@@ -79,7 +81,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: Text(TextConstants.rateUsOn + '${Platform.isIOS ? 'App store' : 'Play market'}',
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
             SettingsContainer(child: Text(TextConstants.terms, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
-            SettingsContainer(child: Text(TextConstants.signOut, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
+            SettingsContainer(
+                child: Text(TextConstants.signOut, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
+                onTap: () {
+                  AuthService.signOut();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (_) => SignInPage()),
+                  );
+                }),
             SizedBox(height: 15),
             Text(TextConstants.joinUs, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
             SizedBox(height: 15),
