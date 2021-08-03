@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -59,9 +60,14 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     return BlocProvider<EditAccountBloc>(
       create: (context) => EditAccountBloc(),
       child: BlocConsumer<EditAccountBloc, EditAccountState>(
-        buildWhen: (_, currState) => currState is EditAccountInitial || currState is EditAccountProgress,
+        buildWhen: (_, currState) => currState is EditAccountInitial || currState is EditAccountProgress || currState is EditAccountError,
         builder: (context, state) {
           if (state is EditAccountProgress) return Stack(children: [_editAccountContent(context), FitnessLoading()]);
+          if (state is EditAccountError) {
+            WidgetsBinding.instance!.addPostFrameCallback((_) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
+            });
+          }
           return _editAccountContent(context);
         },
         listenWhen: (_, currState) => true,

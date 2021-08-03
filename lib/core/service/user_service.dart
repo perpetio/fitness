@@ -20,7 +20,7 @@ class UserService {
       return true;
     } catch (e) {
       print(e);
-      return false;
+      throw Exception(e);
     }
   }
 

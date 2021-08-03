@@ -24,8 +24,14 @@ class EditAccountBloc extends Bloc<EditAccountEvent, EditAccountState> {
     }
     if (event is ChangeUserData) {
       yield EditAccountProgress();
-      await UserService.changeUserData(displayName: event.displayName, email: event.email);
-      yield EditAccountInitial();
+      try {
+        await UserService.changeUserData(displayName: event.displayName, email: event.email);
+        yield EditAccountInitial();
+      } catch (e) {
+        yield EditAccountError(e.toString());
+        await Future.delayed(Duration(seconds: 1));
+        yield EditAccountInitial();
+      }
     }
   }
 }
