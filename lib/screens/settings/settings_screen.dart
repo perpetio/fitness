@@ -46,11 +46,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final displayName = user?.displayName ?? "No Username";
     photoUrl = user?.photoURL ?? null;
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-          child: Column(children: [
-            Stack(alignment: Alignment.topRight, children: [
+      child: Padding(
+        padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+        child: Column(children: [
+          Expanded(
+            child: Stack(alignment: Alignment.topRight, children: [
               Center(
                   child: photoUrl == null
                       ? CircleAvatar(backgroundImage: AssetImage(PathConstants.profile), radius: 60)
@@ -65,53 +65,53 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   style: TextButton.styleFrom(shape: CircleBorder(), backgroundColor: ColorConstants.primaryColor.withOpacity(0.16)),
                   child: Icon(Icons.edit, color: ColorConstants.primaryColor)),
             ]),
-            SizedBox(height: 15),
-            Text(displayName, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            SizedBox(height: 15),
-            SettingsContainer(
-              child: Text(TextConstants.calendar, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
-              withArrow: true,
+          ),
+          SizedBox(height: 15),
+          Text(displayName, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+          SizedBox(height: 15),
+          SettingsContainer(
+            child: Text(TextConstants.calendar, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
+            withArrow: true,
+            onTap: () {
+              // UserService.editPhoto('https://picsum.photos/200/300');
+              print('on tap');
+            },
+          ),
+          SettingsContainer(child: Text(TextConstants.reminder, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)), withArrow: true),
+          SettingsContainer(
+              child: Text(TextConstants.rateUsOn + '${Platform.isIOS ? 'App store' : 'Play market'}',
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
+          SettingsContainer(child: Text(TextConstants.terms, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
+          SettingsContainer(
+              child: Text(TextConstants.signOut, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
               onTap: () {
-                // UserService.editPhoto('https://picsum.photos/200/300');
-                print('on tap');
-              },
-            ),
-            SettingsContainer(child: Text(TextConstants.reminder, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)), withArrow: true),
-            SettingsContainer(
-                child: Text(TextConstants.rateUsOn + '${Platform.isIOS ? 'App store' : 'Play market'}',
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
-            SettingsContainer(child: Text(TextConstants.terms, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
-            SettingsContainer(
-                child: Text(TextConstants.signOut, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
-                onTap: () {
-                  AuthService.signOut();
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => SignInPage()),
-                  );
-                }),
-            SizedBox(height: 15),
-            Text(TextConstants.joinUs, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-            SizedBox(height: 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                    onPressed: () => launch('https://www.facebook.com/perpetio/'),
-                    style: TextButton.styleFrom(shape: CircleBorder(), backgroundColor: Colors.white, elevation: 1),
-                    child: Image.asset(PathConstants.facebook)),
-                TextButton(
-                    onPressed: () => launch('https://www.instagram.com/perpetio/'),
-                    style: TextButton.styleFrom(shape: CircleBorder(), backgroundColor: Colors.white, elevation: 1),
-                    child: Image.asset(PathConstants.instagram)),
-                TextButton(
-                    onPressed: () => launch('https://twitter.com/perpetio'),
-                    style: TextButton.styleFrom(shape: CircleBorder(), backgroundColor: Colors.white, elevation: 1),
-                    child: Image.asset(PathConstants.twitter)),
-              ],
-            )
-          ]),
-        ),
+                AuthService.signOut();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => SignInPage()),
+                );
+              }),
+          SizedBox(height: 15),
+          Text(TextConstants.joinUs, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+          SizedBox(height: 15),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                  onPressed: () => launch('https://www.facebook.com/perpetio/'),
+                  style: TextButton.styleFrom(shape: CircleBorder(), backgroundColor: Colors.white, elevation: 1),
+                  child: Image.asset(PathConstants.facebook)),
+              TextButton(
+                  onPressed: () => launch('https://www.instagram.com/perpetio/'),
+                  style: TextButton.styleFrom(shape: CircleBorder(), backgroundColor: Colors.white, elevation: 1),
+                  child: Image.asset(PathConstants.instagram)),
+              TextButton(
+                  onPressed: () => launch('https://twitter.com/perpetio'),
+                  style: TextButton.styleFrom(shape: CircleBorder(), backgroundColor: Colors.white, elevation: 1),
+                  child: Image.asset(PathConstants.twitter)),
+            ],
+          )
+        ]),
       ),
     );
   }
