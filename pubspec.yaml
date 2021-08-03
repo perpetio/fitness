@@ -30,6 +30,8 @@ dependencies:
   # Firebase
   firebase_core: ^1.4.0
   firebase_auth: ^3.0.1
+  firebase_storage: ^10.0.1
+
 
   # IOS Icons
   cupertino_icons: ^1.0.2
@@ -45,6 +47,8 @@ dependencies:
 
   # Workout Details sliding up panel
   sliding_up_panel: ^2.0.0+1
+
+  image_picker: ^0.8.2
 
 dev_dependencies:
   flutter_test:

@@ -18,6 +18,7 @@ class WorkoutDetailsPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: FitnessButton(
           title: TextConstants.start,
+          onTap: () {},
         ),
       ),
       body: _buildContext(context),

@@ -5,14 +5,21 @@ import 'package:fitness_flutter/core/const/color_constants.dart';
 import 'package:fitness_flutter/core/const/path_constants.dart';
 import 'package:fitness_flutter/core/const/text_constants.dart';
 import 'package:fitness_flutter/screens/common_widgets/settings_container.dart';
+import 'package:fitness_flutter/screens/edit_account/edit_account_screen.dart';
 import 'package:fitness_flutter/screens/settings/bloc/bloc/settings_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
+  @override
+  _SettingsScreenState createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  String? photoUrl;
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: _buildContext(context));
@@ -24,7 +31,7 @@ class SettingsScreen extends StatelessWidget {
       child: BlocConsumer<SettingsBloc, SettingsState>(
         buildWhen: (_, currState) => currState is SettingsInitial,
         builder: (context, state) {
-          return _settingsContent();
+          return _settingsContent(context);
         },
         listenWhen: (_, currState) => true,
         listener: (context, state) {},
@@ -32,18 +39,27 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  Widget _settingsContent() {
+  Widget _settingsContent(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
     final displayName = user?.displayName ?? "No Username";
+    photoUrl = user?.photoURL ?? null;
     return SafeArea(
       child: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(top: 20.0),
           child: Column(children: [
             Stack(alignment: Alignment.topRight, children: [
-              Center(child: Image(image: AssetImage(PathConstants.profile), height: 120, fit: BoxFit.fitHeight)),
+              Center(
+                  child: photoUrl == null
+                      ? CircleAvatar(backgroundImage: AssetImage(PathConstants.profile), radius: 60)
+                      : CircleAvatar(backgroundImage: NetworkImage(photoUrl!), radius: 60)),
               TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await Navigator.push(context, MaterialPageRoute(builder: (context) => EditAccountScreen()));
+                    setState(() {
+                      photoUrl = user?.photoURL ?? null;
+                    });
+                  },
                   style: TextButton.styleFrom(shape: CircleBorder(), backgroundColor: ColorConstants.primaryColor.withOpacity(0.16)),
                   child: Icon(Icons.edit, color: ColorConstants.primaryColor)),
             ]),
@@ -54,6 +70,7 @@ class SettingsScreen extends StatelessWidget {
               child: Text(TextConstants.calendar, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
               withArrow: true,
               onTap: () {
+                // UserService.editPhoto('https://picsum.photos/200/300');
                 print('on tap');
               },
             ),
