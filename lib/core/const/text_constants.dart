@@ -118,6 +118,19 @@ class TextConstants {
   static const String cowPoseMinutes = "8 minutes";
 
   // Workout Details screen -> card3
-  static const String warriorPose = "Warrioe || Pose";
+  static const String warriorPose = "Warrior II Pose";
   static const String warriorPoseMinutes = "12 minutes";
+
+  // Start Workout screen
+  static const String back = "Back";
+  static const String next = "Next";
+  static const String nextExercise = "Next Exercise:";
+
+  // Start Workout screen -> Warrior II Pose
+  static const String warriorDescription =
+      "Named for a fierce warrior, an incarnation of Shiva, this version of Warrior Pose increases stamina.";
+  static const String warriorStep1 =
+      "Stand in Tadasana (Mountain Pose). Raise your arms parallel to the floor and reach them actively out to the sides, shoulder blades wide, palms down.";
+  static const String warriorStep2 =
+      "Turn your right foot slightly to the right and your left foot out to the left 90 degrees. Align the left heel with the right heel. Firm your thighs and turn your left thigh outward so that the center of the left knee cap is in line with the center of the left ankle.";
 }

@@ -25,9 +25,7 @@ class WorkoutsPage extends StatelessWidget {
           if (state is CardTappedState) {
             Navigator.of(context, rootNavigator: true).push(
               MaterialPageRoute(
-                builder: (_) => WorkoutDetailsPage(
-                  workout: state.workout,
-                ),
+                builder: (_) => WorkoutDetailsPage(workout: state.workout),
               ),
             );
           }

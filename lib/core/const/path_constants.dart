@@ -40,4 +40,9 @@ class PathConstants {
   static const String facebook = 'assets/icons/social_networks/facebook.png';
   static const String instagram = 'assets/icons/social_networks/instagram.png';
   static const String twitter = 'assets/icons/social_networks/twitter.png';
+
+  // Start workout -> Yoga
+  static const String recliningVideo = 'assets/videos/workouts/reclining.mp4';
+  static const String cowPoseVideo = 'assets/videos/workouts/cow.mp4';
+  static const String warriorIIVideo = 'assets/videos/workouts/warriorII.mp4';
 }

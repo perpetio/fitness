@@ -17,17 +17,12 @@ class SignUpPage extends StatelessWidget {
     return BlocProvider<SignUpBloc>(
       create: (BuildContext context) => SignUpBloc(),
       child: BlocConsumer<SignUpBloc, SignUpState>(
-        listenWhen: (_, currState) =>
-            currState is NextTabBarPageState ||
-            currState is NextSignInPageState ||
-            currState is ErrorState,
+        listenWhen: (_, currState) => currState is NextTabBarPageState || currState is NextSignInPageState || currState is ErrorState,
         listener: (context, state) {
           if (state is NextTabBarPageState) {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => TabBarPage()));
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => TabBarPage()));
           } else if (state is NextSignInPageState) {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => SignInPage()));
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => SignInPage()));
           } else if (state is ErrorState) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.message)),
