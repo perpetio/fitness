@@ -171,6 +171,7 @@ class StartWorkoutContent extends StatelessWidget {
   Widget _createButton() {
     return FitnessButton(
       title: TextConstants.next,
+      onTap: () {},
     );
   }
 }

@@ -145,6 +145,7 @@ class SignUpContent extends StatelessWidget {
             child: FitnessButton(
               title: TextConstants.signUp,
               isEnabled: state is SignUpButtonEnableChangedState ? state.isEnabled : false,
+              onTap: () {},
             ),
             onTap: () {
               FocusScope.of(context).unfocus();

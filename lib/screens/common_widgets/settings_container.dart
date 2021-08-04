@@ -21,14 +21,13 @@ class SettingsContainer extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Row(
-                children: [child, Spacer(), if (withArrow) Icon(Icons.arrow_forward_ios, color: ColorConstants.primaryColor, size: 20)],
+                children: [Expanded(child: child), if (withArrow) Icon(Icons.arrow_forward_ios, color: ColorConstants.primaryColor, size: 20)],
               ),
             ),
           ),
         ),
         width: double.infinity,
         height: 50,
-        margin: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(40),
           color: ColorConstants.white,
