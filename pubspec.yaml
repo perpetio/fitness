@@ -46,6 +46,12 @@ dependencies:
   # Workout Details sliding up panel
   sliding_up_panel: ^2.0.0+1
 
+  # Video player
+  video_player: ^2.1.12
+
+  # Countdown timer
+  custom_timer: ^0.0.6
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -67,6 +73,7 @@ flutter:
     - assets/icons/home/
     - assets/icons/workouts/
     - assets/icons/social_networks/
+    - assets/videos/workouts/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

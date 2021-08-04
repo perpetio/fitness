@@ -8,7 +8,5 @@ class WorkoutsInitial extends WorkoutsState {}
 class CardTappedState extends WorkoutsState {
   final WorkoutData workout;
 
-  CardTappedState({
-    required this.workout,
-  });
+  CardTappedState({required this.workout});
 }
