@@ -82,8 +82,7 @@ class StartWorkoutContent extends StatelessWidget {
     return Container(
       height: 264,
       width: double.infinity,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20), color: ColorConstants.white),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: ColorConstants.white),
       child: StartWorkoutVideo(
         exercise: exercise,
         onPlayTapped: (time) {
@@ -97,13 +96,11 @@ class StartWorkoutContent extends StatelessWidget {
   }
 
   Widget _createTitle() {
-    return Text(exercise.title,
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold));
+    return Text(exercise.title, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold));
   }
 
   Widget _createDescription() {
-    return Text(exercise.description,
-        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500));
+    return Text(exercise.description, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500));
   }
 
   Widget _createSteps() {
@@ -150,8 +147,7 @@ class StartWorkoutContent extends StatelessWidget {
               Icon(Icons.access_time, size: 20),
               const SizedBox(width: 6.5),
               BlocBuilder<StartWorkoutBloc, StartWorkoutState>(
-                buildWhen: (_, currState) =>
-                    currState is PlayTimerState || currState is PauseTimerState,
+                buildWhen: (_, currState) => currState is PlayTimerState || currState is PauseTimerState,
                 builder: (context, state) {
                   return StartWorkoutTimer(
                     time: bloc.time,
@@ -192,12 +188,7 @@ class Step extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             color: ColorConstants.primaryColor.withOpacity(0.12),
           ),
-          child: Center(
-              child: Text(number,
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: ColorConstants.primaryColor))),
+          child: Center(child: Text(number, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: ColorConstants.primaryColor))),
         ),
         const SizedBox(width: 10),
         Expanded(child: Text(description)),
