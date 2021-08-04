@@ -24,6 +24,16 @@ class UserService {
     }
   }
 
+  static Future<bool> changePassword({required String newPass}) async {
+    try {
+      await firebase.currentUser?.updatePassword(newPass);
+      return true;
+    } catch (e) {
+      print(e);
+      throw Exception(e);
+    }
+  }
+
   static Future<void> signOut() async {
     await firebase.signOut();
   }
