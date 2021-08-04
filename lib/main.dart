@@ -20,8 +20,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Fitness',
       theme: ThemeData(
-        textTheme:
-            TextTheme(bodyText1: TextStyle(color: ColorConstants.textColor)),
+        textTheme: TextTheme(bodyText1: TextStyle(color: ColorConstants.textColor)),
         fontFamily: 'NotoSansKR',
         scaffoldBackgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,

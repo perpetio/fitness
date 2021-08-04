@@ -6,6 +6,7 @@ import 'package:fitness_flutter/core/const/color_constants.dart';
 import 'package:fitness_flutter/core/const/path_constants.dart';
 import 'package:fitness_flutter/core/const/text_constants.dart';
 import 'package:fitness_flutter/core/service/validation_service.dart';
+import 'package:fitness_flutter/screens/change_password/change_password_page.dart';
 import 'package:fitness_flutter/screens/common_widgets/fitness_button.dart';
 import 'package:fitness_flutter/screens/common_widgets/fitness_loading.dart';
 import 'package:fitness_flutter/screens/common_widgets/settings_container.dart';
@@ -115,7 +116,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
               SizedBox(height: 15),
               InkWell(
                 onTap: () {
-                  print('tapped');
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ChangePasswordScreen()));
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
