@@ -18,4 +18,9 @@ class WorkoutData {
     required this.image,
     required this.exerciseDataList,
   });
+
+  @override
+  String toString() {
+    return 'WorkoutData(title: $title, exercices: $exercices, minutes: $minutes, currentProgress: $currentProgress, progress: $progress, image: $image, exerciseDataList: $exerciseDataList)';
+  }
 }

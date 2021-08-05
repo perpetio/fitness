@@ -36,7 +36,7 @@ class DataConstants {
           ExerciseData(
             title: TextConstants.reclining,
             minutes: TextConstants.recliningMinutes,
-            progress: 0.99,
+            progress: 1,
             video: PathConstants.recliningVideo,
             description: TextConstants.warriorDescription,
             steps: [

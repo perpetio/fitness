@@ -85,6 +85,7 @@ class HomeContent extends StatelessWidget {
   Widget _createProfileData(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
     final displayName = user?.displayName ?? "No Username";
+    final photoUrl = user?.photoURL ?? null;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
@@ -112,11 +113,11 @@ class HomeContent extends StatelessWidget {
               ),
             ],
           ),
-          Image(
-            image: AssetImage(
-              PathConstants.profile,
-            ),
-          ),
+          photoUrl == null
+              ? CircleAvatar(backgroundImage: AssetImage(PathConstants.profile), radius: 60)
+              : CircleAvatar(
+                  child: ClipOval(child: FadeInImage.assetNetwork(placeholder: PathConstants.profile, image: photoUrl, fit: BoxFit.cover, width: 200)),
+                  radius: 25),
         ],
       ),
     );
@@ -146,26 +147,28 @@ class HomeContent extends StatelessWidget {
             ),
           ),
           SizedBox(width: 20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                TextConstants.keepProgress,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  TextConstants.keepProgress,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 3),
-              Text(
-                TextConstants.profileSuccessful,
-                style: TextStyle(
-                  fontSize: 16,
+                const SizedBox(height: 3),
+                Text(
+                  TextConstants.profileSuccessful,
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
                 ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

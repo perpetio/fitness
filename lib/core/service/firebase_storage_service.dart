@@ -18,9 +18,7 @@ class FirebaseStorageService {
     try {
       final User? user = FirebaseAuth.instance.currentUser;
       if (user != null) {
-        TaskSnapshot upload = await FirebaseStorage.instance
-            .ref('user_logos/${user.uid}.png')
-            .putFile(file);
+        TaskSnapshot upload = await FirebaseStorage.instance.ref('user_logos/${user.uid}.png').putFile(file);
         String downloadUrl = await upload.ref.getDownloadURL();
         await UserService.editPhoto(downloadUrl);
         return true;

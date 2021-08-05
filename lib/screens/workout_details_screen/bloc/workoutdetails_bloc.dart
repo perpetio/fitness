@@ -2,14 +2,15 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:fitness_flutter/data/exercise_data.dart';
+import 'package:fitness_flutter/data/workout_data.dart';
 import 'package:meta/meta.dart';
 
 part 'workoutdetails_event.dart';
 part 'workoutdetails_state.dart';
 
-class WorkoutDetailsBloc
-    extends Bloc<WorkoutDetailsEvent, WorkoutDetailsState> {
-  WorkoutDetailsBloc() : super(WorkoutDetailsInitial());
+class WorkoutDetailsBloc extends Bloc<WorkoutDetailsEvent, WorkoutDetailsState> {
+  final WorkoutData workout;
+  WorkoutDetailsBloc({required this.workout}) : super(WorkoutDetailsInitial());
 
   @override
   Stream<WorkoutDetailsState> mapEventToState(

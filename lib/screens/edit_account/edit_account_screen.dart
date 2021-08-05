@@ -42,8 +42,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     return Scaffold(
         body: _buildContext(context),
         appBar: AppBar(
-            title: Text('Edit account',
-                style: TextStyle(color: Colors.black, fontSize: 18)),
+            title: Text(TextConstants.editAccount, style: TextStyle(color: Colors.black, fontSize: 18)),
             backgroundColor: Colors.transparent,
             elevation: 0,
             leading: IconButton(
@@ -59,18 +58,12 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     return BlocProvider<EditAccountBloc>(
       create: (context) => EditAccountBloc(),
       child: BlocConsumer<EditAccountBloc, EditAccountState>(
-        buildWhen: (_, currState) =>
-            currState is EditAccountInitial ||
-            currState is EditAccountProgress ||
-            currState is EditAccountError,
+        buildWhen: (_, currState) => currState is EditAccountInitial || currState is EditAccountProgress || currState is EditAccountError,
         builder: (context, state) {
-          if (state is EditAccountProgress)
-            return Stack(
-                children: [_editAccountContent(context), FitnessLoading()]);
+          if (state is EditAccountProgress) return Stack(children: [_editAccountContent(context), FitnessLoading()]);
           if (state is EditAccountError) {
             WidgetsBinding.instance!.addPostFrameCallback((_) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text(state.error)));
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
             });
           }
           return _editAccountContent(context);
@@ -90,45 +83,36 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
         child: Padding(
           padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
           child: SizedBox(
-            height: height - 140,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            height: height - 140 - MediaQuery.of(context).padding.bottom,
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Center(
-                  child: photoUrl == null
-                      ? CircleAvatar(
-                          backgroundImage: AssetImage(PathConstants.profile),
-                          radius: 60)
-                      : CircleAvatar(
-                          backgroundImage: NetworkImage(photoUrl), radius: 60)),
+                child: photoUrl == null
+                    ? CircleAvatar(backgroundImage: AssetImage(PathConstants.profile), radius: 60)
+                    : CircleAvatar(
+                        child: ClipOval(child: FadeInImage.assetNetwork(placeholder: PathConstants.profile, image: photoUrl, fit: BoxFit.cover, width: 200)),
+                        radius: 60),
+              ),
               SizedBox(height: 15),
               Center(
                 child: TextButton(
                     onPressed: () async {
                       _bloc.add(UploadImage());
                     },
-                    child: Text('Edit photo',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: ColorConstants.primaryColor))),
+                    child: Text(TextConstants.editPhoto, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: ColorConstants.primaryColor))),
               ),
               SizedBox(height: 15),
-              Text('Full name', style: TextStyle(fontWeight: FontWeight.w600)),
+              Text(TextConstants.fullName, style: TextStyle(fontWeight: FontWeight.w600)),
               SettingsContainer(
                   child: SettingsTextField(
                 controller: _nameController,
               )),
-              if (isNameInvalid)
-                Text('Name should contain at least 2 characters',
-                    style: TextStyle(color: ColorConstants.errorColor)),
-              Text('Email', style: TextStyle(fontWeight: FontWeight.w600)),
+              if (isNameInvalid) Text(TextConstants.nameShouldContain2Char, style: TextStyle(color: ColorConstants.errorColor)),
+              Text(TextConstants.email, style: TextStyle(fontWeight: FontWeight.w600)),
               SettingsContainer(
                   child: SettingsTextField(
                 controller: _emailController,
               )),
-              if (isEmailInvalid)
-                Text(TextConstants.emailErrorText,
-                    style: TextStyle(color: ColorConstants.errorColor)),
+              if (isEmailInvalid) Text(TextConstants.emailErrorText, style: TextStyle(color: ColorConstants.errorColor)),
               SizedBox(height: 15),
               InkWell(
                 onTap: () {
@@ -137,34 +121,25 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Change Password',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: ColorConstants.primaryColor,
-                            fontSize: 18)),
+                    Text(TextConstants.changePassword, style: TextStyle(fontWeight: FontWeight.w600, color: ColorConstants.primaryColor, fontSize: 18)),
                     SizedBox(width: 10),
-                    Icon(Icons.arrow_forward_ios,
-                        color: ColorConstants.primaryColor)
+                    Icon(Icons.arrow_forward_ios, color: ColorConstants.primaryColor)
                   ],
                 ),
               ),
               Spacer(),
               FitnessButton(
-                title: 'Save',
+                title: TextConstants.save,
                 isEnabled: true,
                 onTap: () {
                   FocusScope.of(context).unfocus();
                   setState(() {
                     isNameInvalid = !(_nameController.text.length > 1);
-                    isEmailInvalid =
-                        !ValidationService.email(_emailController.text);
+                    isEmailInvalid = !ValidationService.email(_emailController.text);
                   });
                   if (!(isNameInvalid || isEmailInvalid)) {
-                    if (userName != _nameController.text ||
-                        userEmail != _emailController.text) {
-                      _bloc.add(ChangeUserData(
-                          displayName: _nameController.text,
-                          email: _emailController.text));
+                    if (userName != _nameController.text || userEmail != _emailController.text) {
+                      _bloc.add(ChangeUserData(displayName: _nameController.text, email: _emailController.text));
                       userName = _nameController.text;
                       userEmail = _emailController.text;
                     }

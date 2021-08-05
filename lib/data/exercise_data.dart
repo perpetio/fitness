@@ -1,6 +1,6 @@
 class ExerciseData {
   final String title;
-  final String minutes;
+  final int minutes;
   final double progress;
   final String video;
   final String description;
@@ -14,4 +14,9 @@ class ExerciseData {
     required this.description,
     required this.steps,
   });
+
+  @override
+  String toString() {
+    return 'ExerciseData(title: $title, minutes: $minutes, progress: $progress, video: $video)';
+  }
 }
