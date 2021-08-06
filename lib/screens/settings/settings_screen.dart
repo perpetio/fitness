@@ -52,9 +52,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: Column(children: [
             Stack(alignment: Alignment.topRight, children: [
               Center(
-                  child: photoUrl == null
-                      ? CircleAvatar(backgroundImage: AssetImage(PathConstants.profile), radius: 60)
-                      : CircleAvatar(backgroundImage: NetworkImage(photoUrl!), radius: 60)),
+                child: photoUrl == null
+                    ? CircleAvatar(backgroundImage: AssetImage(PathConstants.profile), radius: 60)
+                    : CircleAvatar(
+                        child: ClipOval(child: FadeInImage.assetNetwork(placeholder: PathConstants.profile, image: photoUrl!, fit: BoxFit.cover, width: 200)),
+                        radius: 60),
+              ),
               TextButton(
                   onPressed: () async {
                     await Navigator.push(context, MaterialPageRoute(builder: (context) => EditAccountScreen()));
@@ -72,15 +75,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Text(TextConstants.calendar, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
               withArrow: true,
               onTap: () {
-                // UserService.editPhoto('https://picsum.photos/200/300');
-                print('on tap');
+                launch(Platform.isAndroid ? 'content://com.android.calendar/time/' : 'calshow://');
               },
             ),
             SettingsContainer(child: Text(TextConstants.reminder, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)), withArrow: true),
             SettingsContainer(
+                onTap: () => launch(Platform.isIOS ? 'https://www.apple.com/app-store/' : 'https://play.google.com/store'),
                 child: Text(TextConstants.rateUsOn + '${Platform.isIOS ? 'App store' : 'Play market'}',
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
-            SettingsContainer(child: Text(TextConstants.terms, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
+            SettingsContainer(
+                onTap: () => launch('https://perpet.io/'), child: Text(TextConstants.terms, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
             SettingsContainer(
                 child: Text(TextConstants.signOut, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
                 onTap: () {

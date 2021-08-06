@@ -48,12 +48,16 @@ class HomeStatistics extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 10),
-              Text(
-                TextConstants.finished,
-                style: TextStyle(
-                  color: ColorConstants.textBlack,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
+              Expanded(
+                child: Text(
+                  TextConstants.finished,
+                  style: TextStyle(
+                    color: ColorConstants.textBlack,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
                 ),
               ),
             ],

@@ -17,10 +17,19 @@ class EditAccountBloc extends Bloc<EditAccountEvent, EditAccountState> {
     EditAccountEvent event,
   ) async* {
     if (event is UploadImage) {
-      yield EditAccountProgress();
-      final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image != null) await FirebaseStorageService.uploadImage(filePath: image.path);
-      yield EditAccountInitial();
+      try {
+        final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+        if (image != null) {
+          yield EditAccountProgress();
+          await FirebaseStorageService.uploadImage(filePath: image.path);
+          yield EditPhotoSuccess(image);
+        }
+        // yield EditAccountInitial();
+      } catch (e) {
+        yield EditAccountError(e.toString());
+        await Future.delayed(Duration(seconds: 1));
+        yield EditAccountInitial();
+      }
     }
     if (event is ChangeUserData) {
       yield EditAccountProgress();

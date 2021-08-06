@@ -37,7 +37,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     return Scaffold(
         body: _buildContext(context),
         appBar: AppBar(
-            title: Text('Change password', style: TextStyle(color: Colors.black, fontSize: 18)),
+            title: Text(TextConstants.changePassword, style: TextStyle(color: Colors.black, fontSize: 18)),
             backgroundColor: Colors.transparent,
             elevation: 0,
             leading: IconButton(
@@ -84,25 +84,28 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         child: Padding(
           padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
           child: SizedBox(
-            height: height - 140,
+            height: height - 140 - MediaQuery.of(context).padding.bottom,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Center(
-                  child: photoUrl == null
-                      ? CircleAvatar(backgroundImage: AssetImage(PathConstants.profile), radius: 60)
-                      : CircleAvatar(backgroundImage: NetworkImage(photoUrl), radius: 60)),
+                child: photoUrl == null
+                    ? CircleAvatar(backgroundImage: AssetImage(PathConstants.profile), radius: 60)
+                    : CircleAvatar(
+                        child: ClipOval(child: FadeInImage.assetNetwork(placeholder: PathConstants.profile, image: photoUrl, fit: BoxFit.cover, width: 200)),
+                        radius: 60),
+              ),
               SizedBox(height: 15),
               Center(child: Text(userName, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
               SizedBox(height: 15),
-              Text('New password', style: TextStyle(fontWeight: FontWeight.w600)),
+              Text(TextConstants.newPassword, style: TextStyle(fontWeight: FontWeight.w600)),
               SettingsContainer(child: SettingsTextField(controller: _newPassController, obscureText: true)),
               if (isNewPassInvalid) Text(TextConstants.passwordErrorText, style: TextStyle(color: ColorConstants.errorColor)),
-              Text('Confirm new password', style: TextStyle(fontWeight: FontWeight.w600)),
+              Text(TextConstants.confirmPassword, style: TextStyle(fontWeight: FontWeight.w600)),
               SettingsContainer(child: SettingsTextField(controller: _confirmPassController, obscureText: true)),
-              if (isConfirmPassInvalid) Text('Passwords must match', style: TextStyle(color: ColorConstants.errorColor)),
+              if (isConfirmPassInvalid) Text(TextConstants.confirmPasswordErrorText, style: TextStyle(color: ColorConstants.errorColor)),
               SizedBox(height: 15),
               Spacer(),
               FitnessButton(
-                title: 'Save',
+                title: TextConstants.save,
                 isEnabled: true,
                 onTap: () {
                   FocusScope.of(context).unfocus();

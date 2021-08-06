@@ -1,6 +1,7 @@
 import 'package:fitness_flutter/core/const/color_constants.dart';
 import 'package:fitness_flutter/core/const/path_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class FitnessTextField extends StatefulWidget {
   final String title;
@@ -10,6 +11,8 @@ class FitnessTextField extends StatefulWidget {
   final bool isError;
   final TextEditingController controller;
   final VoidCallback onTextChanged;
+  final TextInputAction textInputAction;
+  final TextInputType? keyboardType;
 
   const FitnessTextField({
     required this.title,
@@ -19,6 +22,8 @@ class FitnessTextField extends StatefulWidget {
     required this.controller,
     required this.onTextChanged,
     required this.errorText,
+    this.textInputAction = TextInputAction.done,
+    this.keyboardType,
     Key? key,
   }) : super(key: key);
 
@@ -115,10 +120,13 @@ class _FitnessTextFieldState extends State<FitnessTextField> {
   }
 
   Widget _createTextField() {
+    print(widget.textInputAction);
     return TextField(
       focusNode: focusNode,
       controller: widget.controller,
       obscureText: stateObscureText,
+      textInputAction: widget.textInputAction,
+      keyboardType: widget.keyboardType,
       style: TextStyle(
         color: ColorConstants.textBlack,
         fontSize: 16,
@@ -127,9 +135,7 @@ class _FitnessTextFieldState extends State<FitnessTextField> {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide(
-            color: stateIsError
-                ? ColorConstants.errorColor
-                : ColorConstants.textFieldBorder.withOpacity(0.4),
+            color: stateIsError ? ColorConstants.errorColor : ColorConstants.textFieldBorder.withOpacity(0.4),
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -164,9 +170,7 @@ class _FitnessTextFieldState extends State<FitnessTextField> {
         image: AssetImage(
           PathConstants.eye,
         ),
-        color: widget.controller.text.isNotEmpty
-            ? ColorConstants.primaryColor
-            : ColorConstants.grey,
+        color: widget.controller.text.isNotEmpty ? ColorConstants.primaryColor : ColorConstants.grey,
       ),
     );
   }
