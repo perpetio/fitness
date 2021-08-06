@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_flutter/core/const/color_constants.dart';
 import 'package:fitness_flutter/core/const/path_constants.dart';
@@ -23,6 +25,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final User? user = FirebaseAuth.instance.currentUser;
+  String? photoUrl;
   bool isNameInvalid = false;
   bool isEmailInvalid = false;
   late String userName;
@@ -32,6 +35,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
   void initState() {
     userName = user?.displayName ?? "No Username";
     userEmail = user?.email ?? 'No email';
+    photoUrl = user?.photoURL ?? null;
     _nameController.text = userName;
     _emailController.text = userEmail;
     super.initState();
@@ -58,7 +62,8 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     return BlocProvider<EditAccountBloc>(
       create: (context) => EditAccountBloc(),
       child: BlocConsumer<EditAccountBloc, EditAccountState>(
-        buildWhen: (_, currState) => currState is EditAccountInitial || currState is EditAccountProgress || currState is EditAccountError,
+        buildWhen: (_, currState) =>
+            currState is EditAccountInitial || currState is EditAccountProgress || currState is EditAccountError || currState is EditPhotoSuccess,
         builder: (context, state) {
           if (state is EditAccountProgress) return Stack(children: [_editAccountContent(context), FitnessLoading()]);
           if (state is EditAccountError) {
@@ -66,6 +71,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
             });
           }
+          if (state is EditPhotoSuccess) photoUrl = state.image.path;
           return _editAccountContent(context);
         },
         listenWhen: (_, currState) => true,
@@ -76,7 +82,6 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
 
   Widget _editAccountContent(BuildContext context) {
     EditAccountBloc _bloc = BlocProvider.of<EditAccountBloc>(context);
-    final photoUrl = user?.photoURL ?? null;
     double height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: SingleChildScrollView(
@@ -85,13 +90,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
           child: SizedBox(
             height: height - 140 - MediaQuery.of(context).padding.bottom,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Center(
-                child: photoUrl == null
-                    ? CircleAvatar(backgroundImage: AssetImage(PathConstants.profile), radius: 60)
-                    : CircleAvatar(
-                        child: ClipOval(child: FadeInImage.assetNetwork(placeholder: PathConstants.profile, image: photoUrl, fit: BoxFit.cover, width: 200)),
-                        radius: 60),
-              ),
+              Center(child: _getImageWidget()),
               SizedBox(height: 15),
               Center(
                 child: TextButton(
@@ -151,5 +150,17 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
         ),
       ),
     );
+  }
+
+  Widget _getImageWidget() {
+    if (photoUrl != null) {
+      if (photoUrl!.startsWith('https://')) {
+        return CircleAvatar(
+            child: ClipOval(child: FadeInImage.assetNetwork(placeholder: PathConstants.profile, image: photoUrl!, fit: BoxFit.cover, width: 200)), radius: 60);
+      } else {
+        return CircleAvatar(backgroundImage: FileImage(File(photoUrl!)), radius: 60);
+      }
+    } else
+      return CircleAvatar(backgroundImage: AssetImage(PathConstants.profile), radius: 60);
   }
 }
