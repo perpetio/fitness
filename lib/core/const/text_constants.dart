@@ -133,4 +133,21 @@ class TextConstants {
       "Stand in Tadasana (Mountain Pose). Raise your arms parallel to the floor and reach them actively out to the sides, shoulder blades wide, palms down.";
   static const String warriorStep2 =
       "Turn your right foot slightly to the right and your left foot out to the left 90 degrees. Align the left heel with the right heel. Firm your thighs and turn your left thigh outward so that the center of the left knee cap is in line with the center of the left ankle.";
+
+  // Reminder screen
+  static const String selectTime = "Please select reminder time";
+  static const String save = "Save";
+  static const String repeating = "How often repeat";
+
+  // Reminder day of the week
+  static const String everyday = "Everyday";
+  static const String monday_friday = "Mon - Fri";
+  static const String weekends = "Weekends";
+  static const String monday = "Monday";
+  static const String tuesday = "Tue";
+  static const String wednesday = "Wed";
+  static const String thursday = "Thu";
+  static const String friday = "Fri";
+  static const String saturday = "Sat";
+  static const String sunday = "Sun";
 }

@@ -23,6 +23,7 @@ class DataConstants {
       imagePath: PathConstants.onboarding3,
     ),
   ];
+
   // Workouts
   static final List<WorkoutData> workouts = [
     WorkoutData(
@@ -165,5 +166,19 @@ class DataConstants {
         ),
       ],
     ),
+  ];
+
+  // Reminder
+  static List<String> reminderDays = [
+    TextConstants.everyday,
+    TextConstants.monday_friday,
+    TextConstants.weekends,
+    TextConstants.monday,
+    TextConstants.tuesday,
+    TextConstants.wednesday,
+    TextConstants.thursday,
+    TextConstants.friday,
+    TextConstants.saturday,
+    TextConstants.sunday,
   ];
 }
