@@ -31,8 +31,12 @@ class WorkoutDetailsBody extends StatelessWidget {
         child: BlocBuilder<WorkoutDetailsBloc, WorkoutDetailsState>(
           builder: (context, state) {
             return GestureDetector(
-              child: Image(
-                image: AssetImage(PathConstants.back),
+              child: Container(
+                width: 30,
+                height: 30,
+                child: Image(
+                  image: AssetImage(PathConstants.back),
+                ),
               ),
               onTap: () {
                 bloc.add(BackTappedEvent());
@@ -41,8 +45,8 @@ class WorkoutDetailsBody extends StatelessWidget {
           },
         ),
       ),
-      left: 30,
-      top: 24,
+      left: 20,
+      top: 14,
     );
   }
 

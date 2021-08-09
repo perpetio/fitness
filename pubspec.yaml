@@ -50,6 +50,10 @@ dependencies:
 
   # Video player
   video_player: ^2.1.12
+  chewie: 
+    git:
+      url: git@github.com:v1nnk1/chewie.git
+
 
   # Countdown timer
   custom_timer: ^0.0.6

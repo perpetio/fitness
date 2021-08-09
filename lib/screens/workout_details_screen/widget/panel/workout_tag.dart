@@ -15,28 +15,12 @@ class WorkoutTag extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         color: ColorConstants.primaryColor.withOpacity(0.12),
       ),
-      child: Center(
-        child: Row(
-          children: [
-            Container(
-              height: 17,
-              width: 17,
-              child: Image(
-                image: AssetImage(icon),
-                fit: BoxFit.cover,
-              ),
-            ),
-            const SizedBox(width: 7),
-            Text(
-              content,
-              style: TextStyle(
-                color: ColorConstants.primaryColor,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
-        ),
+      child: Row(
+        children: [
+          Image.asset(icon, height: 17, width: 17, fit: BoxFit.fill),
+          const SizedBox(width: 7),
+          Text(content, style: TextStyle(color: ColorConstants.primaryColor, fontSize: 14, fontWeight: FontWeight.w500)),
+        ],
       ),
     );
   }

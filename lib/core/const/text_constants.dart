@@ -22,7 +22,7 @@ class TextConstants {
 
   static const String email = "Email";
   static const String emailPlaceholder = "example@mail.com";
-  static const String emailErrorText = 'Email is unvalid, please enter email properly';
+  static const String emailErrorText = 'Email is invalid, please enter email properly';
 
   static const String password = "Password";
   static const String passwordPlaceholder = "Must be at least 6 symbols";

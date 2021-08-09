@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:chewie/chewie.dart';
 import 'package:fitness_flutter/core/const/color_constants.dart';
 import 'package:fitness_flutter/data/exercise_data.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
 
@@ -24,8 +26,10 @@ class _StartWorkoutVideoState extends State<StartWorkoutVideo> {
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlayerFuture;
   late bool isPlayButtonHidden = false;
+  late ChewieController _chewieController;
   Timer? timer;
   Timer? videoTimer;
+  bool _isVideoPlaying = false;
 
   @override
   void initState() {
@@ -33,55 +37,33 @@ class _StartWorkoutVideoState extends State<StartWorkoutVideo> {
 
     _initializeVideoPlayerFuture = _controller.initialize();
 
-    _controller.setLooping(true);
-
+    _chewieController = ChewieController(
+        videoPlayerController: _controller,
+        looping: true,
+        autoPlay: false,
+        deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
+        aspectRatio: 15 / 10,
+        placeholder: Center(child: CupertinoActivityIndicator()),
+        materialProgressColors: ChewieProgressColors(playedColor: ColorConstants.primaryColor));
     super.initState();
   }
 
   @override
   void dispose() {
     _controller.dispose();
-
+    _chewieController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _initializeVideoPlayerFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          return AspectRatio(
-            aspectRatio: _controller.value.aspectRatio,
-            child: GestureDetector(
-              child: ClipRect(
-                child: Stack(
-                  children: [
-                    _createVideoContainer(),
-                    if (!isPlayButtonHidden) _createPlayButton(),
-                  ],
-                ),
-              ),
-              onTap: () {
-                setState(() {
-                  isPlayButtonHidden = !isPlayButtonHidden;
-                });
-              },
-            ),
-          );
-        } else {
-          return const Center(
-            child: CupertinoActivityIndicator(),
-          );
-        }
-      },
-    );
+    return AspectRatio(aspectRatio: _controller.value.aspectRatio, child: _createVideoContainer());
   }
 
   Widget _createVideoContainer() {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
-      child: VideoPlayer(_controller),
+      child: Theme(data: Theme.of(context).copyWith(platform: TargetPlatform.android), child: Chewie(controller: _chewieController)),
     );
   }
 
@@ -89,17 +71,21 @@ class _StartWorkoutVideoState extends State<StartWorkoutVideo> {
     return Center(
       child: GestureDetector(
         onTap: () {
-          timer?.cancel();
+          // timer?.cancel();
+          _chewieController.isPlaying ? _chewieController.pause() : _chewieController.play();
           setState(() {
-            if (_controller.value.isPlaying) {
-              _controller.pause();
-              widget.onPauseTapped(_getCurrentTime());
-            } else {
-              _controller.play();
-              _playTimer();
-              widget.onPlayTapped(_getCurrentTime());
-            }
+            _isVideoPlaying = _chewieController.isPlaying;
           });
+          // setState(() {
+          //   if (_controller.value.isPlaying) {
+          //     _controller.pause();
+          //     widget.onPauseTapped(_getCurrentTime());
+          //   } else {
+          //     _controller.play();
+          //     _playTimer();
+          //     widget.onPlayTapped(_getCurrentTime());
+          //   }
+          // });
         },
         child: Container(
           height: 50,
@@ -109,7 +95,7 @@ class _StartWorkoutVideoState extends State<StartWorkoutVideo> {
             color: ColorConstants.white.withOpacity(0.8),
           ),
           child: Icon(
-            _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+            _isVideoPlaying ? Icons.pause : Icons.play_arrow,
             color: ColorConstants.primaryColor,
           ),
         ),
@@ -117,18 +103,18 @@ class _StartWorkoutVideoState extends State<StartWorkoutVideo> {
     );
   }
 
-  void _playTimer() {
-    timer = Timer(Duration(seconds: 3), () {
-      setState(() {
-        isPlayButtonHidden = true;
-      });
-    });
-  }
+  // void _playTimer() {
+  //   timer = Timer(Duration(seconds: 3), () {
+  //     setState(() {
+  //       isPlayButtonHidden = true;
+  //     });
+  //   });
+  // }
 
-  int _getCurrentTime() {
-    int duration = _controller.value.duration.inSeconds;
-    int position = _controller.value.position.inSeconds;
+  // int _getCurrentTime() {
+  //   int duration = _controller.value.duration.inSeconds;
+  //   int position = _controller.value.position.inSeconds;
 
-    return duration - position;
-  }
+  //   return duration - position;
+  // }
 }

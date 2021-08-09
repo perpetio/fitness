@@ -120,7 +120,6 @@ class _FitnessTextFieldState extends State<FitnessTextField> {
   }
 
   Widget _createTextField() {
-    print(widget.textInputAction);
     return TextField(
       focusNode: focusNode,
       controller: widget.controller,

@@ -39,22 +39,28 @@ class SignInContent extends StatelessWidget {
   }
 
   Widget _createMainData(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 20),
-          _createHeader(),
-          const SizedBox(height: 50),
-          _createForm(context),
-          const SizedBox(height: 20),
-          _createForgotPasswordButton(context),
-          const SizedBox(height: 40),
-          _createSignInButton(context),
-          Spacer(),
-          _createDoNotHaveAccountText(context),
-          const SizedBox(height: 30),
-        ],
+      child: SingleChildScrollView(
+        child: SizedBox(
+          height: height - 30 - MediaQuery.of(context).padding.bottom,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              _createHeader(),
+              const SizedBox(height: 50),
+              _createForm(context),
+              const SizedBox(height: 20),
+              _createForgotPasswordButton(context),
+              const SizedBox(height: 40),
+              _createSignInButton(context),
+              Spacer(),
+              _createDoNotHaveAccountText(context),
+              const SizedBox(height: 30),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -86,6 +92,7 @@ class SignInContent extends StatelessWidget {
           children: [
             FitnessTextField(
               title: TextConstants.email,
+              keyboardType: TextInputType.emailAddress,
               placeholder: TextConstants.emailPlaceholder,
               controller: bloc.emailController,
               errorText: TextConstants.emailErrorText,

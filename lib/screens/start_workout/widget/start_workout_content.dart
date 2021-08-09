@@ -54,26 +54,24 @@ class StartWorkoutContent extends StatelessWidget {
     final bloc = BlocProvider.of<StartWorkoutBloc>(context);
     return Padding(
       padding: const EdgeInsets.only(left: 10, top: 8),
-      child: Row(
-        children: [
-          GestureDetector(
-            child: BlocBuilder<StartWorkoutBloc, StartWorkoutState>(
-              builder: (context, state) {
-                return Image(
-                  image: AssetImage(PathConstants.back),
-                );
-              },
-            ),
-            onTap: () {
-              bloc.add(BackTappedEvent());
-            },
-          ),
-          const SizedBox(width: 17),
-          Text(
-            TextConstants.back,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-          ),
-        ],
+      child: GestureDetector(
+        child: BlocBuilder<StartWorkoutBloc, StartWorkoutState>(
+          builder: (context, state) {
+            return Row(
+              children: [
+                Image(image: AssetImage(PathConstants.back)),
+                const SizedBox(width: 17),
+                Text(
+                  TextConstants.back,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                ),
+              ],
+            );
+          },
+        ),
+        onTap: () {
+          bloc.add(BackTappedEvent());
+        },
       ),
     );
   }
