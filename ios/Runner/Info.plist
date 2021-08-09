@@ -36,6 +36,8 @@
 	<string>App used photo for user data</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>App used photo for user data</string>
+		<key>NSMicrophoneUsageDescription</key>
+	<string>App used micro for choosing image</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

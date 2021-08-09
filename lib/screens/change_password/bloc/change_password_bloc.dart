@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:fitness_flutter/core/const/text_constants.dart';
 import 'package:fitness_flutter/core/service/user_service.dart';
 import 'package:meta/meta.dart';
 
@@ -18,7 +19,7 @@ class ChangePasswordBloc extends Bloc<ChangePasswordEvent, ChangePasswordState> 
       yield ChangePasswordProgress();
       try {
         await UserService.changePassword(newPass: event.newPass);
-        yield ChangePasswordSuccess(message: 'Password successfully updated!');
+        yield ChangePasswordSuccess(message: TextConstants.passwordUpdated);
         await Future.delayed(Duration(seconds: 1));
         yield ChangePasswordInitial();
       } catch (e) {

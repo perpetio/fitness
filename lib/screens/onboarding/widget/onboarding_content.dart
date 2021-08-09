@@ -61,35 +61,51 @@ class OnboardingContent extends StatelessWidget {
         BlocBuilder<OnboardingBloc, OnboardingState>(
           buildWhen: (_, currState) => currState is PageChangedState,
           builder: (context, state) {
-            final percent = (bloc.pageIndex.toDouble() + 1) / 3;
-            return CircularPercentIndicator(
-              radius: 110,
-              backgroundColor: ColorConstants.primaryColor,
-              progressColor: Colors.white,
-              percent: 1 - percent,
-              center: Material(
-                shape: CircleBorder(),
-                color: ColorConstants.primaryColor,
-                child: RawMaterialButton(
-                  shape: CircleBorder(),
-                  onPressed: () {
-                    bloc.add(PageChangedEvent());
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(24.0),
-                    child: Icon(
-                      Icons.east_rounded,
-                      size: 38.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            );
+            final percent = _getPercent(bloc.pageIndex);
+            return TweenAnimationBuilder<double>(
+                tween: Tween<double>(begin: 0, end: percent),
+                duration: Duration(seconds: 1),
+                builder: (context, value, _) => CircularPercentIndicator(
+                      radius: 110,
+                      backgroundColor: ColorConstants.primaryColor,
+                      progressColor: Colors.white,
+                      percent: 1 - value,
+                      center: Material(
+                        shape: CircleBorder(),
+                        color: ColorConstants.primaryColor,
+                        child: RawMaterialButton(
+                          shape: CircleBorder(),
+                          onPressed: () {
+                            bloc.add(PageChangedEvent());
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: Icon(
+                              Icons.east_rounded,
+                              size: 38.0,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ));
           },
         ),
         SizedBox(height: 30),
       ],
     );
+  }
+
+  double _getPercent(int pageIndex) {
+    switch (pageIndex) {
+      case 0:
+        return 0.25;
+      case 1:
+        return 0.65;
+      case 2:
+        return 1;
+      default:
+        return 0;
+    }
   }
 }

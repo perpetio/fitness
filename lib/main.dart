@@ -5,7 +5,6 @@ import 'package:fitness_flutter/core/service/notification_service.dart';
 import 'package:fitness_flutter/screens/onboarding/page/onboarding_page.dart';
 import 'package:fitness_flutter/screens/tab_bar/page/tab_bar_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 

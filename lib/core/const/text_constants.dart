@@ -111,15 +111,15 @@ class TextConstants {
 
   // Workout Details screen -> card1
   static const String reclining = "Reclining to big toe";
-  static const String recliningMinutes = "12 minutes";
+  static const int recliningMinutes = 12;
 
   // Workout Details screen -> card2
   static const String cowPose = "Cow Pose";
-  static const String cowPoseMinutes = "8 minutes";
+  static const int cowPoseMinutes = 8;
 
   // Workout Details screen -> card3
   static const String warriorPose = "Warrior II Pose";
-  static const String warriorPoseMinutes = "12 minutes";
+  static const int warriorPoseMinutes = 12;
 
   // Start Workout screen
   static const String back = "Back";
@@ -150,4 +150,15 @@ class TextConstants {
   static const String friday = "Fri";
   static const String saturday = "Sat";
   static const String sunday = "Sun";
+  // Edit account screen
+  static const String editAccount = 'Edit account';
+  static const String editPhoto = 'Edit photo';
+  static const String fullName = 'Full name';
+  static const String nameShouldContain2Char =
+      'Name should contain at least 2 characters';
+  static const String changePassword = 'Change Password';
+
+  //Change password screen
+  static const String newPassword = 'New password';
+  static const String passwordUpdated = 'Password successfully updated!';
 }
