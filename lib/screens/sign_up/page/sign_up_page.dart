@@ -8,9 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _buildBody(context),
-    );
+    return Scaffold(body: _buildBody(context));
   }
 
   BlocProvider<SignUpBloc> _buildBody(BuildContext context) {

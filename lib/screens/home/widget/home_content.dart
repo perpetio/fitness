@@ -116,7 +116,8 @@ class HomeContent extends StatelessWidget {
           photoUrl == null
               ? CircleAvatar(backgroundImage: AssetImage(PathConstants.profile), radius: 60)
               : CircleAvatar(
-                  child: ClipOval(child: FadeInImage.assetNetwork(placeholder: PathConstants.profile, image: photoUrl, fit: BoxFit.cover, width: 200)),
+                  child: ClipOval(
+                      child: FadeInImage.assetNetwork(placeholder: PathConstants.profile, image: photoUrl, fit: BoxFit.cover, width: 200, height: 120)),
                   radius: 25),
         ],
       ),
