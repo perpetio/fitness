@@ -125,6 +125,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
               SettingsContainer(
                   child: SettingsTextField(
                 controller: _nameController,
+                placeHolder: TextConstants.fullNamePlaceholder,
               )),
               if (isNameInvalid)
                 Text(TextConstants.nameShouldContain2Char,
@@ -134,6 +135,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
               SettingsContainer(
                   child: SettingsTextField(
                 controller: _emailController,
+                placeHolder: TextConstants.emailPlaceholder,
               )),
               if (isEmailInvalid)
                 Text(TextConstants.emailErrorText,
