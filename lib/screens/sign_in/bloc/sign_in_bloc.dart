@@ -29,11 +29,11 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       if (_checkValidatorsOfTextField()) {
         try {
           yield LoadingState();
-          await AuthService.signIn(
-              emailController.text, passwordController.text);
+          await AuthService.signIn(emailController.text, passwordController.text);
           yield NextTabBarPageState();
           print("Go to the next page");
         } catch (e) {
+          print('E to tstrng: ' + e.toString());
           yield ErrorState(message: e.toString());
         }
       } else {
@@ -47,12 +47,10 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   }
 
   bool _checkIfSignInButtonEnabled() {
-    return emailController.text.isNotEmpty &&
-        passwordController.text.isNotEmpty;
+    return emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
   }
 
   bool _checkValidatorsOfTextField() {
-    return ValidationService.email(emailController.text) &&
-        ValidationService.password(passwordController.text);
+    return ValidationService.email(emailController.text) && ValidationService.password(passwordController.text);
   }
 }

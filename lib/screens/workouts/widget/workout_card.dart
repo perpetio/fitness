@@ -20,12 +20,7 @@ class WorkoutCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: ColorConstants.white,
-        boxShadow: [
-          BoxShadow(
-              color: ColorConstants.textBlack.withOpacity(0.12),
-              blurRadius: 5.0,
-              spreadRadius: 1.1)
-        ],
+        boxShadow: [BoxShadow(color: ColorConstants.textBlack.withOpacity(0.12), blurRadius: 5.0, spreadRadius: 1.1)],
       ),
       child: Material(
         color: Colors.transparent,
@@ -39,48 +34,35 @@ class WorkoutCard extends StatelessWidget {
               },
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 child: Row(
                   children: [
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(workout.title,
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold)),
+                          Text(workout.title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                           const SizedBox(height: 3),
-                          Text(
-                              workout.exercices +
-                                  " " +
-                                  TextConstants.exercisesUppercase,
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: ColorConstants.grey),
+                          Text(workout.exercices + " " + TextConstants.exercisesUppercase,
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: ColorConstants.grey),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2),
                           const SizedBox(height: 3),
                           Text(workout.minutes + " " + TextConstants.minutes,
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: ColorConstants.grey),
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: ColorConstants.grey),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2),
                           Spacer(),
-                          Text('${workout.currentProgress}/${workout.progress}',
-                              style: TextStyle(fontSize: 10)),
+                          Text('${workout.currentProgress}/${workout.progress}', style: TextStyle(fontSize: 10)),
                           SizedBox(height: 3),
                           Padding(
-                            padding: const EdgeInsets.only(right: 30.0),
+                            padding: const EdgeInsets.only(right: 30.0, left: 2),
                             child: LinearPercentIndicator(
-                              percent:
-                                  workout.currentProgress / workout.progress,
+                              percent: workout.currentProgress / workout.progress,
                               progressColor: ColorConstants.primaryColor,
-                              backgroundColor:
-                                  ColorConstants.primaryColor.withOpacity(0.12),
+                              backgroundColor: ColorConstants.primaryColor.withOpacity(0.12),
                               lineHeight: 6,
                               padding: EdgeInsets.zero,
                             ),
@@ -89,11 +71,7 @@ class WorkoutCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: 60),
-                    Expanded(
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child:
-                                Image.asset(workout.image, fit: BoxFit.fill))),
+                    Expanded(child: ClipRRect(borderRadius: BorderRadius.circular(15), child: Image.asset(workout.image, fit: BoxFit.fill))),
                   ],
                 ),
               ),
