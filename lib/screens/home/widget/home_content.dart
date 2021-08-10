@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_flutter/core/const/color_constants.dart';
 import 'package:fitness_flutter/core/const/path_constants.dart';
 import 'package:fitness_flutter/core/const/text_constants.dart';
+import 'package:fitness_flutter/screens/edit_account/bloc/edit_account_bloc.dart';
+import 'package:fitness_flutter/screens/edit_account/edit_account_screen.dart';
 import 'package:fitness_flutter/screens/home/widget/home_statistics.dart';
 import 'package:flutter/material.dart';
 
@@ -113,12 +115,19 @@ class HomeContent extends StatelessWidget {
               ),
             ],
           ),
+          GestureDetector(
+            child: 
           photoUrl == null
               ? CircleAvatar(backgroundImage: AssetImage(PathConstants.profile), radius: 60)
               : CircleAvatar(
                   child: ClipOval(
                       child: FadeInImage.assetNetwork(placeholder: PathConstants.profile, image: photoUrl, fit: BoxFit.cover, width: 200, height: 120)),
                   radius: 25),
+                      onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (_) => EditAccountScreen()));
+            },
+          ),
         ],
       ),
     );
