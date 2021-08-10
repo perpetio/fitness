@@ -92,6 +92,7 @@ class SignInContent extends StatelessWidget {
           children: [
             FitnessTextField(
               title: TextConstants.email,
+              textInputAction: TextInputAction.next,
               keyboardType: TextInputType.emailAddress,
               placeholder: TextConstants.emailPlaceholder,
               controller: bloc.emailController,
@@ -101,9 +102,7 @@ class SignInContent extends StatelessWidget {
                 bloc.add(OnTextChangeEvent());
               },
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             FitnessTextField(
               title: TextConstants.password,
               placeholder: TextConstants.passwordPlaceholderSignIn,

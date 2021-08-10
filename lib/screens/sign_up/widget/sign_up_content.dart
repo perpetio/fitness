@@ -126,7 +126,6 @@ class SignUpContent extends StatelessWidget {
               title: TextConstants.confirmPassword,
               placeholder: TextConstants.confirmPasswordPlaceholder,
               obscureText: true,
-              textInputAction: TextInputAction.done,
               isError: state is ShowErrorState ? !ValidationService.confirmPassword(bloc.passwordController.text, bloc.confirmPasswordController.text) : false,
               controller: bloc.confirmPasswordController,
               errorText: TextConstants.confirmPasswordErrorText,

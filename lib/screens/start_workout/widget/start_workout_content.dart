@@ -120,10 +120,10 @@ class StartWorkoutContent extends StatelessWidget {
     return Container(
       width: double.infinity,
       color: ColorConstants.white,
-      child: nextExercise != null
-          ? Column(
-              children: [
-                Row(
+      child: Column(
+        children: [
+          nextExercise != null
+              ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
@@ -157,33 +157,37 @@ class StartWorkoutContent extends StatelessWidget {
                     //   },
                     // ),
                   ],
-                ),
-                const SizedBox(height: 18),
-                _createButton(context),
-              ],
-            )
-          : SizedBox.shrink(),
+                )
+              : SizedBox.shrink(),
+          const SizedBox(height: 18),
+          _createButton(context),
+        ],
+      ),
     );
   }
 
   Widget _createButton(BuildContext context) {
     return FitnessButton(
-      title: TextConstants.next,
+      title: nextExercise != null ? TextConstants.next : 'Finish',
       onTap: () {
-        List<ExerciseData> exercisesList = BlocProvider.of<workout_bloc.WorkoutDetailsBloc>(context).workout.exerciseDataList;
-        int currentExerciseIndex = exercisesList.indexOf(exercise);
-        if (currentExerciseIndex < exercisesList.length - 1) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-                builder: (_) => BlocProvider.value(
-                      value: BlocProvider.of<workout_bloc.WorkoutDetailsBloc>(context),
-                      child: StartWorkoutPage(
-                        exercise: exercisesList[currentExerciseIndex + 1],
-                        currentExercise: exercisesList[currentExerciseIndex + 1],
-                        nextExercise: currentExerciseIndex + 2 < exercisesList.length ? exercisesList[currentExerciseIndex + 2] : null,
-                      ),
-                    )),
-          );
+        if (nextExercise != null) {
+          List<ExerciseData> exercisesList = BlocProvider.of<workout_bloc.WorkoutDetailsBloc>(context).workout.exerciseDataList;
+          int currentExerciseIndex = exercisesList.indexOf(exercise);
+          if (currentExerciseIndex < exercisesList.length - 1) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                  builder: (_) => BlocProvider.value(
+                        value: BlocProvider.of<workout_bloc.WorkoutDetailsBloc>(context),
+                        child: StartWorkoutPage(
+                          exercise: exercisesList[currentExerciseIndex + 1],
+                          currentExercise: exercisesList[currentExerciseIndex + 1],
+                          nextExercise: currentExerciseIndex + 2 < exercisesList.length ? exercisesList[currentExerciseIndex + 2] : null,
+                        ),
+                      )),
+            );
+          }
+        } else {
+          Navigator.of(context).pop();
         }
       },
     );
