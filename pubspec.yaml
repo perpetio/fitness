@@ -67,6 +67,9 @@ dependencies:
   # Native timezone
   flutter_native_timezone: ^2.0.0
 
+  # Permission handler
+  permission_handler: ^8.1.4+2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

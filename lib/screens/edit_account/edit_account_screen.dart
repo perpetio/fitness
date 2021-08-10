@@ -11,8 +11,10 @@ import 'package:fitness_flutter/screens/common_widgets/fitness_loading.dart';
 import 'package:fitness_flutter/screens/common_widgets/settings_container.dart';
 import 'package:fitness_flutter/screens/common_widgets/settings_textfield.dart';
 import 'package:fitness_flutter/screens/edit_account/bloc/edit_account_bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class EditAccountScreen extends StatefulWidget {
   EditAccountScreen({Key? key}) : super(key: key);
@@ -46,7 +48,8 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     return Scaffold(
         body: _buildContext(context),
         appBar: AppBar(
-            title: Text(TextConstants.editAccount, style: TextStyle(color: Colors.black, fontSize: 18)),
+            title: Text(TextConstants.editAccount,
+                style: TextStyle(color: Colors.black, fontSize: 18)),
             backgroundColor: Colors.transparent,
             elevation: 0,
             leading: IconButton(
@@ -63,12 +66,18 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
       create: (context) => EditAccountBloc(),
       child: BlocConsumer<EditAccountBloc, EditAccountState>(
         buildWhen: (_, currState) =>
-            currState is EditAccountInitial || currState is EditAccountProgress || currState is EditAccountError || currState is EditPhotoSuccess,
+            currState is EditAccountInitial ||
+            currState is EditAccountProgress ||
+            currState is EditAccountError ||
+            currState is EditPhotoSuccess,
         builder: (context, state) {
-          if (state is EditAccountProgress) return Stack(children: [_editAccountContent(context), FitnessLoading()]);
+          if (state is EditAccountProgress)
+            return Stack(
+              children: [_editAccountContent(context), FitnessLoading()],
+            );
           if (state is EditAccountError) {
-            WidgetsBinding.instance!.addPostFrameCallback((_) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
+            WidgetsBinding.instance!.addPostFrameCallback((_) async {
+              _showOpenSettingsPopUp();
             });
           }
           if (state is EditPhotoSuccess) photoUrl = state.image.path;
@@ -89,40 +98,65 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
           padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
           child: SizedBox(
             height: height - 140 - MediaQuery.of(context).padding.bottom,
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Center(child: _getImageWidget()),
               SizedBox(height: 15),
               Center(
                 child: TextButton(
-                    onPressed: () async {
-                      _bloc.add(UploadImage());
-                    },
-                    child: Text(TextConstants.editPhoto, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: ColorConstants.primaryColor))),
+                  onPressed: () {
+                    _bloc.add(UploadImage());
+                  },
+                  child: Text(
+                    TextConstants.editPhoto,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: ColorConstants.primaryColor,
+                    ),
+                  ),
+                ),
               ),
               SizedBox(height: 15),
-              Text(TextConstants.fullName, style: TextStyle(fontWeight: FontWeight.w600)),
+              Text(
+                TextConstants.fullName,
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
               SettingsContainer(
                   child: SettingsTextField(
                 controller: _nameController,
               )),
-              if (isNameInvalid) Text(TextConstants.nameShouldContain2Char, style: TextStyle(color: ColorConstants.errorColor)),
-              Text(TextConstants.email, style: TextStyle(fontWeight: FontWeight.w600)),
+              if (isNameInvalid)
+                Text(TextConstants.nameShouldContain2Char,
+                    style: TextStyle(color: ColorConstants.errorColor)),
+              Text(TextConstants.email,
+                  style: TextStyle(fontWeight: FontWeight.w600)),
               SettingsContainer(
                   child: SettingsTextField(
                 controller: _emailController,
               )),
-              if (isEmailInvalid) Text(TextConstants.emailErrorText, style: TextStyle(color: ColorConstants.errorColor)),
+              if (isEmailInvalid)
+                Text(TextConstants.emailErrorText,
+                    style: TextStyle(color: ColorConstants.errorColor)),
               SizedBox(height: 15),
               InkWell(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ChangePasswordScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ChangePasswordScreen()));
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(TextConstants.changePassword, style: TextStyle(fontWeight: FontWeight.w600, color: ColorConstants.primaryColor, fontSize: 18)),
+                    Text(TextConstants.changePassword,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: ColorConstants.primaryColor,
+                            fontSize: 18)),
                     SizedBox(width: 10),
-                    Icon(Icons.arrow_forward_ios, color: ColorConstants.primaryColor)
+                    Icon(Icons.arrow_forward_ios,
+                        color: ColorConstants.primaryColor)
                   ],
                 ),
               ),
@@ -134,11 +168,15 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                   FocusScope.of(context).unfocus();
                   setState(() {
                     isNameInvalid = !(_nameController.text.length > 1);
-                    isEmailInvalid = !ValidationService.email(_emailController.text);
+                    isEmailInvalid =
+                        !ValidationService.email(_emailController.text);
                   });
                   if (!(isNameInvalid || isEmailInvalid)) {
-                    if (userName != _nameController.text || userEmail != _emailController.text) {
-                      _bloc.add(ChangeUserData(displayName: _nameController.text, email: _emailController.text));
+                    if (userName != _nameController.text ||
+                        userEmail != _emailController.text) {
+                      _bloc.add(ChangeUserData(
+                          displayName: _nameController.text,
+                          email: _emailController.text));
                       userName = _nameController.text;
                       userEmail = _emailController.text;
                     }
@@ -156,11 +194,39 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     if (photoUrl != null) {
       if (photoUrl!.startsWith('https://')) {
         return CircleAvatar(
-            child: ClipOval(child: FadeInImage.assetNetwork(placeholder: PathConstants.profile, image: photoUrl!, fit: BoxFit.cover, width: 200)), radius: 60);
+            child: ClipOval(
+                child: FadeInImage.assetNetwork(
+                    placeholder: PathConstants.profile,
+                    image: photoUrl!,
+                    fit: BoxFit.cover,
+                    width: 200)),
+            radius: 60);
       } else {
-        return CircleAvatar(backgroundImage: FileImage(File(photoUrl!)), radius: 60);
+        return CircleAvatar(
+            backgroundImage: FileImage(File(photoUrl!)), radius: 60);
       }
     } else
-      return CircleAvatar(backgroundImage: AssetImage(PathConstants.profile), radius: 60);
+      return CircleAvatar(
+          backgroundImage: AssetImage(PathConstants.profile), radius: 60);
+  }
+
+  void _showOpenSettingsPopUp() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text(TextConstants.cameraPermission),
+        content: Text(TextConstants.cameAccess),
+        actions: [
+          CupertinoDialogAction(
+            child: Text(TextConstants.deny),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          CupertinoDialogAction(
+            child: Text(TextConstants.settings),
+            onPressed: () => openAppSettings(),
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -6,7 +6,8 @@ import 'package:fitness_flutter/screens/common_widgets/fitness_button.dart';
 import 'package:fitness_flutter/screens/start_workout/bloc/start_workout_bloc.dart';
 import 'package:fitness_flutter/screens/start_workout/page/start_workout_page.dart';
 import 'package:fitness_flutter/screens/start_workout/widget/start_workout_video.dart';
-import 'package:fitness_flutter/screens/workout_details_screen/bloc/workoutdetails_bloc.dart' as workout_bloc;
+import 'package:fitness_flutter/screens/workout_details_screen/bloc/workoutdetails_bloc.dart'
+    as workout_bloc;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -81,7 +82,8 @@ class StartWorkoutContent extends StatelessWidget {
     return Container(
       height: 264,
       width: double.infinity,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: ColorConstants.white),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20), color: ColorConstants.white),
       child: StartWorkoutVideo(
         exercise: exercise,
         onPlayTapped: (time) {
@@ -95,11 +97,13 @@ class StartWorkoutContent extends StatelessWidget {
   }
 
   Widget _createTitle() {
-    return Text(exercise.title, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold));
+    return Text(exercise.title,
+        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold));
   }
 
   Widget _createDescription() {
-    return Text(exercise.description, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500));
+    return Text(exercise.description,
+        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500));
   }
 
   Widget _createSteps() {
@@ -116,7 +120,7 @@ class StartWorkoutContent extends StatelessWidget {
   }
 
   Widget _createTimeTracker(BuildContext context) {
-    final bloc = BlocProvider.of<StartWorkoutBloc>(context);
+    // final bloc = BlocProvider.of<StartWorkoutBloc>(context);
     return Container(
       width: double.infinity,
       color: ColorConstants.white,
@@ -146,7 +150,8 @@ class StartWorkoutContent extends StatelessWidget {
                     const SizedBox(width: 6.5),
                     Icon(Icons.access_time, size: 20),
                     const SizedBox(width: 6.5),
-                    Text('00:${nextExercise!.minutes > 10 ? nextExercise!.minutes : '0${nextExercise!.minutes}'}')
+                    Text(
+                        '00:${nextExercise!.minutes > 10 ? nextExercise!.minutes : '0${nextExercise!.minutes}'}')
                     // BlocBuilder<StartWorkoutBloc, StartWorkoutState>(
                     //   buildWhen: (_, currState) => currState is PlayTimerState || currState is PauseTimerState,
                     //   builder: (context, state) {
@@ -170,17 +175,25 @@ class StartWorkoutContent extends StatelessWidget {
     return FitnessButton(
       title: TextConstants.next,
       onTap: () {
-        List<ExerciseData> exercisesList = BlocProvider.of<workout_bloc.WorkoutDetailsBloc>(context).workout.exerciseDataList;
+        List<ExerciseData> exercisesList =
+            BlocProvider.of<workout_bloc.WorkoutDetailsBloc>(context)
+                .workout
+                .exerciseDataList;
         int currentExerciseIndex = exercisesList.indexOf(exercise);
         if (currentExerciseIndex < exercisesList.length - 1) {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
                 builder: (_) => BlocProvider.value(
-                      value: BlocProvider.of<workout_bloc.WorkoutDetailsBloc>(context),
+                      value: BlocProvider.of<workout_bloc.WorkoutDetailsBloc>(
+                          context),
                       child: StartWorkoutPage(
                         exercise: exercisesList[currentExerciseIndex + 1],
-                        currentExercise: exercisesList[currentExerciseIndex + 1],
-                        nextExercise: currentExerciseIndex + 2 < exercisesList.length ? exercisesList[currentExerciseIndex + 2] : null,
+                        currentExercise:
+                            exercisesList[currentExerciseIndex + 1],
+                        nextExercise:
+                            currentExerciseIndex + 2 < exercisesList.length
+                                ? exercisesList[currentExerciseIndex + 2]
+                                : null,
                       ),
                     )),
           );
@@ -206,7 +219,12 @@ class Step extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             color: ColorConstants.primaryColor.withOpacity(0.12),
           ),
-          child: Center(child: Text(number, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: ColorConstants.primaryColor))),
+          child: Center(
+              child: Text(number,
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: ColorConstants.primaryColor))),
         ),
         const SizedBox(width: 10),
         Expanded(child: Text(description)),
