@@ -156,7 +156,8 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     if (photoUrl != null) {
       if (photoUrl!.startsWith('https://')) {
         return CircleAvatar(
-            child: ClipOval(child: FadeInImage.assetNetwork(placeholder: PathConstants.profile, image: photoUrl!, fit: BoxFit.cover, width: 200)), radius: 60);
+            child: ClipOval(child: FadeInImage.assetNetwork(placeholder: PathConstants.profile, image: photoUrl!, fit: BoxFit.cover, width: 200, height: 120)),
+            radius: 60);
       } else {
         return CircleAvatar(backgroundImage: FileImage(File(photoUrl!)), radius: 60);
       }
