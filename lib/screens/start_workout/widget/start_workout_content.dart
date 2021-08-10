@@ -39,11 +39,15 @@ class StartWorkoutContent extends StatelessWidget {
           const SizedBox(height: 23),
           _createVideo(context),
           const SizedBox(height: 8),
-          _createTitle(),
-          const SizedBox(height: 9),
-          _createDescription(),
-          const SizedBox(height: 30),
-          _createSteps(),
+          Expanded(
+            child: ListView(children: [
+              _createTitle(),
+              const SizedBox(height: 9),
+              _createDescription(),
+              const SizedBox(height: 30),
+              _createSteps(),
+            ]),
+          ),
           _createTimeTracker(context),
         ],
       ),
@@ -103,15 +107,13 @@ class StartWorkoutContent extends StatelessWidget {
   }
 
   Widget _createSteps() {
-    return Expanded(
-      child: ListView(
-        children: [
-          for (int i = 0; i < exercise.steps.length; i++) ...[
-            Step(number: "${i + 1}", description: exercise.steps[i]),
-            const SizedBox(height: 20),
-          ],
+    return Column(
+      children: [
+        for (int i = 0; i < exercise.steps.length; i++) ...[
+          Step(number: "${i + 1}", description: exercise.steps[i]),
+          const SizedBox(height: 20),
         ],
-      ),
+      ],
     );
   }
 

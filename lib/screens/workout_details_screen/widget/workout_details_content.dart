@@ -27,7 +27,7 @@ class WorkoutDetailsContent extends StatelessWidget {
       panel: WorkoutDetailsPanel(workout: workout),
       body: WorkoutDetailsBody(workout: workout),
       minHeight: MediaQuery.of(context).size.height * 0.65,
-      maxHeight: MediaQuery.of(context).size.height * 0.9,
+      maxHeight: MediaQuery.of(context).size.height * 0.87,
       isDraggable: true,
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(50),
