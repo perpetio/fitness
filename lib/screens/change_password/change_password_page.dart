@@ -36,8 +36,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     return Scaffold(
         body: _buildContext(context),
         appBar: AppBar(
-            title: Text(TextConstants.changePassword,
-                style: TextStyle(color: Colors.black, fontSize: 18)),
+            title: Text(TextConstants.changePassword, style: TextStyle(color: Colors.black, fontSize: 18)),
             backgroundColor: Colors.transparent,
             elevation: 0,
             leading: IconButton(
@@ -54,24 +53,17 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       create: (context) => ChangePasswordBloc(),
       child: BlocConsumer<ChangePasswordBloc, ChangePasswordState>(
         buildWhen: (_, currState) =>
-            currState is ChangePasswordInitial ||
-            currState is ChangePasswordError ||
-            currState is ChangePasswordProgress ||
-            currState is ChangePasswordSuccess,
+            currState is ChangePasswordInitial || currState is ChangePasswordError || currState is ChangePasswordProgress || currState is ChangePasswordSuccess,
         builder: (context, state) {
-          if (state is ChangePasswordProgress)
-            return Stack(
-                children: [_editAccountContent(context), FitnessLoading()]);
+          if (state is ChangePasswordProgress) return Stack(children: [_editAccountContent(context), FitnessLoading()]);
           if (state is ChangePasswordError) {
             WidgetsBinding.instance!.addPostFrameCallback((_) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text(state.error)));
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
             });
           }
           if (state is ChangePasswordSuccess) {
             WidgetsBinding.instance!.addPostFrameCallback((_) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text(state.message)));
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
             });
           }
           return _editAccountContent(context);
@@ -91,11 +83,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
           child: SizedBox(
             height: height - 140 - MediaQuery.of(context).padding.bottom,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               SizedBox(height: 15),
-              Text(TextConstants.newPassword,
-                  style: TextStyle(fontWeight: FontWeight.w600)),
+              Text(TextConstants.newPassword, style: TextStyle(fontWeight: FontWeight.w600)),
               SettingsContainer(
                 child: SettingsTextField(
                   controller: _newPassController,
@@ -103,12 +93,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   placeHolder: TextConstants.passwordPlaceholder,
                 ),
               ),
-              if (isNewPassInvalid)
-                Text(TextConstants.passwordErrorText,
-                    style: TextStyle(color: ColorConstants.errorColor)),
+              if (isNewPassInvalid) Text(TextConstants.passwordErrorText, style: TextStyle(color: ColorConstants.errorColor)),
               SizedBox(height: 10),
-              Text(TextConstants.confirmPassword,
-                  style: TextStyle(fontWeight: FontWeight.w600)),
+              Text(TextConstants.confirmPassword, style: TextStyle(fontWeight: FontWeight.w600)),
               SettingsContainer(
                 child: SettingsTextField(
                   controller: _confirmPassController,
@@ -116,9 +103,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   placeHolder: TextConstants.confirmPasswordPlaceholder,
                 ),
               ),
-              if (isConfirmPassInvalid)
-                Text(TextConstants.confirmPasswordErrorText,
-                    style: TextStyle(color: ColorConstants.errorColor)),
+              if (isConfirmPassInvalid) Text(TextConstants.confirmPasswordErrorText, style: TextStyle(color: ColorConstants.errorColor)),
               Spacer(),
               FitnessButton(
                 title: TextConstants.save,
@@ -126,10 +111,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 onTap: () {
                   FocusScope.of(context).unfocus();
                   setState(() {
-                    isNewPassInvalid =
-                        !ValidationService.password(_newPassController.text);
-                    isConfirmPassInvalid =
-                        _newPassController.text != _confirmPassController.text;
+                    isNewPassInvalid = !ValidationService.password(_newPassController.text);
+                    isConfirmPassInvalid = _newPassController.text != _confirmPassController.text;
                   });
                   if (!(isNewPassInvalid || isConfirmPassInvalid)) {
                     _bloc.add(ChangePassword(newPass: _newPassController.text));

@@ -116,19 +116,14 @@ class HomeContent extends StatelessWidget {
             ],
           ),
           GestureDetector(
-            child: photoUrl == null
-                ? CircleAvatar(
-                    backgroundImage: AssetImage(PathConstants.profile),
-                    radius: 60)
-                : CircleAvatar(
-                    child: ClipOval(
-                        child: FadeInImage.assetNetwork(
-                            placeholder: PathConstants.profile,
-                            image: photoUrl,
-                            fit: BoxFit.cover,
-                            width: 200)),
-                    radius: 25),
-            onTap: () {
+            child: 
+          photoUrl == null
+              ? CircleAvatar(backgroundImage: AssetImage(PathConstants.profile), radius: 60)
+              : CircleAvatar(
+                  child: ClipOval(
+                      child: FadeInImage.assetNetwork(placeholder: PathConstants.profile, image: photoUrl, fit: BoxFit.cover, width: 200, height: 120)),
+                  radius: 25),
+                      onTap: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (_) => EditAccountScreen()));
             },
