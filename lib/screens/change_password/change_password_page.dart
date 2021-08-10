@@ -97,20 +97,28 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               Text(TextConstants.newPassword,
                   style: TextStyle(fontWeight: FontWeight.w600)),
               SettingsContainer(
-                  child: SettingsTextField(
-                      controller: _newPassController, obscureText: true)),
+                child: SettingsTextField(
+                  controller: _newPassController,
+                  obscureText: true,
+                  placeHolder: TextConstants.passwordPlaceholder,
+                ),
+              ),
               if (isNewPassInvalid)
                 Text(TextConstants.passwordErrorText,
                     style: TextStyle(color: ColorConstants.errorColor)),
+              SizedBox(height: 10),
               Text(TextConstants.confirmPassword,
                   style: TextStyle(fontWeight: FontWeight.w600)),
               SettingsContainer(
-                  child: SettingsTextField(
-                      controller: _confirmPassController, obscureText: true)),
+                child: SettingsTextField(
+                  controller: _confirmPassController,
+                  obscureText: true,
+                  placeHolder: TextConstants.confirmPasswordPlaceholder,
+                ),
+              ),
               if (isConfirmPassInvalid)
                 Text(TextConstants.confirmPasswordErrorText,
                     style: TextStyle(color: ColorConstants.errorColor)),
-              SizedBox(height: 15),
               Spacer(),
               FitnessButton(
                 title: TextConstants.save,
