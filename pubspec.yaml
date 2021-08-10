@@ -61,6 +61,12 @@ dependencies:
   # Image library
   image_picker: ^0.8.2
 
+  # Reminder notification
+  flutter_local_notifications: ^8.0.0
+
+  # Native timezone
+  flutter_native_timezone: ^2.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
