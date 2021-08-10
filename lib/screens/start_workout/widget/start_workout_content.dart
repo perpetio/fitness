@@ -116,7 +116,7 @@ class StartWorkoutContent extends StatelessWidget {
   }
 
   Widget _createTimeTracker(BuildContext context) {
-    final bloc = BlocProvider.of<StartWorkoutBloc>(context);
+    // final bloc = BlocProvider.of<StartWorkoutBloc>(context);
     return Container(
       width: double.infinity,
       color: ColorConstants.white,

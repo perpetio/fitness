@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_flutter/core/const/color_constants.dart';
-import 'package:fitness_flutter/core/const/path_constants.dart';
 import 'package:fitness_flutter/core/const/text_constants.dart';
 import 'package:fitness_flutter/core/service/validation_service.dart';
 import 'package:fitness_flutter/screens/change_password/bloc/change_password_bloc.dart';
@@ -77,7 +76,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   Widget _editAccountContent(BuildContext context) {
     ChangePasswordBloc _bloc = BlocProvider.of<ChangePasswordBloc>(context);
-    final photoUrl = user?.photoURL ?? null;
     double height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: SingleChildScrollView(
@@ -86,24 +84,26 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           child: SizedBox(
             height: height - 140 - MediaQuery.of(context).padding.bottom,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Center(
-                child: photoUrl == null
-                    ? CircleAvatar(backgroundImage: AssetImage(PathConstants.profile), radius: 60)
-                    : CircleAvatar(
-                        child: ClipOval(
-                            child: FadeInImage.assetNetwork(placeholder: PathConstants.profile, image: photoUrl, fit: BoxFit.cover, width: 200, height: 120)),
-                        radius: 60),
-              ),
-              SizedBox(height: 15),
-              Center(child: Text(userName, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
               SizedBox(height: 15),
               Text(TextConstants.newPassword, style: TextStyle(fontWeight: FontWeight.w600)),
-              SettingsContainer(child: SettingsTextField(controller: _newPassController, obscureText: true)),
+              SettingsContainer(
+                child: SettingsTextField(
+                  controller: _newPassController,
+                  obscureText: true,
+                  placeHolder: TextConstants.passwordPlaceholder,
+                ),
+              ),
               if (isNewPassInvalid) Text(TextConstants.passwordErrorText, style: TextStyle(color: ColorConstants.errorColor)),
+              SizedBox(height: 10),
               Text(TextConstants.confirmPassword, style: TextStyle(fontWeight: FontWeight.w600)),
-              SettingsContainer(child: SettingsTextField(controller: _confirmPassController, obscureText: true)),
+              SettingsContainer(
+                child: SettingsTextField(
+                  controller: _confirmPassController,
+                  obscureText: true,
+                  placeHolder: TextConstants.confirmPasswordPlaceholder,
+                ),
+              ),
               if (isConfirmPassInvalid) Text(TextConstants.confirmPasswordErrorText, style: TextStyle(color: ColorConstants.errorColor)),
-              SizedBox(height: 15),
               Spacer(),
               FitnessButton(
                 title: TextConstants.save,

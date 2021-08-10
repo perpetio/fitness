@@ -11,8 +11,10 @@ import 'package:fitness_flutter/screens/common_widgets/fitness_loading.dart';
 import 'package:fitness_flutter/screens/common_widgets/settings_container.dart';
 import 'package:fitness_flutter/screens/common_widgets/settings_textfield.dart';
 import 'package:fitness_flutter/screens/edit_account/bloc/edit_account_bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class EditAccountScreen extends StatefulWidget {
   EditAccountScreen({Key? key}) : super(key: key);
@@ -65,10 +67,13 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
         buildWhen: (_, currState) =>
             currState is EditAccountInitial || currState is EditAccountProgress || currState is EditAccountError || currState is EditPhotoSuccess,
         builder: (context, state) {
-          if (state is EditAccountProgress) return Stack(children: [_editAccountContent(context), FitnessLoading()]);
+          if (state is EditAccountProgress)
+            return Stack(
+              children: [_editAccountContent(context), FitnessLoading()],
+            );
           if (state is EditAccountError) {
-            WidgetsBinding.instance!.addPostFrameCallback((_) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
+            WidgetsBinding.instance!.addPostFrameCallback((_) async {
+              _showOpenSettingsPopUp();
             });
           }
           if (state is EditPhotoSuccess) photoUrl = state.image.path;
@@ -94,22 +99,35 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
               SizedBox(height: 15),
               Center(
                 child: TextButton(
-                    onPressed: () async {
-                      _bloc.add(UploadImage());
-                    },
-                    child: Text(TextConstants.editPhoto, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: ColorConstants.primaryColor))),
+                  onPressed: () {
+                    _bloc.add(UploadImage());
+                  },
+                  child: Text(
+                    TextConstants.editPhoto,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: ColorConstants.primaryColor,
+                    ),
+                  ),
+                ),
               ),
               SizedBox(height: 15),
-              Text(TextConstants.fullName, style: TextStyle(fontWeight: FontWeight.w600)),
+              Text(
+                TextConstants.fullName,
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
               SettingsContainer(
                   child: SettingsTextField(
                 controller: _nameController,
+                placeHolder: TextConstants.fullNamePlaceholder,
               )),
               if (isNameInvalid) Text(TextConstants.nameShouldContain2Char, style: TextStyle(color: ColorConstants.errorColor)),
               Text(TextConstants.email, style: TextStyle(fontWeight: FontWeight.w600)),
               SettingsContainer(
                   child: SettingsTextField(
                 controller: _emailController,
+                placeHolder: TextConstants.emailPlaceholder,
               )),
               if (isEmailInvalid) Text(TextConstants.emailErrorText, style: TextStyle(color: ColorConstants.errorColor)),
               SizedBox(height: 15),
@@ -163,5 +181,25 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
       }
     } else
       return CircleAvatar(backgroundImage: AssetImage(PathConstants.profile), radius: 60);
+  }
+
+  void _showOpenSettingsPopUp() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text(TextConstants.cameraPermission),
+        content: Text(TextConstants.cameAccess),
+        actions: [
+          CupertinoDialogAction(
+            child: Text(TextConstants.deny),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          CupertinoDialogAction(
+            child: Text(TextConstants.settings),
+            onPressed: () => openAppSettings(),
+          ),
+        ],
+      ),
+    );
   }
 }
