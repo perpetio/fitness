@@ -164,7 +164,7 @@ class TextConstants {
       'This app needs camera access to take pictures for upload user profile photo';
   static const String deny = 'Deny';
   static const String settings = 'Settings';
-  static const String fullNamePlaceholder = 'Enter your ful name';
+  static const String fullNamePlaceholder = 'Enter your full name';
 
   //Change password screen
   static const String newPassword = 'New password';
