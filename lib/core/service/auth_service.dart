@@ -5,7 +5,8 @@ class AuthService {
   static final FirebaseAuth auth = FirebaseAuth.instance;
 
   static Future<User> signUp(String email, String password, String name) async {
-    UserCredential result = await auth.createUserWithEmailAndPassword(email: email.trim(), password: password.trim());
+    UserCredential result = await auth.createUserWithEmailAndPassword(
+        email: email.trim(), password: password.trim());
     final User user = result.user!;
     await user.updateDisplayName(name);
 
@@ -26,7 +27,7 @@ class AuthService {
 
       return user;
     } on FirebaseAuthException catch (e) {
-      throw CustomFirebaseException(_getExceptionMessage(e));
+      throw CustomFirebaseException(getExceptionMessage(e));
     } catch (e) {
       throw Exception(e);
     }
@@ -35,16 +36,18 @@ class AuthService {
   static Future<void> signOut() async {
     await auth.signOut();
   }
+}
 
-  static String _getExceptionMessage(FirebaseAuthException e) {
-    print(e.code);
-    switch (e.code) {
-      case 'user-not-found':
-        return 'User not found';
-      case 'wrong-password':
-        return 'Password is incorrect';
-      default:
-        return e.message ?? 'Error';
-    }
+String getExceptionMessage(FirebaseAuthException e) {
+  print(e.code);
+  switch (e.code) {
+    case 'user-not-found':
+      return 'User not found';
+    case 'wrong-password':
+      return 'Password is incorrect';
+    case 'requires-recent-login':
+      return 'Log in again before retrying this request';
+    default:
+      return e.message ?? 'Error';
   }
 }

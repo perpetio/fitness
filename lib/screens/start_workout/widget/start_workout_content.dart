@@ -6,8 +6,7 @@ import 'package:fitness_flutter/screens/common_widgets/fitness_button.dart';
 import 'package:fitness_flutter/screens/start_workout/bloc/start_workout_bloc.dart';
 import 'package:fitness_flutter/screens/start_workout/page/start_workout_page.dart';
 import 'package:fitness_flutter/screens/start_workout/widget/start_workout_video.dart';
-import 'package:fitness_flutter/screens/workout_details_screen/bloc/workoutdetails_bloc.dart'
-    as workout_bloc;
+import 'package:fitness_flutter/screens/workout_details_screen/bloc/workoutdetails_bloc.dart' as workout_bloc;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,11 +39,15 @@ class StartWorkoutContent extends StatelessWidget {
           const SizedBox(height: 23),
           _createVideo(context),
           const SizedBox(height: 8),
-          _createTitle(),
-          const SizedBox(height: 9),
-          _createDescription(),
-          const SizedBox(height: 30),
-          _createSteps(),
+          Expanded(
+            child: ListView(children: [
+              _createTitle(),
+              const SizedBox(height: 9),
+              _createDescription(),
+              const SizedBox(height: 30),
+              _createSteps(),
+            ]),
+          ),
           _createTimeTracker(context),
         ],
       ),
@@ -82,8 +85,7 @@ class StartWorkoutContent extends StatelessWidget {
     return Container(
       height: 264,
       width: double.infinity,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20), color: ColorConstants.white),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: ColorConstants.white),
       child: StartWorkoutVideo(
         exercise: exercise,
         onPlayTapped: (time) {
@@ -97,25 +99,21 @@ class StartWorkoutContent extends StatelessWidget {
   }
 
   Widget _createTitle() {
-    return Text(exercise.title,
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold));
+    return Text(exercise.title, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold));
   }
 
   Widget _createDescription() {
-    return Text(exercise.description,
-        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500));
+    return Text(exercise.description, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500));
   }
 
   Widget _createSteps() {
-    return Expanded(
-      child: ListView(
-        children: [
-          for (int i = 0; i < exercise.steps.length; i++) ...[
-            Step(number: "${i + 1}", description: exercise.steps[i]),
-            const SizedBox(height: 20),
-          ],
+    return Column(
+      children: [
+        for (int i = 0; i < exercise.steps.length; i++) ...[
+          Step(number: "${i + 1}", description: exercise.steps[i]),
+          const SizedBox(height: 20),
         ],
-      ),
+      ],
     );
   }
 
@@ -124,10 +122,10 @@ class StartWorkoutContent extends StatelessWidget {
     return Container(
       width: double.infinity,
       color: ColorConstants.white,
-      child: nextExercise != null
-          ? Column(
-              children: [
-                Row(
+      child: Column(
+        children: [
+          nextExercise != null
+              ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
@@ -150,8 +148,7 @@ class StartWorkoutContent extends StatelessWidget {
                     const SizedBox(width: 6.5),
                     Icon(Icons.access_time, size: 20),
                     const SizedBox(width: 6.5),
-                    Text(
-                        '00:${nextExercise!.minutes > 10 ? nextExercise!.minutes : '0${nextExercise!.minutes}'}')
+                    Text('00:${nextExercise!.minutes > 10 ? nextExercise!.minutes : '0${nextExercise!.minutes}'}')
                     // BlocBuilder<StartWorkoutBloc, StartWorkoutState>(
                     //   buildWhen: (_, currState) => currState is PlayTimerState || currState is PauseTimerState,
                     //   builder: (context, state) {
@@ -162,41 +159,37 @@ class StartWorkoutContent extends StatelessWidget {
                     //   },
                     // ),
                   ],
-                ),
-                const SizedBox(height: 18),
-                _createButton(context),
-              ],
-            )
-          : SizedBox.shrink(),
+                )
+              : SizedBox.shrink(),
+          const SizedBox(height: 18),
+          _createButton(context),
+        ],
+      ),
     );
   }
 
   Widget _createButton(BuildContext context) {
     return FitnessButton(
-      title: TextConstants.next,
+      title: nextExercise != null ? TextConstants.next : 'Finish',
       onTap: () {
-        List<ExerciseData> exercisesList =
-            BlocProvider.of<workout_bloc.WorkoutDetailsBloc>(context)
-                .workout
-                .exerciseDataList;
-        int currentExerciseIndex = exercisesList.indexOf(exercise);
-        if (currentExerciseIndex < exercisesList.length - 1) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-                builder: (_) => BlocProvider.value(
-                      value: BlocProvider.of<workout_bloc.WorkoutDetailsBloc>(
-                          context),
-                      child: StartWorkoutPage(
-                        exercise: exercisesList[currentExerciseIndex + 1],
-                        currentExercise:
-                            exercisesList[currentExerciseIndex + 1],
-                        nextExercise:
-                            currentExerciseIndex + 2 < exercisesList.length
-                                ? exercisesList[currentExerciseIndex + 2]
-                                : null,
-                      ),
-                    )),
-          );
+        if (nextExercise != null) {
+          List<ExerciseData> exercisesList = BlocProvider.of<workout_bloc.WorkoutDetailsBloc>(context).workout.exerciseDataList;
+          int currentExerciseIndex = exercisesList.indexOf(exercise);
+          if (currentExerciseIndex < exercisesList.length - 1) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                  builder: (_) => BlocProvider.value(
+                        value: BlocProvider.of<workout_bloc.WorkoutDetailsBloc>(context),
+                        child: StartWorkoutPage(
+                          exercise: exercisesList[currentExerciseIndex + 1],
+                          currentExercise: exercisesList[currentExerciseIndex + 1],
+                          nextExercise: currentExerciseIndex + 2 < exercisesList.length ? exercisesList[currentExerciseIndex + 2] : null,
+                        ),
+                      )),
+            );
+          }
+        } else {
+          Navigator.of(context).pop();
         }
       },
     );
@@ -219,12 +212,7 @@ class Step extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             color: ColorConstants.primaryColor.withOpacity(0.12),
           ),
-          child: Center(
-              child: Text(number,
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: ColorConstants.primaryColor))),
+          child: Center(child: Text(number, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: ColorConstants.primaryColor))),
         ),
         const SizedBox(width: 10),
         Expanded(child: Text(description)),

@@ -129,7 +129,8 @@ class HomeContent extends StatelessWidget {
                             placeholder: PathConstants.profile,
                             image: photoUrl,
                             fit: BoxFit.cover,
-                            width: 200)),
+                            width: 200,
+                            height: 120)),
                     radius: 25),
             onTap: () {
               Navigator.of(context)

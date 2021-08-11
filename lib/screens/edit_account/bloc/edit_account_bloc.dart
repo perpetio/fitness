@@ -5,6 +5,7 @@ import 'package:fitness_flutter/core/service/firebase_storage_service.dart';
 import 'package:fitness_flutter/core/service/user_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 part 'edit_account_event.dart';
 part 'edit_account_state.dart';
@@ -18,8 +19,7 @@ class EditAccountBloc extends Bloc<EditAccountEvent, EditAccountState> {
   ) async* {
     if (event is UploadImage) {
       try {
-        final XFile? image =
-            await ImagePicker().pickImage(source: ImageSource.gallery);
+        final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
         if (image != null) {
           yield EditAccountProgress();
           await FirebaseStorageService.uploadImage(filePath: image.path);
@@ -34,8 +34,7 @@ class EditAccountBloc extends Bloc<EditAccountEvent, EditAccountState> {
     if (event is ChangeUserData) {
       yield EditAccountProgress();
       try {
-        await UserService.changeUserData(
-            displayName: event.displayName, email: event.email);
+        await UserService.changeUserData(displayName: event.displayName, email: event.email);
         yield EditAccountInitial();
       } catch (e) {
         yield EditAccountError(e.toString());
