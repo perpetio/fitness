@@ -12,5 +12,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   @override
   Stream<HomeState> mapEventToState(
     HomeEvent event,
-  ) async* {}
+  ) async* {
+    if (event is ReloadImageEvent) {
+      yield ReloadImageState();
+    }
+  }
 }

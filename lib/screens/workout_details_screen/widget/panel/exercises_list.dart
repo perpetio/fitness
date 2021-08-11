@@ -20,7 +20,8 @@ class ExercisesList extends StatelessWidget {
       itemBuilder: (context, index) {
         return ExerciseCell(
           currentExercise: exercises[index],
-          nextExercise: index == exercises.length - 1 ? null : exercises[index + 1],
+          nextExercise:
+              index == exercises.length - 1 ? null : exercises[index + 1],
           workout: workout,
         );
       },
@@ -60,7 +61,8 @@ class ExerciseCell extends StatelessWidget {
           },
           child: Container(
             width: double.infinity,
-            padding: const EdgeInsets.only(left: 10, right: 25, top: 10, bottom: 10),
+            padding:
+                const EdgeInsets.only(left: 10, right: 25, top: 10, bottom: 10),
             decoration: BoxDecoration(
               color: ColorConstants.white,
               borderRadius: BorderRadius.circular(10),
@@ -97,7 +99,7 @@ class ExerciseCell extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
         image: DecorationImage(
           image: AssetImage(workout.image),
-          fit: BoxFit.cover,
+          fit: BoxFit.contain,
         ),
       ),
     );

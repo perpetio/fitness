@@ -4,9 +4,11 @@ import 'package:fitness_flutter/core/const/data_constants.dart';
 import 'package:fitness_flutter/core/const/path_constants.dart';
 import 'package:fitness_flutter/core/const/text_constants.dart';
 import 'package:fitness_flutter/screens/edit_account/edit_account_screen.dart';
+import 'package:fitness_flutter/screens/home/bloc/home_bloc.dart';
 import 'package:fitness_flutter/screens/home/widget/home_statistics.dart';
 import 'package:fitness_flutter/screens/workout_details_screen/page/workout_details_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'home_exercises_card.dart';
 
@@ -69,7 +71,7 @@ class HomeContent extends StatelessWidget {
                   workout: DataConstants.homeWorkouts[0],
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (_) => WorkoutDetailsPage(
-                            workout: DataConstants.homeWorkouts[0],
+                            workout: DataConstants.workouts[0],
                           )))),
               const SizedBox(width: 15),
               WorkoutCard(
@@ -77,7 +79,7 @@ class HomeContent extends StatelessWidget {
                   workout: DataConstants.homeWorkouts[1],
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (_) => WorkoutDetailsPage(
-                            workout: DataConstants.homeWorkouts[1],
+                            workout: DataConstants.workouts[2],
                           )))),
               const SizedBox(width: 20),
             ],
@@ -90,7 +92,6 @@ class HomeContent extends StatelessWidget {
   Widget _createProfileData(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
     final displayName = user?.displayName ?? "No Username";
-    final photoUrl = user?.photoURL ?? null;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
@@ -106,9 +107,7 @@ class HomeContent extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(
-                height: 2,
-              ),
+              const SizedBox(height: 2),
               Text(
                 TextConstants.checkActivity,
                 style: TextStyle(
@@ -118,23 +117,31 @@ class HomeContent extends StatelessWidget {
               ),
             ],
           ),
-          GestureDetector(
-            child: photoUrl == null
-                ? CircleAvatar(
-                    backgroundImage: AssetImage(PathConstants.profile),
-                    radius: 60)
-                : CircleAvatar(
-                    child: ClipOval(
-                        child: FadeInImage.assetNetwork(
-                            placeholder: PathConstants.profile,
-                            image: photoUrl,
-                            fit: BoxFit.cover,
-                            width: 200,
-                            height: 120)),
-                    radius: 25),
-            onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (_) => EditAccountScreen()));
+          BlocBuilder<HomeBloc, HomeState>(
+            buildWhen: (_, currState) => currState is ReloadImageState,
+            builder: (context, state) {
+              final photoUrl =
+                  FirebaseAuth.instance.currentUser?.photoURL ?? null;
+              return GestureDetector(
+                child: photoUrl == null
+                    ? CircleAvatar(
+                        backgroundImage: AssetImage(PathConstants.profile),
+                        radius: 60)
+                    : CircleAvatar(
+                        child: ClipOval(
+                            child: FadeInImage.assetNetwork(
+                                placeholder: PathConstants.profile,
+                                image: photoUrl,
+                                fit: BoxFit.cover,
+                                width: 200,
+                                height: 120)),
+                        radius: 25),
+                onTap: () async {
+                  await Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => EditAccountScreen()));
+                  BlocProvider.of<HomeBloc>(context).add(ReloadImageEvent());
+                },
+              );
             },
           ),
         ],
