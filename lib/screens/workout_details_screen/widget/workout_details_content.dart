@@ -8,9 +8,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 class WorkoutDetailsContent extends StatelessWidget {
   final WorkoutData workout;
 
-  const WorkoutDetailsContent({
-    required this.workout,
-  });
+  const WorkoutDetailsContent({required this.workout});
 
   @override
   Widget build(BuildContext context) {

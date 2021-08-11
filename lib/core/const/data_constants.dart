@@ -168,6 +168,82 @@ class DataConstants {
     ),
   ];
 
+  static final List<WorkoutData> homeWorkouts = [
+    WorkoutData(
+        title: TextConstants.cardioTitle,
+        exercices: TextConstants.cardioExercises,
+        minutes: TextConstants.cardioMinutes,
+        currentProgress: 10,
+        progress: 16,
+        image: PathConstants.cardio,
+        exerciseDataList: [
+          ExerciseData(
+            title: TextConstants.reclining,
+            minutes: TextConstants.recliningMinutes,
+            progress: 1,
+            video: PathConstants.recliningVideo,
+            description: TextConstants.warriorDescription,
+            steps: [
+              TextConstants.warriorStep1,
+              TextConstants.warriorStep2,
+              TextConstants.warriorStep1,
+              TextConstants.warriorStep2,
+              TextConstants.warriorStep1,
+              TextConstants.warriorStep2,
+            ],
+          ),
+          ExerciseData(
+            title: TextConstants.cowPose,
+            minutes: TextConstants.cowPoseMinutes,
+            progress: 0.3,
+            video: PathConstants.cowPoseVideo,
+            description: TextConstants.warriorDescription,
+            steps: [TextConstants.warriorStep1, TextConstants.warriorStep2],
+          ),
+          ExerciseData(
+            title: TextConstants.warriorPose,
+            minutes: TextConstants.warriorPoseMinutes,
+            progress: 0.99,
+            video: PathConstants.warriorIIVideo,
+            description: TextConstants.warriorDescription,
+            steps: [TextConstants.warriorStep1, TextConstants.warriorStep2],
+          ),
+        ]),
+    WorkoutData(
+        title: TextConstants.armsTitle,
+        exercices: TextConstants.armsExercises,
+        minutes: TextConstants.armsMinutes,
+        currentProgress: 1,
+        progress: 20,
+        image: PathConstants.cardio,
+        exerciseDataList: [
+          ExerciseData(
+            title: TextConstants.reclining,
+            minutes: TextConstants.recliningMinutes,
+            progress: 0.1,
+            video: PathConstants.recliningVideo,
+            description: TextConstants.warriorDescription,
+            steps: [TextConstants.warriorStep1, TextConstants.warriorStep2],
+          ),
+          ExerciseData(
+            title: TextConstants.cowPose,
+            minutes: TextConstants.cowPoseMinutes,
+            progress: 0.1,
+            video: PathConstants.cowPoseVideo,
+            description: TextConstants.warriorDescription,
+            steps: [TextConstants.warriorStep1, TextConstants.warriorStep2],
+          ),
+          ExerciseData(
+            title: TextConstants.warriorPose,
+            minutes: TextConstants.warriorPoseMinutes,
+            progress: 0.0,
+            video: PathConstants.warriorIIVideo,
+            description: TextConstants.warriorDescription,
+            steps: [TextConstants.warriorStep1, TextConstants.warriorStep2],
+          ),
+        ]),
+  ];
+
   // Reminder
   static List<String> reminderDays = [
     TextConstants.everyday,
