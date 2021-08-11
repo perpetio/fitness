@@ -1,16 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_flutter/core/const/color_constants.dart';
+import 'package:fitness_flutter/core/const/data_constants.dart';
 import 'package:fitness_flutter/core/const/path_constants.dart';
 import 'package:fitness_flutter/core/const/text_constants.dart';
-import 'package:fitness_flutter/screens/edit_account/bloc/edit_account_bloc.dart';
 import 'package:fitness_flutter/screens/edit_account/edit_account_screen.dart';
 import 'package:fitness_flutter/screens/home/widget/home_statistics.dart';
+import 'package:fitness_flutter/screens/workout_details_screen/page/workout_details_page.dart';
 import 'package:flutter/material.dart';
 
 import 'home_exercises_card.dart';
 
 class HomeContent extends StatelessWidget {
-  const HomeContent({Key? key}) : super(key: key);
+  const HomeContent({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,7 @@ class HomeContent extends StatelessWidget {
           const SizedBox(height: 35),
           HomeStatistics(),
           const SizedBox(height: 30),
-          _createExercisesList(),
+          _createExercisesList(context),
           const SizedBox(height: 25),
           _createProgress(),
         ],
@@ -39,7 +42,7 @@ class HomeContent extends StatelessWidget {
     );
   }
 
-  Widget _createExercisesList() {
+  Widget _createExercisesList(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -61,21 +64,21 @@ class HomeContent extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             children: [
               const SizedBox(width: 20),
-              ExercisesCard(
-                color: ColorConstants.cardioColor,
-                title: TextConstants.cardioTitle,
-                exercises: TextConstants.cardioExercises,
-                minutes: TextConstants.cardioMinutes,
-                image: PathConstants.cardio,
-              ),
+              WorkoutCard(
+                  color: ColorConstants.cardioColor,
+                  workout: DataConstants.homeWorkouts[0],
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => WorkoutDetailsPage(
+                            workout: DataConstants.homeWorkouts[0],
+                          )))),
               const SizedBox(width: 15),
-              ExercisesCard(
-                color: ColorConstants.armsColor,
-                title: TextConstants.armsTitle,
-                exercises: TextConstants.armsExercises,
-                minutes: TextConstants.armsMinutes,
-                image: PathConstants.cardio,
-              ),
+              WorkoutCard(
+                  color: ColorConstants.armsColor,
+                  workout: DataConstants.homeWorkouts[1],
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => WorkoutDetailsPage(
+                            workout: DataConstants.homeWorkouts[1],
+                          )))),
               const SizedBox(width: 20),
             ],
           ),
@@ -116,14 +119,20 @@ class HomeContent extends StatelessWidget {
             ],
           ),
           GestureDetector(
-            child: 
-          photoUrl == null
-              ? CircleAvatar(backgroundImage: AssetImage(PathConstants.profile), radius: 60)
-              : CircleAvatar(
-                  child: ClipOval(
-                      child: FadeInImage.assetNetwork(placeholder: PathConstants.profile, image: photoUrl, fit: BoxFit.cover, width: 200, height: 120)),
-                  radius: 25),
-                      onTap: () {
+            child: photoUrl == null
+                ? CircleAvatar(
+                    backgroundImage: AssetImage(PathConstants.profile),
+                    radius: 60)
+                : CircleAvatar(
+                    child: ClipOval(
+                        child: FadeInImage.assetNetwork(
+                            placeholder: PathConstants.profile,
+                            image: photoUrl,
+                            fit: BoxFit.cover,
+                            width: 200,
+                            height: 120)),
+                    radius: 25),
+            onTap: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (_) => EditAccountScreen()));
             },

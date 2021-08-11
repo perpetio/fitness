@@ -69,13 +69,13 @@ class TextConstants {
 
   // Home screen -> cardio card
   static const String cardioTitle = "Cardio";
-  static const String cardioExercises = "10 Exercises";
-  static const String cardioMinutes = "50 Minutes";
+  static const String cardioExercises = "10";
+  static const String cardioMinutes = "50";
 
   // Home screen -> arms card
   static const String armsTitle = "Arms";
-  static const String armsExercises = "6 Exercises";
-  static const String armsMinutes = "35 Minutes";
+  static const String armsExercises = "6";
+  static const String armsMinutes = "35";
 
   //Workout screen -> yoga card
   static const String yogaTitle = "Yoga";
