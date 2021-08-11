@@ -10,6 +10,7 @@ import 'package:fitness_flutter/screens/edit_account/edit_account_screen.dart';
 import 'package:fitness_flutter/screens/reminder/page/reminder_page.dart';
 import 'package:fitness_flutter/screens/settings/bloc/bloc/settings_bloc.dart';
 import 'package:fitness_flutter/screens/sign_in/page/sign_in_page.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -54,9 +55,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Stack(alignment: Alignment.topRight, children: [
               Center(
                 child: photoUrl == null
-                    ? CircleAvatar(
-                        backgroundImage: AssetImage(PathConstants.profile),
-                        radius: 60)
+                    ? CircleAvatar(backgroundImage: AssetImage(PathConstants.profile), radius: 60)
                     : CircleAvatar(
                         child: ClipOval(
                             child: FadeInImage.assetNetwork(
@@ -71,53 +70,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               TextButton(
                   onPressed: () async {
-                    await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => EditAccountScreen()));
+                    await Navigator.push(context, MaterialPageRoute(builder: (context) => EditAccountScreen()));
                     setState(() {
                       photoUrl = user?.photoURL ?? null;
                     });
                   },
-                  style: TextButton.styleFrom(
-                      shape: CircleBorder(),
-                      backgroundColor:
-                          ColorConstants.primaryColor.withOpacity(0.16)),
+                  style: TextButton.styleFrom(shape: CircleBorder(), backgroundColor: ColorConstants.primaryColor.withOpacity(0.16)),
                   child: Icon(Icons.edit, color: ColorConstants.primaryColor)),
             ]),
             SizedBox(height: 15),
-            Text(displayName,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            Text(displayName, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
             SizedBox(height: 15),
             SettingsContainer(
-              child: Text(TextConstants.reminder,
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
+              child: Text(TextConstants.reminder, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
               withArrow: true,
               onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => ReminderPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (_) => ReminderPage()));
               },
             ),
+            if (!kIsWeb)
+              SettingsContainer(
+                child: Text(TextConstants.rateUsOn + '${Platform.isIOS ? 'App store' : 'Play market'}',
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
+                onTap: () {
+                  return launch(Platform.isIOS ? 'https://www.apple.com/app-store/' : 'https://play.google.com/store');
+                },
+              ),
             SettingsContainer(
-              child: Text(
-                  TextConstants.rateUsOn +
-                      '${Platform.isIOS ? 'App store' : 'Play market'}',
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
-              onTap: () {
-                return launch(Platform.isIOS
-                    ? 'https://www.apple.com/app-store/'
-                    : 'https://play.google.com/store');
-              },
-            ),
+                onTap: () => launch('https://perpet.io/'), child: Text(TextConstants.terms, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
             SettingsContainer(
-                onTap: () => launch('https://perpet.io/'),
-                child: Text(TextConstants.terms,
-                    style:
-                        TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
-            SettingsContainer(
-                child: Text(TextConstants.signOut,
-                    style:
-                        TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
+                child: Text(TextConstants.signOut, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
                 onTap: () {
                   AuthService.signOut();
                   Navigator.pushReplacement(
@@ -126,34 +108,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   );
                 }),
             SizedBox(height: 15),
-            Text(TextConstants.joinUs,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+            Text(TextConstants.joinUs, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
             SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                    onPressed: () =>
-                        launch('https://www.facebook.com/perpetio/'),
-                    style: TextButton.styleFrom(
-                        shape: CircleBorder(),
-                        backgroundColor: Colors.white,
-                        elevation: 1),
+                    onPressed: () => launch('https://www.facebook.com/perpetio/'),
+                    style: TextButton.styleFrom(shape: CircleBorder(), backgroundColor: Colors.white, elevation: 1),
                     child: Image.asset(PathConstants.facebook)),
                 TextButton(
-                    onPressed: () =>
-                        launch('https://www.instagram.com/perpetio/'),
-                    style: TextButton.styleFrom(
-                        shape: CircleBorder(),
-                        backgroundColor: Colors.white,
-                        elevation: 1),
+                    onPressed: () => launch('https://www.instagram.com/perpetio/'),
+                    style: TextButton.styleFrom(shape: CircleBorder(), backgroundColor: Colors.white, elevation: 1),
                     child: Image.asset(PathConstants.instagram)),
                 TextButton(
                     onPressed: () => launch('https://twitter.com/perpetio'),
-                    style: TextButton.styleFrom(
-                        shape: CircleBorder(),
-                        backgroundColor: Colors.white,
-                        elevation: 1),
+                    style: TextButton.styleFrom(shape: CircleBorder(), backgroundColor: Colors.white, elevation: 1),
                     child: Image.asset(PathConstants.twitter)),
               ],
             )
