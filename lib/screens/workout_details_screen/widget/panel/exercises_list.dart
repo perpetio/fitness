@@ -16,12 +16,12 @@ class ExercisesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+      padding: EdgeInsets.only(top: 10),
       itemCount: exercises.length,
       itemBuilder: (context, index) {
         return ExerciseCell(
           currentExercise: exercises[index],
-          nextExercise:
-              index == exercises.length - 1 ? null : exercises[index + 1],
+          nextExercise: index == exercises.length - 1 ? null : exercises[index + 1],
           workout: workout,
         );
       },
@@ -61,8 +61,7 @@ class ExerciseCell extends StatelessWidget {
           },
           child: Container(
             width: double.infinity,
-            padding:
-                const EdgeInsets.only(left: 10, right: 25, top: 10, bottom: 10),
+            padding: const EdgeInsets.only(left: 10, right: 25, top: 10, bottom: 10),
             decoration: BoxDecoration(
               color: ColorConstants.white,
               borderRadius: BorderRadius.circular(10),

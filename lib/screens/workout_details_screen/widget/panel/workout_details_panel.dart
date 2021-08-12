@@ -28,7 +28,7 @@ class WorkoutDetailsPanel extends StatelessWidget {
               _createHeader(),
               const SizedBox(height: 20),
               _createWorkoutData(),
-              _createExercisesCard(),
+              SizedBox(height: 20),
               _createExerciesList(),
             ],
           ),
@@ -80,9 +80,5 @@ class WorkoutDetailsPanel extends StatelessWidget {
         child: ExercisesList(exercises: workout.exerciseDataList, workout: workout),
       ),
     );
-  }
-
-  Widget _createExercisesCard() {
-    return Container();
   }
 }
