@@ -7,12 +7,9 @@ class TextConstants {
   static const String onboarding2Title = "Learn techniques";
   static const String onboarding3Title = "Stay strong & healthy";
 
-  static const String onboarding1Description =
-      "You can do your workout at home without any equipment, outside or at the gym.";
-  static const String onboarding2Description =
-      "Our workout programs are made by professionals.";
-  static const String onboarding3Description =
-      "We want you to fully enjoy the program and stay healthy and positive.";
+  static const String onboarding1Description = "You can do your workout at home without any equipment, outside or at the gym.";
+  static const String onboarding2Description = "Our workout programs are made by professionals.";
+  static const String onboarding3Description = "We want you to fully enjoy the program and stay healthy and positive.";
 
   // Sign Up
   static const String signUp = "Sign up";
@@ -25,13 +22,11 @@ class TextConstants {
 
   static const String email = "Email";
   static const String emailPlaceholder = "example@mail.com";
-  static const String emailErrorText =
-      'Email is unvalid, please enter email properly';
+  static const String emailErrorText = 'Email is unvalid, please enter email properly';
 
   static const String password = "Password";
   static const String passwordPlaceholder = "Must be at least 6 symbols";
-  static const String passwordErrorText =
-      'Password should contain at least 6 characters';
+  static const String passwordErrorText = 'Password should contain at least 6 characters';
 
   static const String confirmPassword = "Confirm password";
   static const String confirmPasswordPlaceholder = "Re-enter password";
@@ -64,8 +59,7 @@ class TextConstants {
   static const String discoverWorkouts = "Discover new workouts";
 
   static const String keepProgress = "Keep the progress!";
-  static const String profileSuccessful =
-      "You are more successful than 88% users.";
+  static const String profileSuccessful = "You are more successful than 88% users.";
 
   // Home screen -> cardio card
   static const String cardioTitle = "Cardio";
@@ -127,8 +121,7 @@ class TextConstants {
   static const String nextExercise = "Next Exercise:";
 
   // Start Workout screen -> Warrior II Pose
-  static const String warriorDescription =
-      "Named for a fierce warrior, an incarnation of Shiva, this version of Warrior Pose increases stamina.";
+  static const String warriorDescription = "Named for a fierce warrior, an incarnation of Shiva, this version of Warrior Pose increases stamina.";
   static const String warriorStep1 =
       "Stand in Tadasana (Mountain Pose). Raise your arms parallel to the floor and reach them actively out to the sides, shoulder blades wide, palms down.";
   static const String warriorStep2 =
@@ -154,14 +147,12 @@ class TextConstants {
   static const String editAccount = 'Edit account';
   static const String editPhoto = 'Edit photo';
   static const String fullName = 'Full name';
-  static const String nameShouldContain2Char =
-      'Name should contain at least 2 characters';
+  static const String nameShouldContain2Char = 'Name should contain at least 2 characters';
   static const String changePassword = 'Change Password';
 
   // Edit account screen -> show settings
   static const String cameraPermission = 'Camera permisson';
-  static const String cameAccess =
-      'This app needs camera access to take pictures for upload user profile photo';
+  static const String cameAccess = 'This app needs camera access to take pictures for upload user profile photo';
   static const String deny = 'Deny';
   static const String settings = 'Settings';
   static const String fullNamePlaceholder = 'Enter your full name';
@@ -169,4 +160,9 @@ class TextConstants {
   //Change password screen
   static const String newPassword = 'New password';
   static const String passwordUpdated = 'Password successfully updated!';
+
+  //Forgot password screen
+  static const passwordReset = 'Password Reset';
+  static const sendActivationBuild = 'Send Activation Link';
+  static const resetPasswordLinkWasSent = 'Reset password link was sent on your email.';
 }

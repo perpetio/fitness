@@ -30,6 +30,7 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
+  
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
@@ -39,6 +40,24 @@
         navigator.serviceWorker.register('flutter_service_worker.js');
       });
     }
+  </script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyDrPUAw_3Cea0ULoW4XtRpcrn99XE-Cc2g",
+      authDomain: "fitness-1a139.firebaseapp.com",
+      projectId: "fitness-1a139",
+      storageBucket: "fitness-1a139.appspot.com",
+      messagingSenderId: "422986340486",
+      appId: "1:422986340486:web:7a9af0190bbbc19db51907",
+      measurementId: "G-LZ3D1T26G6"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
   </script>
   <script src="main.dart.js" type="application/javascript"></script>
 </body>
