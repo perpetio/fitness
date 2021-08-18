@@ -10,3 +10,11 @@ class CardTappedState extends WorkoutsState {
 
   CardTappedState({required this.workout});
 }
+
+class ReloadWorkoutsState extends WorkoutsState {
+  final List<WorkoutData> workouts;
+
+  ReloadWorkoutsState({
+    required this.workouts,
+  });
+}

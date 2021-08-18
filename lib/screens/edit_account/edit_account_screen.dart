@@ -46,19 +46,20 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: _buildContext(context),
-        appBar: AppBar(
-            title: Text(TextConstants.editAccount,
-                style: TextStyle(color: Colors.black, fontSize: 18)),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios_new),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            iconTheme: IconThemeData(
-              color: ColorConstants.primaryColor,
-            )));
+      body: _buildContext(context),
+      appBar: AppBar(
+        title: Text(TextConstants.editAccount,
+            style: TextStyle(color: Colors.black, fontSize: 18)),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new),
+            onPressed: () => Navigator.of(context).pop()),
+        iconTheme: IconThemeData(
+          color: ColorConstants.primaryColor,
+        ),
+      ),
+    );
   }
 
   BlocProvider<EditAccountBloc> _buildContext(BuildContext context) {
@@ -98,95 +99,103 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
           padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
           child: SizedBox(
             height: height - 140 - MediaQuery.of(context).padding.bottom,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Center(child: _getImageWidget()),
-              SizedBox(height: 15),
-              Center(
-                child: TextButton(
-                  onPressed: () {
-                    _bloc.add(UploadImage());
-                  },
-                  child: Text(
-                    TextConstants.editPhoto,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: ColorConstants.primaryColor,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(child: _getImageWidget()),
+                SizedBox(height: 15),
+                Center(
+                  child: TextButton(
+                    onPressed: () {
+                      _bloc.add(UploadImage());
+                    },
+                    child: Text(
+                      TextConstants.editPhoto,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: ColorConstants.primaryColor,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 15),
-              Text(
-                TextConstants.fullName,
-                style: TextStyle(fontWeight: FontWeight.w600),
-              ),
-              SettingsContainer(
-                  child: SettingsTextField(
-                controller: _nameController,
-                placeHolder: TextConstants.fullNamePlaceholder,
-              )),
-              if (isNameInvalid)
-                Text(TextConstants.nameShouldContain2Char,
-                    style: TextStyle(color: ColorConstants.errorColor)),
-              Text(TextConstants.email,
-                  style: TextStyle(fontWeight: FontWeight.w600)),
-              SettingsContainer(
-                  child: SettingsTextField(
-                controller: _emailController,
-                placeHolder: TextConstants.emailPlaceholder,
-              )),
-              if (isEmailInvalid)
-                Text(TextConstants.emailErrorText,
-                    style: TextStyle(color: ColorConstants.errorColor)),
-              SizedBox(height: 15),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ChangePasswordScreen()));
-                },
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(TextConstants.changePassword,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: ColorConstants.primaryColor,
-                            fontSize: 18)),
-                    SizedBox(width: 10),
-                    Icon(Icons.arrow_forward_ios,
-                        color: ColorConstants.primaryColor)
-                  ],
+                SizedBox(height: 15),
+                Text(
+                  TextConstants.fullName,
+                  style: TextStyle(fontWeight: FontWeight.w600),
                 ),
-              ),
-              Spacer(),
-              FitnessButton(
-                title: TextConstants.save,
-                isEnabled: true,
-                onTap: () {
-                  FocusScope.of(context).unfocus();
-                  setState(() {
-                    isNameInvalid = !(_nameController.text.length > 1);
-                    isEmailInvalid =
-                        !ValidationService.email(_emailController.text);
-                  });
-                  if (!(isNameInvalid || isEmailInvalid)) {
-                    if (userName != _nameController.text ||
-                        userEmail != _emailController.text) {
-                      _bloc.add(ChangeUserData(
-                          displayName: _nameController.text,
-                          email: _emailController.text));
-                      userName = _nameController.text;
-                      userEmail = _emailController.text;
+                SettingsContainer(
+                    child: SettingsTextField(
+                  controller: _nameController,
+                  placeHolder: TextConstants.fullNamePlaceholder,
+                )),
+                if (isNameInvalid)
+                  Text(TextConstants.nameShouldContain2Char,
+                      style: TextStyle(color: ColorConstants.errorColor)),
+                Text(TextConstants.email,
+                    style: TextStyle(fontWeight: FontWeight.w600)),
+                SettingsContainer(
+                    child: SettingsTextField(
+                  controller: _emailController,
+                  placeHolder: TextConstants.emailPlaceholder,
+                )),
+                if (isEmailInvalid)
+                  Text(TextConstants.emailErrorText,
+                      style: TextStyle(color: ColorConstants.errorColor)),
+                SizedBox(height: 15),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ChangePasswordScreen()));
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        TextConstants.changePassword,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: ColorConstants.primaryColor,
+                          fontSize: 18,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: ColorConstants.primaryColor,
+                      )
+                    ],
+                  ),
+                ),
+                Spacer(),
+                FitnessButton(
+                  title: TextConstants.save,
+                  isEnabled: true,
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                    setState(() async {
+                      isNameInvalid = !(_nameController.text.length > 1);
+                      isEmailInvalid =
+                          !ValidationService.email(_emailController.text);
+                    });
+
+                    if (!(isNameInvalid || isEmailInvalid)) {
+                      if (userName != _nameController.text ||
+                          userEmail != _emailController.text) {
+                        _bloc.add(ChangeUserData(
+                            displayName: _nameController.text,
+                            email: _emailController.text));
+                        userName = _nameController.text;
+                        userEmail = _emailController.text;
+                      }
                     }
-                  }
-                  Navigator.pop(context, true);
-                },
-              ),
-            ]),
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -197,14 +206,17 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     if (photoUrl != null) {
       if (photoUrl!.startsWith('https://')) {
         return CircleAvatar(
-            child: ClipOval(
-                child: FadeInImage.assetNetwork(
-                    placeholder: PathConstants.profile,
-                    image: photoUrl!,
-                    fit: BoxFit.cover,
-                    width: 200,
-                    height: 120)),
-            radius: 60);
+          radius: 60,
+          child: ClipOval(
+            child: FadeInImage.assetNetwork(
+              placeholder: PathConstants.profile,
+              image: photoUrl!,
+              fit: BoxFit.cover,
+              width: 200,
+              height: 120,
+            ),
+          ),
+        );
       } else {
         return CircleAvatar(
             backgroundImage: FileImage(File(photoUrl!)), radius: 60);

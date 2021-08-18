@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitness_flutter/core/const/color_constants.dart';
+import 'package:fitness_flutter/core/const/global_constants.dart';
 import 'package:fitness_flutter/core/service/notification_service.dart';
+import 'package:fitness_flutter/data/user_data.dart';
 import 'package:fitness_flutter/screens/onboarding/page/onboarding_page.dart';
 import 'package:fitness_flutter/screens/tab_bar/page/tab_bar_page.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,8 @@ import 'package:timezone/data/latest.dart' as tz;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await Firebase.initializeApp();
   runApp(MyApp());
 }
@@ -22,28 +25,40 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  static late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = NotificationService.flutterLocalNotificationsPlugin;
+  static late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      NotificationService.flutterLocalNotificationsPlugin;
 
   @override
   initState() {
     super.initState();
-    const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
-    final IOSInitializationSettings initializationSettingsIOS = IOSInitializationSettings();
-    final InitializationSettings initializationSettings = InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('app_icon');
+    final IOSInitializationSettings initializationSettingsIOS =
+        IOSInitializationSettings();
+    final InitializationSettings initializationSettings =
+        InitializationSettings(
+            android: initializationSettingsAndroid,
+            iOS: initializationSettingsIOS);
 
     tz.initializeTimeZones();
 
-    flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: selectNotification);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: selectNotification);
   }
 
   @override
   Widget build(BuildContext context) {
-    final isLoggedIn = FirebaseAuth.instance.currentUser != null;
+    final currUser = FirebaseAuth.instance.currentUser;
+    final isLoggedIn = currUser != null;
+    if (isLoggedIn) {
+      GlobalConstants.currentUser = UserData.fromFirebase(currUser);
+    }
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Fitness',
       theme: ThemeData(
-        textTheme: TextTheme(bodyText1: TextStyle(color: ColorConstants.textColor)),
+        textTheme:
+            TextTheme(bodyText1: TextStyle(color: ColorConstants.textColor)),
         fontFamily: 'NotoSansKR',
         scaffoldBackgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,

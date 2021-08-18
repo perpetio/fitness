@@ -1,14 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitness_flutter/core/const/global_constants.dart';
 import 'package:fitness_flutter/core/extensions/exceptions.dart';
-import 'package:flutter/services.dart';
+import 'package:fitness_flutter/core/service/user_storage_service.dart';
+import 'package:fitness_flutter/data/user_data.dart';
 
 class AuthService {
   static final FirebaseAuth auth = FirebaseAuth.instance;
 
   static Future<User> signUp(String email, String password, String name) async {
-    UserCredential result = await auth.createUserWithEmailAndPassword(email: email.trim(), password: password.trim());
+    UserCredential result = await auth.createUserWithEmailAndPassword(
+        email: email.trim(), password: password.trim());
     final User user = result.user!;
     await user.updateDisplayName(name);
+
+    final userData = UserData.fromFirebase(auth.currentUser);
+    await UserStorageService.writeSecureData(email, userData.toJsonString());
+    GlobalConstants.currentUser = userData;
 
     return user;
   }
@@ -34,6 +41,14 @@ class AuthService {
 
       if (user == null) {
         throw Exception("User not found");
+      } else {
+        final userFromLocal = await UserStorageService.readSecureData(email);
+        final userData = UserData.fromFirebase(auth.currentUser);
+        if (userFromLocal == null) {
+          await UserStorageService.writeSecureData(
+              email, userData.toJsonString());
+        }
+        GlobalConstants.currentUser = userData;
       }
 
       return user;

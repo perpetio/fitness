@@ -1,7 +1,7 @@
 import 'package:fitness_flutter/core/const/color_constants.dart';
 import 'package:fitness_flutter/core/const/path_constants.dart';
 import 'package:fitness_flutter/data/workout_data.dart';
-import 'package:fitness_flutter/screens/workout_details_screen/bloc/workoutdetails_bloc.dart';
+import 'package:fitness_flutter/screens/workout_details_screen/bloc/workout_details_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -54,7 +54,7 @@ class WorkoutDetailsBody extends StatelessWidget {
     return Container(
       width: double.infinity,
       child: Image(
-        image: AssetImage(workout.image),
+        image: AssetImage(workout.image ?? ""),
         fit: BoxFit.cover,
       ),
     );

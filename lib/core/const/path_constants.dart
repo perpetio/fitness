@@ -27,7 +27,6 @@ class PathConstants {
   static const String rectangle = 'assets/icons/workouts/rectangle.png';
   static const String timeTracker = 'assets/icons/workouts/time.png';
   static const String exerciseTracker = 'assets/icons/workouts/exercise.png';
-
   static const String recicling = 'assets/images/exercises/recicling.png';
 
   //Workouts

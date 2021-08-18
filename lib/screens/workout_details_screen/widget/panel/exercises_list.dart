@@ -2,7 +2,7 @@ import 'package:fitness_flutter/core/const/color_constants.dart';
 import 'package:fitness_flutter/core/const/path_constants.dart';
 import 'package:fitness_flutter/data/exercise_data.dart';
 import 'package:fitness_flutter/data/workout_data.dart';
-import 'package:fitness_flutter/screens/workout_details_screen/bloc/workoutdetails_bloc.dart';
+import 'package:fitness_flutter/screens/workout_details_screen/bloc/workout_details_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -21,8 +21,10 @@ class ExercisesList extends StatelessWidget {
       itemBuilder: (context, index) {
         return ExerciseCell(
           currentExercise: exercises[index],
-          nextExercise: index == exercises.length - 1 ? null : exercises[index + 1],
+          nextExercise:
+              index == exercises.length - 1 ? null : exercises[index + 1],
           workout: workout,
+          index: index,
         );
       },
       separatorBuilder: (context, index) {
@@ -36,11 +38,13 @@ class ExerciseCell extends StatelessWidget {
   final WorkoutData workout;
   final ExerciseData currentExercise;
   final ExerciseData? nextExercise;
+  final int index;
 
   const ExerciseCell({
     required this.currentExercise,
     required this.workout,
     required this.nextExercise,
+    required this.index,
   });
 
   @override
@@ -53,15 +57,16 @@ class ExerciseCell extends StatelessWidget {
           borderRadius: BorderRadius.circular(40),
           onTap: () {
             bloc.add(
-              WorkoutExerciseCellTappedEvent(
-                currentExercise: currentExercise,
-                nextExercise: nextExercise,
+              StartTappedEvent(
+                workout: workout,
+                index: index,
               ),
             );
           },
           child: Container(
             width: double.infinity,
-            padding: const EdgeInsets.only(left: 10, right: 25, top: 10, bottom: 10),
+            padding:
+                const EdgeInsets.only(left: 10, right: 25, top: 10, bottom: 10),
             decoration: BoxDecoration(
               color: ColorConstants.white,
               borderRadius: BorderRadius.circular(10),
@@ -97,7 +102,7 @@ class ExerciseCell extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         image: DecorationImage(
-          image: AssetImage(workout.image),
+          image: AssetImage(workout.image ?? ""),
           fit: BoxFit.contain,
         ),
       ),
@@ -110,7 +115,7 @@ class ExerciseCell extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          currentExercise.title,
+          currentExercise.title ?? "",
           style: TextStyle(
             color: ColorConstants.textColor,
             fontSize: 16,
@@ -129,7 +134,7 @@ class ExerciseCell extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: 20),
           child: LinearPercentIndicator(
-            percent: currentExercise.progress,
+            percent: currentExercise.progress ?? 0,
             progressColor: ColorConstants.primaryColor,
             backgroundColor: ColorConstants.primaryColor.withOpacity(0.12),
             lineHeight: 6,

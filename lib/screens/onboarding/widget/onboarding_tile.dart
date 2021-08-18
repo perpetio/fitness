@@ -14,9 +14,7 @@ class OnboardingTile extends StatelessWidget {
         children: [
           const SizedBox(height: 34),
           Expanded(
-            child: Image.asset(
-              imagePath,
-            ),
+            child: Image.asset(imagePath),
           ),
           const SizedBox(height: 65),
           Text(
@@ -33,9 +31,7 @@ class OnboardingTile extends StatelessWidget {
             ),
             child: Text(
               mainText,
-              style: TextStyle(
-                fontSize: 16.0,
-              ),
+              style: TextStyle(fontSize: 16.0),
               textAlign: TextAlign.center,
             ),
           ),

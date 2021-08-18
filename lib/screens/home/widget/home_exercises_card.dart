@@ -39,7 +39,7 @@ class WorkoutCard extends StatelessWidget {
                   children: [
                     const SizedBox(height: 5),
                     Text(
-                      workout.title,
+                      workout.title ?? "",
                       style: TextStyle(
                         color: ColorConstants.white,
                         fontSize: 24,
@@ -48,7 +48,7 @@ class WorkoutCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      "${workout.exercices} exercises",
+                      "${workout.exercises} exercises",
                       style: TextStyle(
                         color: ColorConstants.white,
                         fontSize: 16,
@@ -72,7 +72,7 @@ class WorkoutCard extends StatelessWidget {
               right: 0,
               bottom: 0,
               child: Image(
-                image: AssetImage(workout.image),
+                image: AssetImage(workout.image ?? ""),
               ),
             ),
           ],

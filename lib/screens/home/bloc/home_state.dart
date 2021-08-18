@@ -5,4 +5,18 @@ abstract class HomeState {}
 
 class HomeInitial extends HomeState {}
 
-class ReloadImageState extends HomeState {}
+class ReloadImageState extends HomeState {
+  final String? photoURL;
+
+  ReloadImageState({
+    required this.photoURL,
+  });
+}
+
+class ReloadDisplayNameState extends HomeState {
+  final String? displayName;
+
+  ReloadDisplayNameState({
+    required this.displayName,
+  });
+}

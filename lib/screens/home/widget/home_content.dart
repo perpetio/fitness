@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_flutter/core/const/color_constants.dart';
 import 'package:fitness_flutter/core/const/data_constants.dart';
 import 'package:fitness_flutter/core/const/path_constants.dart';
@@ -75,12 +74,16 @@ class HomeContent extends StatelessWidget {
                           )))),
               const SizedBox(width: 15),
               WorkoutCard(
-                  color: ColorConstants.armsColor,
-                  workout: DataConstants.homeWorkouts[1],
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => WorkoutDetailsPage(
-                            workout: DataConstants.workouts[2],
-                          )))),
+                color: ColorConstants.armsColor,
+                workout: DataConstants.homeWorkouts[1],
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => WorkoutDetailsPage(
+                      workout: DataConstants.workouts[2],
+                    ),
+                  ),
+                ),
+              ),
               const SizedBox(width: 20),
             ],
           ),
@@ -90,8 +93,6 @@ class HomeContent extends StatelessWidget {
   }
 
   Widget _createProfileData(BuildContext context) {
-    final User? user = FirebaseAuth.instance.currentUser;
-    final displayName = user?.displayName ?? "No Username";
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
@@ -100,12 +101,21 @@ class HomeContent extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Hi, $displayName',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+              BlocBuilder<HomeBloc, HomeState>(
+                buildWhen: (_, currState) =>
+                    currState is ReloadDisplayNameState,
+                builder: (context, state) {
+                  final displayName = state is ReloadDisplayNameState
+                      ? state.displayName
+                      : null;
+                  return Text(
+                    'Hi, $displayName',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                },
               ),
               const SizedBox(height: 2),
               Text(
@@ -120,10 +130,10 @@ class HomeContent extends StatelessWidget {
           BlocBuilder<HomeBloc, HomeState>(
             buildWhen: (_, currState) => currState is ReloadImageState,
             builder: (context, state) {
-              final photoUrl =
-                  FirebaseAuth.instance.currentUser?.photoURL ?? null;
+              final photoURL =
+                  state is ReloadImageState ? state.photoURL : null;
               return GestureDetector(
-                child: photoUrl == null
+                child: photoURL == null
                     ? CircleAvatar(
                         backgroundImage: AssetImage(PathConstants.profile),
                         radius: 60)
@@ -131,7 +141,7 @@ class HomeContent extends StatelessWidget {
                         child: ClipOval(
                             child: FadeInImage.assetNetwork(
                                 placeholder: PathConstants.profile,
-                                image: photoUrl,
+                                image: photoURL,
                                 fit: BoxFit.cover,
                                 width: 200,
                                 height: 120)),
@@ -167,29 +177,19 @@ class HomeContent extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Image(
-            image: AssetImage(
-              PathConstants.progress,
-            ),
-          ),
+          Image(image: AssetImage(PathConstants.progress)),
           SizedBox(width: 20),
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  TextConstants.keepProgress,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                Text(TextConstants.keepProgress,
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 3),
                 Text(
                   TextConstants.profileSuccessful,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
+                  style: TextStyle(fontSize: 16),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 ),
