@@ -2,6 +2,7 @@ import 'package:fitness_flutter/core/const/color_constants.dart';
 import 'package:fitness_flutter/core/const/data_constants.dart';
 import 'package:fitness_flutter/core/const/path_constants.dart';
 import 'package:fitness_flutter/core/const/text_constants.dart';
+import 'package:fitness_flutter/core/service/data_service.dart';
 import 'package:fitness_flutter/screens/edit_account/edit_account_screen.dart';
 import 'package:fitness_flutter/screens/home/bloc/home_bloc.dart';
 import 'package:fitness_flutter/screens/home/widget/home_statistics.dart';
@@ -37,7 +38,7 @@ class HomeContent extends StatelessWidget {
           const SizedBox(height: 30),
           _createExercisesList(context),
           const SizedBox(height: 25),
-          _createProgress(),
+          _showProgress(),
         ],
       ),
     );
@@ -198,6 +199,25 @@ class HomeContent extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Future<bool> _getProgress() async {
+    final workouts = await DataService.getWorkoutsForUser();
+    final workoutE = workouts.every((element) => element.currentProgress == 0);
+    return workoutE;
+  }
+
+  Widget _showProgress() {
+    return FutureBuilder(
+      future: _getProgress(),
+      builder: (context, snapshot) {
+        if (snapshot.data == false) {
+          return _createProgress();
+        } else {
+          return Container();
+        }
+      },
     );
   }
 }

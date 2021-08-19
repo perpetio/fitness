@@ -111,10 +111,11 @@ class WorkoutData {
     progress = json['progress'];
     image = json['image'];
     if (json['exerciseDataList'] != null) {
-      List<ExerciseData> exerciseDataList = [];
+      List<ExerciseData> exercises = [];
       json['exerciseDataList'].forEach((v) {
-        exerciseDataList.add(ExerciseData.fromJson(v));
+        exercises.add(ExerciseData.fromJson(v));
       });
+      exerciseDataList = exercises;
     }
   }
 
