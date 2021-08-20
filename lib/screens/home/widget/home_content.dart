@@ -39,7 +39,7 @@ class HomeContent extends StatelessWidget {
         children: [
           _createProfileData(context),
           const SizedBox(height: 35),
-          _showStartWorkout(),
+          _showStartWorkout(context, bloc),
           const SizedBox(height: 30),
           _createExercisesList(context),
           const SizedBox(height: 25),
@@ -76,8 +76,7 @@ class HomeContent extends StatelessWidget {
                   workout: DataConstants.homeWorkouts[0],
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (_) => WorkoutDetailsPage(
-                            workout: DataConstants.workouts[0],
-                          )))),
+                          workout: DataConstants.workouts[0])))),
               const SizedBox(width: 15),
               WorkoutCard(
                 color: ColorConstants.armsColor,
@@ -142,8 +141,7 @@ class HomeContent extends StatelessWidget {
                 child: photoURL == null
                     ? CircleAvatar(
                         backgroundImage: AssetImage(PathConstants.profile),
-                        radius: 60,
-                      )
+                        radius: 25)
                     : CircleAvatar(
                         child: ClipOval(
                             child: FadeInImage.assetNetwork(
@@ -195,7 +193,7 @@ class HomeContent extends StatelessWidget {
                         TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 3),
                 Text(
-                  '${TextConstants.profileSuccessful} ${bloc.getProgressPercentage()}% users.',
+                  '${TextConstants.profileSuccessful} ${bloc.getProgressPercentage()}% of workouts.',
                   style: TextStyle(fontSize: 16),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
@@ -208,7 +206,7 @@ class HomeContent extends StatelessWidget {
     );
   }
 
-  Widget _createStartWorkout() {
+  Widget _createStartWorkout(BuildContext context, HomeBloc bloc) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -249,7 +247,12 @@ class HomeContent extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   color: ColorConstants.textGrey)),
           const SizedBox(height: 24),
-          FitnessButton(title: TextConstants.startWorkout, onTap: () {}),
+          FitnessButton(
+            title: TextConstants.startWorkout,
+            onTap: () {
+              // TO DO: get index of TabBar to WorkoutPage
+            },
+          ),
         ],
       ),
     );
@@ -259,7 +262,9 @@ class HomeContent extends StatelessWidget {
     return workouts.isNotEmpty ? _createProgress(bloc) : Container();
   }
 
-  Widget _showStartWorkout() {
-    return workouts.isEmpty ? _createStartWorkout() : HomeStatistics();
+  Widget _showStartWorkout(BuildContext context, HomeBloc bloc) {
+    return workouts.isEmpty
+        ? _createStartWorkout(context, bloc)
+        : HomeStatistics();
   }
 }

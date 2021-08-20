@@ -39,11 +39,26 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   int getProgressPercentage() {
-    final completed =
-        workouts.where((w) => (w.currentProgress ?? 0) > 0).toList();
+    final completed = workouts
+        .where((w) =>
+            (w.currentProgress ?? 0) > 0 && w.currentProgress == w.progress)
+        .toList();
     final percent01 =
         completed.length.toDouble() / DataConstants.workouts.length.toDouble();
     final percent = (percent01 * 100).toInt();
     return percent;
+  }
+
+  int getFinishedWorkouts() {
+    final completedWorkouts =
+        workouts.where((w) => w.currentProgress == w.progress).toList();
+    return completedWorkouts.length;
+  }
+
+  int getInProgressWorkouts() {
+    final completedWorkouts = workouts.where(
+        (w) => (w.currentProgress ?? 0) > 0 && w.currentProgress != w.progress);
+
+    return completedWorkouts.length;
   }
 }

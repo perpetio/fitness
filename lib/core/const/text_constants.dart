@@ -65,7 +65,7 @@ class TextConstants {
   static const String discoverWorkouts = "Discover new workouts";
 
   static const String keepProgress = "Keep the progress!";
-  static const String profileSuccessful = "You are more successful than";
+  static const String profileSuccessful = "You have completed";
 
   // Home screen start workout container
   static const String didYouKnow = "Did you know...";
