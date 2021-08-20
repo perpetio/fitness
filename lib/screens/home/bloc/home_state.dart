@@ -20,3 +20,11 @@ class ReloadDisplayNameState extends HomeState {
     required this.displayName,
   });
 }
+
+class WorkoutsGotState extends HomeState {
+  final List<WorkoutData> workouts;
+
+  WorkoutsGotState({
+    required this.workouts,
+  });
+}

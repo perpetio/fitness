@@ -67,6 +67,12 @@ class TextConstants {
   static const String keepProgress = "Keep the progress!";
   static const String profileSuccessful = "You are more successful than";
 
+  // Home screen start workout container
+  static const String didYouKnow = "Did you know...";
+  static const String sportActivity = "Sport activity improves memory!";
+  static const String signToStart = "Sooo, it’s sign to start right now!";
+  static const String startWorkout = "Start Workout!";
+
   // Home screen -> cardio card
   static const String cardioTitle = "Cardio";
   static const String cardioExercises = "10";

@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:fitness_flutter/core/const/data_constants.dart';
 import 'package:fitness_flutter/core/service/auth_service.dart';
+import 'package:fitness_flutter/core/service/data_service.dart';
 import 'package:fitness_flutter/core/service/user_storage_service.dart';
+import 'package:fitness_flutter/data/workout_data.dart';
 import 'package:meta/meta.dart';
 
 part 'home_event.dart';
@@ -11,11 +14,16 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeInitial());
 
+  List<WorkoutData> workouts = <WorkoutData>[];
+
   @override
   Stream<HomeState> mapEventToState(
     HomeEvent event,
   ) async* {
-    if (event is ReloadImageEvent) {
+    if (event is HomeInitialEvent) {
+      workouts = await DataService.getWorkoutsForUser();
+      yield WorkoutsGotState(workouts: workouts);
+    } else if (event is ReloadImageEvent) {
       String? photoURL = await UserStorageService.readSecureData('image');
       if (photoURL == null) {
         photoURL = AuthService.auth.currentUser?.photoURL;
@@ -28,5 +36,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       final displayName = await UserStorageService.readSecureData('name');
       yield ReloadDisplayNameState(displayName: displayName);
     }
+  }
+
+  int getProgressPercentage() {
+    final completed =
+        workouts.where((w) => (w.currentProgress ?? 0) > 0).toList();
+    final percent01 =
+        completed.length.toDouble() / DataConstants.workouts.length.toDouble();
+    final percent = (percent01 * 100).toInt();
+    return percent;
   }
 }

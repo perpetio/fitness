@@ -2,7 +2,8 @@ import 'package:fitness_flutter/core/const/color_constants.dart';
 import 'package:fitness_flutter/core/const/data_constants.dart';
 import 'package:fitness_flutter/core/const/path_constants.dart';
 import 'package:fitness_flutter/core/const/text_constants.dart';
-import 'package:fitness_flutter/core/service/data_service.dart';
+import 'package:fitness_flutter/data/workout_data.dart';
+import 'package:fitness_flutter/screens/common_widgets/fitness_button.dart';
 import 'package:fitness_flutter/screens/edit_account/edit_account_screen.dart';
 import 'package:fitness_flutter/screens/home/bloc/home_bloc.dart';
 import 'package:fitness_flutter/screens/home/widget/home_statistics.dart';
@@ -13,7 +14,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'home_exercises_card.dart';
 
 class HomeContent extends StatelessWidget {
+  final List<WorkoutData> workouts;
+
   const HomeContent({
+    required this.workouts,
     Key? key,
   }) : super(key: key);
 
@@ -28,17 +32,18 @@ class HomeContent extends StatelessWidget {
   }
 
   Widget _createHomeBody(BuildContext context) {
+    final bloc = BlocProvider.of<HomeBloc>(context);
     return SafeArea(
       child: ListView(
         padding: const EdgeInsets.symmetric(vertical: 20),
         children: [
           _createProfileData(context),
           const SizedBox(height: 35),
-          HomeStatistics(),
+          _showStartWorkout(),
           const SizedBox(height: 30),
           _createExercisesList(context),
           const SizedBox(height: 25),
-          _showProgress(),
+          _showProgress(bloc),
         ],
       ),
     );
@@ -137,7 +142,8 @@ class HomeContent extends StatelessWidget {
                 child: photoURL == null
                     ? CircleAvatar(
                         backgroundImage: AssetImage(PathConstants.profile),
-                        radius: 60)
+                        radius: 60,
+                      )
                     : CircleAvatar(
                         child: ClipOval(
                             child: FadeInImage.assetNetwork(
@@ -160,7 +166,7 @@ class HomeContent extends StatelessWidget {
     );
   }
 
-  Widget _createProgress() {
+  Widget _createProgress(HomeBloc bloc) {
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -189,7 +195,7 @@ class HomeContent extends StatelessWidget {
                         TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 3),
                 Text(
-                  TextConstants.profileSuccessful,
+                  '${TextConstants.profileSuccessful} ${bloc.getProgressPercentage()}% users.',
                   style: TextStyle(fontSize: 16),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
@@ -202,22 +208,58 @@ class HomeContent extends StatelessWidget {
     );
   }
 
-  Future<bool> _getProgress() async {
-    final workouts = await DataService.getWorkoutsForUser();
-    final workoutE = workouts.every((element) => element.currentProgress == 0);
-    return workoutE;
+  Widget _createStartWorkout() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: ColorConstants.white,
+        boxShadow: [
+          BoxShadow(
+            color: ColorConstants.textBlack.withOpacity(0.12),
+            blurRadius: 5.0,
+            spreadRadius: 1.1,
+          )
+        ],
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image(
+                image: AssetImage(PathConstants.didYouKnow),
+                width: 24,
+                height: 24,
+              ),
+              const SizedBox(width: 10),
+              Text(TextConstants.didYouKnow,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500))
+            ],
+          ),
+          const SizedBox(height: 16),
+          Text(TextConstants.sportActivity,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+          const SizedBox(height: 4),
+          Text(TextConstants.signToStart,
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: ColorConstants.textGrey)),
+          const SizedBox(height: 24),
+          FitnessButton(title: TextConstants.startWorkout, onTap: () {}),
+        ],
+      ),
+    );
   }
 
-  Widget _showProgress() {
-    return FutureBuilder(
-      future: _getProgress(),
-      builder: (context, snapshot) {
-        if (snapshot.data == false) {
-          return _createProgress();
-        } else {
-          return Container();
-        }
-      },
-    );
+  Widget _showProgress(HomeBloc bloc) {
+    return workouts.isNotEmpty ? _createProgress(bloc) : Container();
+  }
+
+  Widget _showStartWorkout() {
+    return workouts.isEmpty ? _createStartWorkout() : HomeStatistics();
   }
 }
