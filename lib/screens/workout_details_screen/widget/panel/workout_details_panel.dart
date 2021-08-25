@@ -29,7 +29,7 @@ class WorkoutDetailsPanel extends StatelessWidget {
             children: [
               _createHeader(),
               const SizedBox(height: 20),
-              _createWorkoutData(),
+              _createWorkoutData(context),
               SizedBox(height: 20),
               _createExerciesList(),
             ],
@@ -56,19 +56,21 @@ class WorkoutDetailsPanel extends StatelessWidget {
     );
   }
 
-  Widget _createWorkoutData() {
+  Widget _createWorkoutData(BuildContext context) {
+    final bloc = BlocProvider.of<WorkoutDetailsBloc>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         children: [
           WorkoutTag(
             icon: PathConstants.timeTracker,
-            content: "${workout.minutes}:00",
+            content: "${_getExerciseTime()}:00",
           ),
           const SizedBox(width: 15),
           WorkoutTag(
             icon: PathConstants.exerciseTracker,
-            content: "${workout.exercises} ${TextConstants.exercisesLowercase}",
+            content:
+                '${workout.exerciseDataList!.length} ${TextConstants.exercisesLowercase}',
           ),
         ],
       ),
@@ -90,5 +92,15 @@ class WorkoutDetailsPanel extends StatelessWidget {
         );
       },
     );
+  }
+
+  int _getExerciseTime() {
+    int time = 0;
+    final List<int?> exerciseList =
+        workout.exerciseDataList!.map((e) => e.minutes).toList();
+    exerciseList.forEach((e) {
+      time += e!;
+    });
+    return time;
   }
 }

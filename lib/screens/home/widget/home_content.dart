@@ -7,6 +7,7 @@ import 'package:fitness_flutter/screens/common_widgets/fitness_button.dart';
 import 'package:fitness_flutter/screens/edit_account/edit_account_screen.dart';
 import 'package:fitness_flutter/screens/home/bloc/home_bloc.dart';
 import 'package:fitness_flutter/screens/home/widget/home_statistics.dart';
+import 'package:fitness_flutter/screens/tab_bar/bloc/tab_bar_bloc.dart';
 import 'package:fitness_flutter/screens/workout_details_screen/page/workout_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -207,6 +208,7 @@ class HomeContent extends StatelessWidget {
   }
 
   Widget _createStartWorkout(BuildContext context, HomeBloc bloc) {
+    final blocTabBar = BlocProvider.of<TabBarBloc>(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -250,7 +252,8 @@ class HomeContent extends StatelessWidget {
           FitnessButton(
             title: TextConstants.startWorkout,
             onTap: () {
-              // TO DO: get index of TabBar to WorkoutPage
+              blocTabBar.add(
+                  TabBarItemTappedEvent(index: blocTabBar.currentIndex = 1));
             },
           ),
         ],

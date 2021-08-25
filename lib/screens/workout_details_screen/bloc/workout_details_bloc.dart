@@ -12,6 +12,7 @@ class WorkoutDetailsBloc
   WorkoutDetailsBloc() : super(WorkoutDetailsInitial());
 
   late WorkoutData workout;
+  // int time = 0;
 
   @override
   Stream<WorkoutDetailsState> mapEventToState(
@@ -30,4 +31,13 @@ class WorkoutDetailsBloc
       );
     }
   }
+
+  // int getExerciseTime() {
+  //   final List<int?> exerciseList =
+  //       workout.exerciseDataList!.map((e) => e.minutes).toList();
+  //   exerciseList.forEach((e) {
+  //     time += e!;
+  //   });
+  //   return time;
+  // }
 }
