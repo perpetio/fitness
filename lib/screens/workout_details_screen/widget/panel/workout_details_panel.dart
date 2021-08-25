@@ -57,7 +57,6 @@ class WorkoutDetailsPanel extends StatelessWidget {
   }
 
   Widget _createWorkoutData(BuildContext context) {
-    final bloc = BlocProvider.of<WorkoutDetailsBloc>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(

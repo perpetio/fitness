@@ -16,7 +16,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeInitial());
 
   List<WorkoutData> workouts = <WorkoutData>[];
-  final List<ExerciseData> exercises = <ExerciseData>[];
+  List<ExerciseData> exercises = <ExerciseData>[];
   int timeSent = 0;
 
   @override
