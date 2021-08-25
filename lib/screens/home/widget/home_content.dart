@@ -75,16 +75,14 @@ class HomeContent extends StatelessWidget {
               const SizedBox(width: 20),
               WorkoutCard(
                   color: ColorConstants.cardioColor,
-                  workout: bloc.workouts[0],
-                  // workout: DataConstants.homeWorkouts[0],
+                  workout: DataConstants.workouts[0],
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (_) => WorkoutDetailsPage(
                           workout: DataConstants.workouts[0])))),
               const SizedBox(width: 15),
               WorkoutCard(
                 color: ColorConstants.armsColor,
-                workout: bloc.workouts[1],
-                // workout: DataConstants.homeWorkouts[1],
+                workout: DataConstants.workouts[2],
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (_) => WorkoutDetailsPage(
@@ -116,7 +114,7 @@ class HomeContent extends StatelessWidget {
                 builder: (context, state) {
                   final displayName = state is ReloadDisplayNameState
                       ? state.displayName
-                      : null;
+                      : '[name]';
                   return Text(
                     'Hi, $displayName',
                     style: TextStyle(

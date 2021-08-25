@@ -52,19 +52,19 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     return percent;
   }
 
-  int getFinishedWorkouts() {
+  int? getFinishedWorkouts() {
     final completedWorkouts =
         workouts.where((w) => w.currentProgress == w.progress).toList();
     return completedWorkouts.length;
   }
 
-  int getInProgressWorkouts() {
+  int? getInProgressWorkouts() {
     final completedWorkouts = workouts.where(
         (w) => (w.currentProgress ?? 0) > 0 && w.currentProgress != w.progress);
     return completedWorkouts.length;
   }
 
-  int getTimeSent() {
+  int? getTimeSent() {
     for (final WorkoutData workout in workouts) {
       exercises.addAll(workout.exerciseDataList!);
     }
