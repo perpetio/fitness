@@ -1,6 +1,11 @@
 # fitness_flutter
 
-A new Flutter project.
+Example of Fitness app done using Flutter for iOS and Android platforms.
+
+## See our tutorial posts:
+
+Part 1 - [How to Make a Fitness App With Flutter: A Tutorial by Perpetio. Part I](https://perpet.io/blog/how-to-build-a-clubhouse-clone-app-with-flutter-a-tutorial-by-perpetio-part-1/)
+
 
 ## Getting Started
 
