@@ -1,4 +1,4 @@
-# fitness_flutter
+# Fitness app
 
 Example of Fitness app done using Flutter for iOS and Android platforms.
 
