@@ -24,12 +24,10 @@ class StartWorkoutVideo extends StatefulWidget {
 
 class _StartWorkoutVideoState extends State<StartWorkoutVideo> {
   late VideoPlayerController _controller;
-  // late Future<void> _initializeVideoPlayerFuture;
   late bool isPlayButtonHidden = false;
   late ChewieController _chewieController;
   Timer? timer;
   Timer? videoTimer;
-  // bool _isVideoPlaying = false;
 
   @override
   void initState() {

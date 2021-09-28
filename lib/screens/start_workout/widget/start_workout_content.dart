@@ -158,7 +158,7 @@ class StartWorkoutContent extends StatelessWidget {
                     Icon(Icons.access_time, size: 20),
                     const SizedBox(width: 6.5),
                     Text(
-                        '${nextExercise!.minutes! > 10 ? nextExercise!.minutes : '0${nextExercise!.minutes}'}:00')
+                        '${nextExercise!.minutes! >= 10 ? nextExercise!.minutes : '0${nextExercise!.minutes}'}:00')
                     // BlocBuilder<StartWorkoutBloc, StartWorkoutState>(
                     //   buildWhen: (_, currState) => currState is PlayTimerState || currState is PauseTimerState,
                     //   builder: (context, state) {

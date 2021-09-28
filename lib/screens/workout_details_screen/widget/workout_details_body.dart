@@ -27,23 +27,21 @@ class WorkoutDetailsBody extends StatelessWidget {
   Widget _createBackButton(BuildContext context) {
     final bloc = BlocProvider.of<WorkoutDetailsBloc>(context);
     return Positioned(
-      child: SafeArea(
-        child: BlocBuilder<WorkoutDetailsBloc, WorkoutDetailsState>(
-          builder: (context, state) {
-            return GestureDetector(
-              child: Container(
-                width: 30,
-                height: 30,
-                child: Image(
-                  image: AssetImage(PathConstants.back),
-                ),
+      child: BlocBuilder<WorkoutDetailsBloc, WorkoutDetailsState>(
+        builder: (context, state) {
+          return GestureDetector(
+            child: Container(
+              width: 30,
+              height: 30,
+              child: Image(
+                image: AssetImage(PathConstants.back),
               ),
-              onTap: () {
-                bloc.add(BackTappedEvent());
-              },
-            );
-          },
-        ),
+            ),
+            onTap: () {
+              bloc.add(BackTappedEvent());
+            },
+          );
+        },
       ),
       left: 20,
       top: 14,

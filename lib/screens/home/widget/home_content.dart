@@ -51,7 +51,6 @@ class HomeContent extends StatelessWidget {
   }
 
   Widget _createExercisesList(BuildContext context) {
-    final bloc = BlocProvider.of<HomeBloc>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

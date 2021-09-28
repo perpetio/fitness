@@ -141,7 +141,7 @@ SPEC CHECKSUMS:
   FirebaseCore: a6dba751680d7033b9d3831e1cfc95ead0605118
   FirebaseCoreDiagnostics: 7e873baabcfaa9512f538554ae4fa0817aaafbdb
   FirebaseStorage: ff380720c204593d98c3e5482e62ccfbb522f0c5
-  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_native_timezone: 5f05b2de06c9776b4cc70e1839f03de178394d22
   flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
@@ -158,4 +158,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 7adbc9d59f05e1b01f554ea99b6c79e97f2214a2
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.0

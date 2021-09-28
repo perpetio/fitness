@@ -61,6 +61,8 @@
 //   }
 // }
 
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_flutter/data/workout_data.dart';
 
@@ -109,5 +111,15 @@ class UserData {
             workouts: [],
           )
         : [];
+  }
+
+  @override
+  String toString() {
+    return 'UserData(userName: $name, userPhoto: $photo, userEmail: $mail)';
+  }
+
+  String toJsonString() {
+    final str = json.encode(this.toJson());
+    return str;
   }
 }

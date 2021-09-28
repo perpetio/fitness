@@ -50,7 +50,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget _settingsContent(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
-    // final displayName = user?.displayName ?? "No Username";
     photoUrl = user?.photoURL ?? null;
     return SafeArea(
       child: SingleChildScrollView(
@@ -154,37 +153,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Text(TextConstants.joinUs,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
             SizedBox(height: 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                    onPressed: () =>
-                        launch('https://www.facebook.com/perpetio/'),
-                    style: TextButton.styleFrom(
-                        shape: CircleBorder(),
-                        backgroundColor: Colors.white,
-                        elevation: 1),
-                    child: Image.asset(PathConstants.facebook)),
-                TextButton(
-                    onPressed: () =>
-                        launch('https://www.instagram.com/perpetio/'),
-                    style: TextButton.styleFrom(
-                        shape: CircleBorder(),
-                        backgroundColor: Colors.white,
-                        elevation: 1),
-                    child: Image.asset(PathConstants.instagram)),
-                TextButton(
-                    onPressed: () => launch('https://twitter.com/perpetio'),
-                    style: TextButton.styleFrom(
-                        shape: CircleBorder(),
-                        backgroundColor: Colors.white,
-                        elevation: 1),
-                    child: Image.asset(PathConstants.twitter)),
-              ],
-            )
+            _createJoinSocialMedia(),
           ]),
         ),
       ),
+    );
+  }
+
+  Widget _createJoinSocialMedia() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextButton(
+            onPressed: () => launch('https://www.facebook.com/perpetio/'),
+            style: TextButton.styleFrom(
+                shape: CircleBorder(),
+                backgroundColor: Colors.white,
+                elevation: 1),
+            child: Image.asset(PathConstants.facebook)),
+        TextButton(
+            onPressed: () => launch('https://www.instagram.com/perpetio/'),
+            style: TextButton.styleFrom(
+                shape: CircleBorder(),
+                backgroundColor: Colors.white,
+                elevation: 1),
+            child: Image.asset(PathConstants.instagram)),
+        TextButton(
+            onPressed: () => launch('https://twitter.com/perpetio'),
+            style: TextButton.styleFrom(
+                shape: CircleBorder(),
+                backgroundColor: Colors.white,
+                elevation: 1),
+            child: Image.asset(PathConstants.twitter)),
+      ],
     );
   }
 }
