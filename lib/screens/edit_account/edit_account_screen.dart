@@ -175,7 +175,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                   isEnabled: true,
                   onTap: () {
                     FocusScope.of(context).unfocus();
-                    setState(() async {
+                    setState(() {
                       isNameInvalid = !(_nameController.text.length > 1);
                       isEmailInvalid =
                           !ValidationService.email(_emailController.text);

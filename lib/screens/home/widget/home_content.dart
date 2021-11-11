@@ -139,7 +139,7 @@ class HomeContent extends StatelessWidget {
               final photoURL =
                   state is ReloadImageState ? state.photoURL : null;
               return GestureDetector(
-                child: photoURL == null
+                child: photoURL == null || photoURL == ''
                     ? CircleAvatar(
                         backgroundImage: AssetImage(PathConstants.profile),
                         radius: 25)
