@@ -1,11 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitness_flutter/core/const/color_constants.dart';
 import 'package:fitness_flutter/core/const/data_constants.dart';
 import 'package:fitness_flutter/core/const/path_constants.dart';
 import 'package:fitness_flutter/core/const/text_constants.dart';
+import 'package:fitness_flutter/data/workout_data.dart';
+import 'package:fitness_flutter/screens/common_widgets/fitness_button.dart';
 import 'package:fitness_flutter/screens/edit_account/edit_account_screen.dart';
 import 'package:fitness_flutter/screens/home/bloc/home_bloc.dart';
 import 'package:fitness_flutter/screens/home/widget/home_statistics.dart';
+import 'package:fitness_flutter/screens/tab_bar/bloc/tab_bar_bloc.dart';
 import 'package:fitness_flutter/screens/workout_details_screen/page/workout_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +15,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'home_exercises_card.dart';
 
 class HomeContent extends StatelessWidget {
+  final List<WorkoutData> workouts;
+
   const HomeContent({
+    required this.workouts,
     Key? key,
   }) : super(key: key);
 
@@ -28,17 +33,18 @@ class HomeContent extends StatelessWidget {
   }
 
   Widget _createHomeBody(BuildContext context) {
+    final bloc = BlocProvider.of<HomeBloc>(context);
     return SafeArea(
       child: ListView(
         padding: const EdgeInsets.symmetric(vertical: 20),
         children: [
           _createProfileData(context),
           const SizedBox(height: 35),
-          HomeStatistics(),
+          _showStartWorkout(context, bloc),
           const SizedBox(height: 30),
           _createExercisesList(context),
           const SizedBox(height: 25),
-          _createProgress(),
+          _showProgress(bloc),
         ],
       ),
     );
@@ -68,19 +74,22 @@ class HomeContent extends StatelessWidget {
               const SizedBox(width: 20),
               WorkoutCard(
                   color: ColorConstants.cardioColor,
-                  workout: DataConstants.homeWorkouts[0],
+                  workout: DataConstants.workouts[0],
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (_) => WorkoutDetailsPage(
-                            workout: DataConstants.workouts[0],
-                          )))),
+                          workout: DataConstants.workouts[0])))),
               const SizedBox(width: 15),
               WorkoutCard(
-                  color: ColorConstants.armsColor,
-                  workout: DataConstants.homeWorkouts[1],
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => WorkoutDetailsPage(
-                            workout: DataConstants.workouts[2],
-                          )))),
+                color: ColorConstants.armsColor,
+                workout: DataConstants.workouts[2],
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => WorkoutDetailsPage(
+                      workout: DataConstants.workouts[2],
+                    ),
+                  ),
+                ),
+              ),
               const SizedBox(width: 20),
             ],
           ),
@@ -90,8 +99,6 @@ class HomeContent extends StatelessWidget {
   }
 
   Widget _createProfileData(BuildContext context) {
-    final User? user = FirebaseAuth.instance.currentUser;
-    final displayName = user?.displayName ?? "No Username";
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
@@ -100,12 +107,21 @@ class HomeContent extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Hi, $displayName',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+              BlocBuilder<HomeBloc, HomeState>(
+                buildWhen: (_, currState) =>
+                    currState is ReloadDisplayNameState,
+                builder: (context, state) {
+                  final displayName = state is ReloadDisplayNameState
+                      ? state.displayName
+                      : '[name]';
+                  return Text(
+                    'Hi, $displayName',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                },
               ),
               const SizedBox(height: 2),
               Text(
@@ -120,18 +136,18 @@ class HomeContent extends StatelessWidget {
           BlocBuilder<HomeBloc, HomeState>(
             buildWhen: (_, currState) => currState is ReloadImageState,
             builder: (context, state) {
-              final photoUrl =
-                  FirebaseAuth.instance.currentUser?.photoURL ?? null;
+              final photoURL =
+                  state is ReloadImageState ? state.photoURL : null;
               return GestureDetector(
-                child: photoUrl == null
+                child: photoURL == null || photoURL == ''
                     ? CircleAvatar(
                         backgroundImage: AssetImage(PathConstants.profile),
-                        radius: 60)
+                        radius: 25)
                     : CircleAvatar(
                         child: ClipOval(
                             child: FadeInImage.assetNetwork(
                                 placeholder: PathConstants.profile,
-                                image: photoUrl,
+                                image: photoURL,
                                 fit: BoxFit.cover,
                                 width: 200,
                                 height: 120)),
@@ -149,7 +165,7 @@ class HomeContent extends StatelessWidget {
     );
   }
 
-  Widget _createProgress() {
+  Widget _createProgress(HomeBloc bloc) {
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -167,29 +183,19 @@ class HomeContent extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Image(
-            image: AssetImage(
-              PathConstants.progress,
-            ),
-          ),
+          Image(image: AssetImage(PathConstants.progress)),
           SizedBox(width: 20),
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  TextConstants.keepProgress,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                Text(TextConstants.keepProgress,
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 3),
                 Text(
-                  TextConstants.profileSuccessful,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
+                  '${TextConstants.profileSuccessful} ${bloc.getProgressPercentage()}% of workouts.',
+                  style: TextStyle(fontSize: 16),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 ),
@@ -199,5 +205,69 @@ class HomeContent extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget _createStartWorkout(BuildContext context, HomeBloc bloc) {
+    final blocTabBar = BlocProvider.of<TabBarBloc>(context);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: ColorConstants.white,
+        boxShadow: [
+          BoxShadow(
+            color: ColorConstants.textBlack.withOpacity(0.12),
+            blurRadius: 5.0,
+            spreadRadius: 1.1,
+          )
+        ],
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image(
+                image: AssetImage(PathConstants.didYouKnow),
+                width: 24,
+                height: 24,
+              ),
+              const SizedBox(width: 10),
+              Text(TextConstants.didYouKnow,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500))
+            ],
+          ),
+          const SizedBox(height: 16),
+          Text(TextConstants.sportActivity,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+          const SizedBox(height: 4),
+          Text(TextConstants.signToStart,
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: ColorConstants.textGrey)),
+          const SizedBox(height: 24),
+          FitnessButton(
+            title: TextConstants.startWorkout,
+            onTap: () {
+              blocTabBar.add(
+                  TabBarItemTappedEvent(index: blocTabBar.currentIndex = 1));
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _showProgress(HomeBloc bloc) {
+    return workouts.isNotEmpty ? _createProgress(bloc) : Container();
+  }
+
+  Widget _showStartWorkout(BuildContext context, HomeBloc bloc) {
+    return workouts.isEmpty
+        ? _createStartWorkout(context, bloc)
+        : HomeStatistics();
   }
 }

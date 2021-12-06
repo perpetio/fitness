@@ -1,4 +1,5 @@
 import 'package:fitness_flutter/core/const/color_constants.dart';
+import 'package:fitness_flutter/core/const/path_constants.dart';
 import 'package:fitness_flutter/data/workout_data.dart';
 import 'package:flutter/material.dart';
 
@@ -39,7 +40,7 @@ class WorkoutCard extends StatelessWidget {
                   children: [
                     const SizedBox(height: 5),
                     Text(
-                      workout.title,
+                      workout.title ?? "",
                       style: TextStyle(
                         color: ColorConstants.white,
                         fontSize: 24,
@@ -48,7 +49,7 @@ class WorkoutCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      "${workout.exercices} exercises",
+                      "${workout.exerciseDataList!.length} exercises",
                       style: TextStyle(
                         color: ColorConstants.white,
                         fontSize: 16,
@@ -57,7 +58,7 @@ class WorkoutCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      "${workout.minutes} minutes",
+                      "${_getWorkoutMinutes()} minutes",
                       style: TextStyle(
                         color: ColorConstants.white,
                         fontSize: 16,
@@ -72,12 +73,22 @@ class WorkoutCard extends StatelessWidget {
               right: 0,
               bottom: 0,
               child: Image(
-                image: AssetImage(workout.image),
+                image: AssetImage(PathConstants.cardio),
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  int _getWorkoutMinutes() {
+    var minutes = 0;
+    final minutesList =
+        workout.exerciseDataList!.map((e) => e.minutes).toList();
+    minutesList.forEach((e) {
+      minutes += e!;
+    });
+    return minutes;
   }
 }

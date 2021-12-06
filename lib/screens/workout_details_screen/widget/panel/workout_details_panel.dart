@@ -1,9 +1,11 @@
 import 'package:fitness_flutter/core/const/path_constants.dart';
 import 'package:fitness_flutter/core/const/text_constants.dart';
 import 'package:fitness_flutter/data/workout_data.dart';
+import 'package:fitness_flutter/screens/workout_details_screen/bloc/workout_details_bloc.dart';
 import 'package:fitness_flutter/screens/workout_details_screen/widget/panel/exercises_list.dart';
 import 'package:fitness_flutter/screens/workout_details_screen/widget/panel/workout_tag.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WorkoutDetailsPanel extends StatelessWidget {
   final WorkoutData workout;
@@ -12,10 +14,10 @@ class WorkoutDetailsPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _createPanelData();
+    return _createPanelData(context);
   }
 
-  Widget _createPanelData() {
+  Widget _createPanelData(BuildContext context) {
     return Column(
       children: [
         const SizedBox(height: 15),
@@ -27,7 +29,7 @@ class WorkoutDetailsPanel extends StatelessWidget {
             children: [
               _createHeader(),
               const SizedBox(height: 20),
-              _createWorkoutData(),
+              _createWorkoutData(context),
               SizedBox(height: 20),
               _createExerciesList(),
             ],
@@ -45,7 +47,7 @@ class WorkoutDetailsPanel extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Text(
-        workout.title + "  " + TextConstants.workout,
+        workout.title! + "  " + TextConstants.workout,
         style: TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.bold,
@@ -54,19 +56,20 @@ class WorkoutDetailsPanel extends StatelessWidget {
     );
   }
 
-  Widget _createWorkoutData() {
+  Widget _createWorkoutData(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         children: [
           WorkoutTag(
             icon: PathConstants.timeTracker,
-            content: "${workout.minutes}:00",
+            content: "${_getExerciseTime()}:00",
           ),
           const SizedBox(width: 15),
           WorkoutTag(
             icon: PathConstants.exerciseTracker,
-            content: "${workout.exercices} ${TextConstants.exercisesLowercase}",
+            content:
+                '${workout.exerciseDataList!.length} ${TextConstants.exercisesLowercase}',
           ),
         ],
       ),
@@ -74,11 +77,29 @@ class WorkoutDetailsPanel extends StatelessWidget {
   }
 
   Widget _createExerciesList() {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: ExercisesList(exercises: workout.exerciseDataList, workout: workout),
-      ),
+    return BlocBuilder<WorkoutDetailsBloc, WorkoutDetailsState>(
+      buildWhen: (_, currState) => currState is ReloadWorkoutDetailsState,
+      builder: (context, state) {
+        return Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: ExercisesList(
+              exercises: workout.exerciseDataList ?? [],
+              workout: workout,
+            ),
+          ),
+        );
+      },
     );
+  }
+
+  int _getExerciseTime() {
+    int time = 0;
+    final List<int?> exerciseList =
+        workout.exerciseDataList!.map((e) => e.minutes).toList();
+    exerciseList.forEach((e) {
+      time += e!;
+    });
+    return time;
   }
 }

@@ -24,16 +24,14 @@ class StartWorkoutVideo extends StatefulWidget {
 
 class _StartWorkoutVideoState extends State<StartWorkoutVideo> {
   late VideoPlayerController _controller;
-  // late Future<void> _initializeVideoPlayerFuture;
   late bool isPlayButtonHidden = false;
   late ChewieController _chewieController;
   Timer? timer;
   Timer? videoTimer;
-  // bool _isVideoPlaying = false;
 
   @override
   void initState() {
-    _controller = VideoPlayerController.asset(widget.exercise.video);
+    _controller = VideoPlayerController.asset(widget.exercise.video ?? "");
 
     _controller.initialize();
 
@@ -44,7 +42,8 @@ class _StartWorkoutVideoState extends State<StartWorkoutVideo> {
         deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
         aspectRatio: 15 / 10,
         placeholder: Center(child: CupertinoActivityIndicator()),
-        materialProgressColors: ChewieProgressColors(playedColor: ColorConstants.primaryColor));
+        materialProgressColors:
+            ChewieProgressColors(playedColor: ColorConstants.primaryColor));
     super.initState();
   }
 
@@ -57,13 +56,17 @@ class _StartWorkoutVideoState extends State<StartWorkoutVideo> {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(aspectRatio: _controller.value.aspectRatio, child: _createVideoContainer());
+    return AspectRatio(
+        aspectRatio: _controller.value.aspectRatio,
+        child: _createVideoContainer());
   }
 
   Widget _createVideoContainer() {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
-      child: Theme(data: Theme.of(context).copyWith(platform: TargetPlatform.android), child: Chewie(controller: _chewieController)),
+      child: Theme(
+          data: Theme.of(context).copyWith(platform: TargetPlatform.android),
+          child: Chewie(controller: _chewieController)),
     );
   }
 

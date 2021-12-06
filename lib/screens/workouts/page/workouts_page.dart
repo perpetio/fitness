@@ -18,16 +18,20 @@ class WorkoutsPage extends StatelessWidget {
       child: BlocConsumer<WorkoutsBloc, WorkoutsState>(
         buildWhen: (_, currState) => currState is WorkoutsInitial,
         builder: (context, state) {
+          final bloc = BlocProvider.of<WorkoutsBloc>(context);
+          bloc.add(WorkoutsInitialEvent());
           return WorkoutContent();
         },
         listenWhen: (_, currState) => currState is CardTappedState,
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is CardTappedState) {
-            Navigator.of(context, rootNavigator: true).push(
+            await Navigator.of(context, rootNavigator: true).push(
               MaterialPageRoute(
                 builder: (_) => WorkoutDetailsPage(workout: state.workout),
               ),
             );
+            final bloc = BlocProvider.of<WorkoutsBloc>(context);
+            bloc.add(WorkoutsInitialEvent());
           }
         },
       ),

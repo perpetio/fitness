@@ -8,3 +8,5 @@ class CardTappedEvent extends WorkoutsEvent {
 
   CardTappedEvent({required this.workout});
 }
+
+class WorkoutsInitialEvent extends WorkoutsEvent {}

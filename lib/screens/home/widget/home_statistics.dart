@@ -1,26 +1,29 @@
 import 'package:fitness_flutter/core/const/color_constants.dart';
 import 'package:fitness_flutter/core/const/path_constants.dart';
 import 'package:fitness_flutter/core/const/text_constants.dart';
+import 'package:fitness_flutter/screens/home/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeStatistics extends StatelessWidget {
   const HomeStatistics({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final bloc = BlocProvider.of<HomeBloc>(context);
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _createComletedWorkouts(context),
-          _createColumnStatistics(),
+          _createComletedWorkouts(context, bloc),
+          _createColumnStatistics(bloc),
         ],
       ),
     );
   }
 
-  Widget _createComletedWorkouts(BuildContext context) {
+  Widget _createComletedWorkouts(BuildContext context, HomeBloc bloc) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Container(
       padding: const EdgeInsets.all(15),
@@ -63,7 +66,7 @@ class HomeStatistics extends StatelessWidget {
             ],
           ),
           Text(
-            '12',
+            '${bloc.getFinishedWorkouts()}',
             style: TextStyle(
               fontSize: 48,
               fontWeight: FontWeight.w700,
@@ -84,20 +87,20 @@ class HomeStatistics extends StatelessWidget {
     );
   }
 
-  Widget _createColumnStatistics() {
+  Widget _createColumnStatistics(HomeBloc bloc) {
     return Column(
       children: [
         DataWorkouts(
           icon: PathConstants.inProgress,
           title: TextConstants.inProgress,
-          count: 2,
+          count: bloc.getInProgressWorkouts() ?? 0,
           text: TextConstants.workouts,
         ),
         const SizedBox(height: 20),
         DataWorkouts(
           icon: PathConstants.timeSent,
           title: TextConstants.timeSent,
-          count: 62,
+          count: bloc.getTimeSent() ?? 0,
           text: TextConstants.minutes,
         ),
       ],

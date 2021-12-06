@@ -17,9 +17,16 @@ class HomePage extends StatelessWidget {
     return BlocProvider<HomeBloc>(
       create: (BuildContext context) => HomeBloc(),
       child: BlocConsumer<HomeBloc, HomeState>(
-        buildWhen: (_, currState) => currState is HomeInitial,
+        buildWhen: (_, currState) =>
+            currState is HomeInitial || currState is WorkoutsGotState,
         builder: (context, state) {
-          return HomeContent();
+          final bloc = BlocProvider.of<HomeBloc>(context);
+          if (state is HomeInitial) {
+            bloc.add(HomeInitialEvent());
+            bloc.add(ReloadDisplayNameEvent());
+            bloc.add(ReloadImageEvent());
+          }
+          return HomeContent(workouts: bloc.workouts);
         },
         listenWhen: (_, currState) => true,
         listener: (context, state) {},
